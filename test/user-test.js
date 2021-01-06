@@ -19,8 +19,8 @@ describe.only('User', () => {
   });
 
   it('Should be able to add recipes to favoriteRecipes', () =>{
-    user1.addToFavorites('dumplings')
-    expect(user1.favoriteRecipes.includes('dumplings')).to.eql(true);
+    user1.addToFavorites(testRecipeData[0]);
+    expect(user1.favoriteRecipes.includes(testRecipeData[0])).to.eql(true);
   });
 
   it('Should be able to remove recipes from favoriteRecipes', () =>{
@@ -41,7 +41,9 @@ describe.only('User', () => {
   });
 
   it('Should be able to check ingredients in User/s pantry for a given recipe', () => {
-    expect(user1.checkPantry('salt')).to.eql('You have the ingredients!');
+    user1.addToFavorites(testRecipeData[0]);
+    user1.addToFavorites(testRecipeData[1]);
+    expect(user1.checkPantry()).to.eql('You have the ingredients!');
   });
 
   it('Should inform User if they lack required ingredients for a given recipe', () => {
