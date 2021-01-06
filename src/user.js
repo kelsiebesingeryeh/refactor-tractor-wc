@@ -31,6 +31,10 @@ class User {
       });
     });
   }
+
+  checkPantry() {
+      this.favoriteRecipes.filter(recipe => pantry.determineEnoughIngredients(recipe))
+  }
 }
 
 
