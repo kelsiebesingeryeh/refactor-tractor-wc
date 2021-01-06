@@ -2,23 +2,25 @@ class Recipe {
   constructor(recipe, ingredientsData) {
     this.name = recipe.name;
     this.id = recipe.id;
-    this.ingredients = recipe.ingredients;
+    this.ingredients = recipe.ingredients.map(recipeIngredient => {
+      let ingredientInfo = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id);
+      return {...recipeIngredient,...ingredientInfo};
+    });
     this.instructions = recipe.instructions;
     this.tags = recipe.tags;
-    this.ingredientsData = ingredientsData;
   }
 
+
   calculateCost() {
-    let costCounter = 0;
-    this.ingredients.forEach(ingredient => {
-      this.ingredientsData.find(specificIngredient => {
-        if (specificIngredient.id === ingredient.id) {
-          costCounter += (Number(specificIngredient.estimatedCostInCents) *
-          Number(ingredient.quantity.amount))
-        }
-      })
-    });
-    return costCounter;
+    const totalCents = this.ingredients.reduce((costTally, ingredient) => {
+      let costForRecipe = ingredient.estimatedCostInCents * ingredient.quantity.amount;
+      return costTally += costForRecipe;
+    }, 0);
+    return totalCents / 100;
+  }
+
+  getInstructions() {
+    return this.instructions;
   }
 
 }
