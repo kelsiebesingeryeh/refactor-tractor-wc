@@ -2,23 +2,20 @@ class Recipe {
   constructor(recipe, ingredientsData) {
     this.name = recipe.name;
     this.id = recipe.id;
-    this.ingredients = recipe.ingredients;
+    this.ingredients = recipe.ingredients.reduce((ingredientList, recipeIngredient) => {
+      let ingredientInfo = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id)
+      return ingredientList.push({...recipeIngredient,...ingredientInfo})
+      }, []);
     this.instructions = recipe.instructions;
     this.tags = recipe.tags;
-    this.ingredientsData = ingredientsData;
   }
 
+
   calculateCost() {
-    let costCounter = 0;
-    this.ingredients.forEach(ingredient => {
-      this.ingredientsData.find(specificIngredient => {
-        if (specificIngredient.id === ingredient.id) {
-          costCounter += (Number(specificIngredient.estimatedCostInCents) *
-          Number(ingredient.quantity.amount))
-        }
-      })
-    });
-    return costCounter;
+    const costReducer = (costTally, ingredient) => {
+      return costTally += ingredient.estimatedCostInCents;
+    }
+    return this.ingredients.reduce(costReducer, 0)
   }
 
 }
