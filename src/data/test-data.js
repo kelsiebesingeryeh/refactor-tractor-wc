@@ -3,7 +3,7 @@ export let testUsers = [{
     "name": "Marty McFly",
     "pantry": [{
             "ingredient": 5555,
-            "amount": 2
+            "amount": 9
         },
         {
             "ingredient": 1111,
@@ -27,19 +27,17 @@ export let testUsers = [{
         }
     ]
 }]
-
-export let testRecipeData = [
-  {
-    name: "Simple Macaroni and Cheese",
-    id: 595736,
-    image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
-    ingredients: [
-      {
-        name: "elbow macaroni",
-        id: 5555,
-        quantity: {
-          amount: 8,
-          unit: "oz",
+export let testRecipeData = [{
+    "name": "Simple Macaroni and Cheese",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [{
+            "name": "elbow macaroni",
+            "id": 5555,
+            "quantity": {
+                "amount": 8,
+                "unit": "oz"
+            }
         },
       },
       {
@@ -49,45 +47,45 @@ export let testRecipeData = [
           amount: 0.25,
           unit: "c",
         },
-      },
-      {
-        name: "all purpose flour",
-        id: 1111,
-        quantity: {
-          amount: 0.25,
-          unit: "c",
+        {
+            "name": "all purpose flour",
+            "id": 1111,
+            "quantity": {
+                "amount": .25,
+                "unit": "c"
+        }
         },
-      },
-      {
-        name: "salt",
-        id: 2047,
-        quantity: {
-          amount: 0.5,
-          unit: "tsp",
+        {
+            "name": "salt",
+            "id": 2047,
+            "quantity": {
+                "amount": 0.5,
+                "unit": "tsp"
+              }
         },
-      },
-      {
-        name: "ground black pepper",
-        id: 11220,
-        quantity: {
-          amount: 0.5,
-          unit: "tsp",
+        {
+            "name": "ground black pepper",
+            "id": 11220,
+            "quantity": {
+                "amount": 0.5,
+                "unit": "tsp"
+              }
         },
-      },
-      {
-        name: "milk",
-        id: 777,
-        quantity: {
-          amount: 1,
-          unit: "c",
+        {
+            "name": "milk",
+            "id": 777,
+            "quantity": {
+                "amount": 1,
+                "unit": "c"
+              }
         },
-      },
-      {
-        name: "shredded cheddar cheese",
-        id: 1919,
-        quantity: {
-          amount: 2,
-          unit: "c",
+        {
+            "name": "shredded cheddar cheese",
+            "id": 1919,
+            "quantity": {
+                "amount": 2,
+                "unit": "c"
+              }
         },
       },
     ],
@@ -249,7 +247,7 @@ export let testIngredientsData = [
             "estimatedCostInCents": 130
         },
         {
-            "id": 7777,
+            "id": 777,
             "name": "milk",
             "estimatedCostInCents": 305
         },
@@ -257,8 +255,7 @@ export let testIngredientsData = [
             "id": 1919,
             "name": "shredded cheddar cheese",
             "estimatedCostInCents": 555
-        },
+          }
+        ]
 
-]
-
-export default { testUsers, testIngredientsData, testRecipeData };
+  export default { testUsers, testIngredientsData, testRecipeData };
