@@ -1,9 +1,9 @@
-let testUsers = [{
+export let testUsers = [{
     "id": 500,
     "name": "Marty McFly",
     "pantry": [{
             "ingredient": 5555,
-            "amount": 2
+            "amount": 9
         },
         {
             "ingredient": 1145,
@@ -32,7 +32,7 @@ let testUsers = [{
     ]
 }]
 
-let testRecipeData = [{
+export let testRecipeData = [{
     "name": "Simple Macaroni and Cheese",
     "id": 595736,
     "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
@@ -58,7 +58,7 @@ let testRecipeData = [{
             "quantity": {
                 "amount": .25,
                 "unit": "c"
-            }
+        }
         },
         {
             "name": "salt",
@@ -66,7 +66,7 @@ let testRecipeData = [{
             "quantity": {
                 "amount": 0.5,
                 "unit": "tsp"
-            }
+              }
         },
         {
             "name": "ground black pepper",
@@ -74,7 +74,7 @@ let testRecipeData = [{
             "quantity": {
                 "amount": 0.5,
                 "unit": "tsp"
-            }
+              }
         },
         {
             "name": "milk",
@@ -82,14 +82,15 @@ let testRecipeData = [{
             "quantity": {
                 "amount": 1,
                 "unit": "c"
-            }
-        } {
+              }
+        },
+        {
             "name": "shredded cheddar cheese",
             "id": 1919,
             "quantity": {
                 "amount": 2,
                 "unit": "c"
-            }
+              }
         },
     ],
     "instructions": [{
@@ -113,7 +114,7 @@ let testRecipeData = [{
     ]
 }]
 
-let testIngredientsData = [{
+export let testIngredientsData = [
         {
             "id": 5555,
             "name": "elbow macaroni",
@@ -140,7 +141,7 @@ let testIngredientsData = [{
             "estimatedCostInCents": 130
         },
         {
-            "id": 7777,
+            "id": 777,
             "name": "milk",
             "estimatedCostInCents": 305
         },
@@ -148,7 +149,7 @@ let testIngredientsData = [{
             "id": 1919,
             "name": "shredded cheddar cheese",
             "estimatedCostInCents": 555
-        },
-    }
+          }
+        ]
 
-]
+  export default { testUsers, testIngredientsData, testRecipeData };
