@@ -8,6 +8,45 @@ export let testUsers = [
         amount: 9,
       },
       {
+        ingredient: 1145,
+        amount: 1,
+      },
+      {
+        ingredient: 1111,
+        amount: 3,
+      },
+      {
+        ingredient: 2047,
+        amount: 5,
+      },
+      {
+        ingredient: 11220,
+        amount: 4,
+      },
+      {
+        ingredient: 777,
+        amount: 1,
+      },
+      {
+        ingredient: 1919,
+        amount: 3,
+      },
+    ],
+  },
+
+  {
+    id: 501,
+    name: "Doc Brown",
+    pantry: [
+      {
+        ingredient: 5555,
+        amount: 9,
+      },
+      {
+        ingredient: 1145,
+        amount: 1,
+      },
+      {
         ingredient: 1111,
         amount: 3,
       },
@@ -259,7 +298,7 @@ export let testRecipeData = [
           "Add all ingredients to a blender (except graham crackers if using). Cover and blend until well pureed then serve topped with crushed graham crackers if desired.*The banana is mostly what gives this smoothie it's sweetness, so I recommend using one that is speckled (not mushy though).Recipe Source: Cooking Classy",
       },
     ],
-    tags: ["morning meal", "brunch", "breakfast", "comfort"],
+    tags: ["morning meal", "brunch", "breakfast", "comfort food"],
   },
 ];
 export let testIngredientsData = [

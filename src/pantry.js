@@ -17,7 +17,7 @@ class Pantry {
     })
     return result;
   }
-  
+
   removeIngredientsFromPantry(recipe){
     return this.contents.reduce((acc, item) => {
       recipe.ingredients.forEach(ing => {
@@ -45,7 +45,7 @@ class Pantry {
         return acc;
       }, [])
     }
-    
+  }
 }
 
 

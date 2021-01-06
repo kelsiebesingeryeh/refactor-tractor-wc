@@ -15,7 +15,7 @@ describe('Cookbook', () => {
 
   it('Should store all recipes', () => {
     expect(cookbook.recipes[0].name).to.equal("Simple Macaroni and Cheese");
-    expect(cookbook.recipes[1].name).to.equal("Pumpkin Cheesecake Breakfast Smoothie");
+    expect(cookbook.recipes[2].name).to.equal("Pumpkin Cheesecake Breakfast Smoothie");
   });
 
   it('Should filter recipes by ingredients', () => {
@@ -30,8 +30,8 @@ describe('Cookbook', () => {
   });
 
   it('Should filter recipes by tag', () => {
-    expect(cookbook.findRecipes('dinner').length).to.equal(1);
-    expect(cookbook.findRecipes('comfort').length).to.equal(2);
+    expect(cookbook.findRecipes('pasta').length).to.equal(1);
+    expect(cookbook.findRecipes('comfort food').length).to.equal(2);
     expect(cookbook.findRecipes('rasberry').length).to.equal(0);
   });
 })

@@ -6,33 +6,33 @@ import Recipe from '../src/recipe.js';
 import Cookbook from '../src/cookbook.js';
 import { testUsers, testIngredientsData, testRecipeData } from '../src/data/test-data.js';
 
-let userData = testUsers[0];
+let userData = testUsers[1];
 let ingredientData = testIngredientsData;
 let recipeData = testRecipeData;
 let cookbook;
-let user1;
-let pantry;
+let user2;
+let pantryTest;
 let recipe;
 
-describe.only('Pantry', () => {
+describe('Pantry', () => {
   beforeEach( () => {
     cookbook = new Cookbook(recipeData)
-    user1 = new User(userData.id, userData.name, userData.pantry)
-    pantry = new Pantry(user1.pantry);
+    user2 = new User(userData.id, userData.name, userData.pantry)
+    pantryTest = new Pantry(user2.pantry);
     recipe = new Recipe(cookbook.recipes[0], ingredientData)
   });
 
   it('should store a users pantry with the keys of ingredient and amount', () => {
-    expect(pantry.contents).to.equal(user1.pantry);
+    expect(pantryTest.contents).to.equal(user2.pantry);
   })
 
   it('should determine wheter a users pantry has enough ingredients to cook a given recipe', () => {
-    expect(pantry.determineEnoughIngredients(recipe)).to.equal(true)
+    expect(pantryTest.determineEnoughIngredients(recipe)).to.equal(true)
   })
 
   it('should remove the ingredients used for a given meal from my pantry, once that meal has been cooked', () => {
-    pantry.removeIngredientsFromPantry(recipe)
-    expect(pantry.contents).to.deep.equal([
+    pantryTest.removeIngredientsFromPantry(recipe)
+    expect(pantryTest.contents).to.deep.equal([
         {
             "ingredient": 5555,
             "amount": 1
@@ -65,8 +65,8 @@ describe.only('Pantry', () => {
   })
 
   it('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', () => {
-    pantry.removeIngredientsFromPantry(recipe)
-    expect(pantry.determineIngredientsNeeded(recipe)).to.deep.equal(['elbow macaroni', 'milk', 'shredded cheddar cheese'])
+    pantryTest.removeIngredientsFromPantry(recipe)
+    expect(pantryTest.determineIngredientsNeeded(recipe)).to.deep.equal(['elbow macaroni', 'milk', 'shredded cheddar cheese'])
   })
 
 })
