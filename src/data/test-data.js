@@ -1,93 +1,98 @@
-export let testUsers = [{
-    "id": 500,
-    "name": "Marty McFly",
-    "pantry": [{
-            "ingredient": 5555,
-            "amount": 9
-        },
-        {
-            "ingredient": 1111,
-            "amount": 3
-        },
-        {
-            "ingredient": 2047,
-            "amount": 5
-        },
-        {
-            "ingredient": 11220,
-            "amount": 4
-        },
-        {
-            "ingredient": 777,
-            "amount": 1
-        },
-        {
-            "ingredient": 1919,
-            "amount": 3
-        }
-    ]
-}]
-
-export let testRecipeData = [{
-    "name": "Simple Macaroni and Cheese",
-    "id": 595736,
-    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
-    "ingredients": [{
-            "name": "elbow macaroni",
-            "id": 5555,
-            "quantity": {
-                "amount": 8,
-                "unit": "oz"
-            }
-        },
+export let testUsers = [
+  {
+    id: 500,
+    name: "Marty McFly",
+    pantry: [
       {
-        "name": "butter",
-        "id": 1145,
-        "quantity": {
-          "amount": 0.25,
-          "unit": "c",
+        ingredient: 5555,
+        amount: 9,
+      },
+      {
+        ingredient: 1111,
+        amount: 3,
+      },
+      {
+        ingredient: 2047,
+        amount: 5,
+      },
+      {
+        ingredient: 11220,
+        amount: 4,
+      },
+      {
+        ingredient: 777,
+        amount: 1,
+      },
+      {
+        ingredient: 1919,
+        amount: 3,
+      },
+    ],
+  },
+];
+
+export let testRecipeData = [
+  {
+    name: "Simple Macaroni and Cheese",
+    id: 595736,
+    image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    ingredients: [
+      {
+        name: "elbow macaroni",
+        id: 5555,
+        quantity: {
+          amount: 8,
+          unit: "oz",
         },
-    },
-        {
-            "name": "all purpose flour",
-            "id": 1111,
-            "quantity": {
-                "amount": .25,
-                "unit": "c"
-        }
-    },
-        {
-            "name": "salt",
-            "id": 2047,
-            "quantity": {
-                "amount": 0.5,
-                "unit": "tsp"
-              }
+      },
+      {
+        name: "butter",
+        id: 1145,
+        quantity: {
+          amount: 0.25,
+          unit: "c",
         },
-        {
-            "name": "ground black pepper",
-            "id": 11220,
-            "quantity": {
-                "amount": 0.5,
-                "unit": "tsp"
-              }
+      },
+      {
+        name: "all purpose flour",
+        id: 1111,
+        quantity: {
+          amount: 0.25,
+          unit: "c",
         },
-        {
-            "name": "milk",
-            "id": 777,
-            "quantity": {
-                "amount": 1,
-                "unit": "c"
-              }
+      },
+      {
+        name: "salt",
+        id: 2047,
+        quantity: {
+          amount: 0.5,
+          unit: "tsp",
         },
-        {
-            "name": "shredded cheddar cheese",
-            "id": 1919,
-            "quantity": {
-                "amount": 2,
-                "unit": "c"
-              }
+      },
+      {
+        name: "ground black pepper",
+        id: 11220,
+        quantity: {
+          amount: 0.5,
+          unit: "tsp",
         },
+      },
+      {
+        name: "milk",
+        id: 777,
+        quantity: {
+          amount: 1,
+          unit: "c",
+        },
+      },
+      {
+        name: "shredded cheddar cheese",
+        id: 1919,
+        quantity: {
+          amount: 2,
+          unit: "c",
+        },
+      },
     ],
     instructions: [
       {
@@ -103,7 +108,7 @@ export let testRecipeData = [{
       {
         number: 3,
         instruction: "Fold macaroni into cheese sauce until coated.",
-      }
+      },
     ],
     tags: ["cheese", "dinner", "pasta", "comfort food"],
   },
@@ -216,90 +221,86 @@ export let testRecipeData = [{
           "Season the pork chops with salt and pepper and grill or pan fry over medium high heat until cooked, about 3-5 minutes per side. (If grilling, baste the chops in the maple dijon apple cider sauce as you grill.)Meanwhile, mix the remaining ingredients except the apple slices, bring to a simmer and cook until the sauce thickens, about 2-5 minutes.Grill or saute the apple slices until just tender but still crisp.Toss the pork chops and apple slices in the maple dijon apple cider sauce and enjoy!",
       },
     ],
-    tags: ["lunch", "main course", "main dish", "dinner"]
+    tags: ["lunch", "main course", "main dish", "dinner"],
   },
-{
-  "name": "Pumpkin Cheesecake Breakfast Smoothie",
-  "id": 543687,
-  "image": "https://spoonacular.com/recipeImages/543687-556x370.jpg",
-  "ingredients": [
-    {
-      "name": "almond milk",
-      "id": 93607,
-      "quantity": {
-        "amount": 1,
-        "unit": "cup"
-      }
-    },
-    {
-      "name": "graham cracker pie crust",
-      "id": 18942,
-      "quantity": {
-        "amount": 1,
-        "unit": "Tbsp"
-      }
-    },
-    {
-      "name": "pumpkin puree",
-      "id": 11424,
-      "quantity": {
-        "amount": 0.5,
-        "unit": "cup"
-      }
-    }
-  ],
-  "instructions": [
-    {
-      "number": 1,
-      "instruction": "Add all ingredients to a blender (except graham crackers if using). Cover and blend until well pureed then serve topped with crushed graham crackers if desired.*The banana is mostly what gives this smoothie it's sweetness, so I recommend using one that is speckled (not mushy though).Recipe Source: Cooking Classy"
-    }
-  ],
-  "tags": [
-    "morning meal",
-    "brunch",
-    "breakfast",
-    "comfort"
-  ]
-}]
-
+  {
+    name: "Pumpkin Cheesecake Breakfast Smoothie",
+    id: 543687,
+    image: "https://spoonacular.com/recipeImages/543687-556x370.jpg",
+    ingredients: [
+      {
+        name: "almond milk",
+        id: 93607,
+        quantity: {
+          amount: 1,
+          unit: "cup",
+        },
+      },
+      {
+        name: "graham cracker pie crust",
+        id: 18942,
+        quantity: {
+          amount: 1,
+          unit: "Tbsp",
+        },
+      },
+      {
+        name: "pumpkin puree",
+        id: 11424,
+        quantity: {
+          amount: 0.5,
+          unit: "cup",
+        },
+      },
+    ],
+    instructions: [
+      {
+        number: 1,
+        instruction:
+          "Add all ingredients to a blender (except graham crackers if using). Cover and blend until well pureed then serve topped with crushed graham crackers if desired.*The banana is mostly what gives this smoothie it's sweetness, so I recommend using one that is speckled (not mushy though).Recipe Source: Cooking Classy",
+      },
+    ],
+    tags: ["morning meal", "brunch", "breakfast", "comfort"],
+  },
+];
 
 export let testIngredientsData = [
-        {
-            "id": 5555,
-            "name": "elbow macaroni",
-            "estimatedCostInCents": 580
-        },
-        {
-            "id": 1145,
-            "name": "butter",
-            "estimatedCostInCents": 617
-        },
-        {
-            "id": 1111,
-            "name": "all purpose flour",
-            "estimatedCostInCents": 205
-        },
-        {
-            "id": 2047,
-            "name": "salt",
-            "estimatedCostInCents": 100
-        },
-        {
-            "id": 11220,
-            "name": "ground black pepper",
-            "estimatedCostInCents": 130
-        },
-        {
-            "id": 777,
-            "name": "milk",
-            "estimatedCostInCents": 305
-        },
+  {
+    id: 5555,
+    name: "elbow macaroni",
+    estimatedCostInCents: 580,
+  },
+  {
+    id: 1145,
+    name: "butter",
+    estimatedCostInCents: 617,
+  },
+  {
+    id: 1111,
+    name: "all purpose flour",
+    estimatedCostInCents: 205,
+  },
+  {
+    id: 2047,
+    name: "salt",
+    estimatedCostInCents: 100,
+  },
+  {
+    id: 11220,
+    name: "ground black pepper",
+    estimatedCostInCents: 130,
+  },
+  {
+    id: 777,
+    name: "milk",
+    estimatedCostInCents: 305,
+  },
 
-        {
-            "id": 1919,
-            "name": "shredded cheddar cheese",
-            "estimatedCostInCents": 555
-          }
-        ];
+  {
+    id: 1919,
+    name: "shredded cheddar cheese",
+    estimatedCostInCents: 555,
+  },
+];
 
-  export default { testUsers, testIngredientsData, testRecipeData };
+export default { testUsers, testIngredientsData, testRecipeData };
