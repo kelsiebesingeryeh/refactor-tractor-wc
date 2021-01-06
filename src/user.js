@@ -4,7 +4,6 @@ class User {
     this.name = name;
     this.pantry = pantry;
     this.favoriteRecipes = [];
-
   }
 
   addToFavorites(recipe) {

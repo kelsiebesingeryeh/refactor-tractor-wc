@@ -1,4 +1,4 @@
-let testUsers = [{
+export let testUsers = [{
     "id": 500,
     "name": "Marty McFly",
     "pantry": [{
@@ -32,7 +32,7 @@ let testUsers = [{
     ]
 }]
 
-let testRecipeData = [{
+export let testRecipeData = [{
     "name": "Simple Macaroni and Cheese",
     "id": 595736,
     "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
@@ -83,7 +83,9 @@ let testRecipeData = [{
                 "amount": 1,
                 "unit": "c"
             }
-        } {
+        },
+
+        {
             "name": "shredded cheddar cheese",
             "id": 1919,
             "quantity": {
@@ -113,7 +115,7 @@ let testRecipeData = [{
     ]
 }]
 
-let testIngredientsData = [{
+export let testIngredientsData = [
         {
             "id": 5555,
             "name": "elbow macaroni",
@@ -140,15 +142,14 @@ let testIngredientsData = [{
             "estimatedCostInCents": 130
         },
         {
-            "id": 7777,
+            "id": 777,
             "name": "milk",
             "estimatedCostInCents": 305
         },
+    
         {
             "id": 1919,
             "name": "shredded cheddar cheese",
             "estimatedCostInCents": 555
-        },
-    }
-
+        }
 ]
