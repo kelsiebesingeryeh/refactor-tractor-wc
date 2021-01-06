@@ -1,27 +1,37 @@
 import {expect} from 'chai';
 
-
-import recipeData from '../src/data/recipes';
 import Cookbook from '../src/cookbook';
+import {
+  testIngredientsData,
+  testRecipeData
+} from '../src/data/test-data.js';
 
 let cookbook;
 
-describe('User', () => {
+describe('Cookbook', () => {
   beforeEach(() => {
-    cookbook = new Cookbook(recipeData);
+    cookbook = new Cookbook(testRecipeData);
   });
 
-  it('Should have an array of all recipes', () => {
-    expect(cookbook.recipes).to.be.an('array');
+  it('Should store all recipes', () => {
+    expect(cookbook.recipes[0].name).to.equal("Simple Macaroni and Cheese");
+    expect(cookbook.recipes[1].name).to.equal("Pumpkin Cheesecake Breakfast Smoothie");
   });
 
-  describe('findRecipe', () => {
-    it('Should be able to filter through its array by ingredients', () => {
-      expect(cookbook.findRecipe('yolk').length).to.equal(2);
-    });
+  it('Should filter recipes by ingredients', () => {
+    expect(cookbook.findRecipes('milk').length).to.equal(2);
+    expect(cookbook.findRecipes('almond').length).to.equal(1);
+    expect(cookbook.findRecipes('blue').length).to.equal(0);
+  });
 
-    it('Should be able to filter through its array by name', () => {
-      expect(cookbook.findRecipe('Sesame Cookies').length).to.equal(1);
-    });
+  it('Should filter recipes by name', () => {
+    expect(cookbook.findRecipes('Macaroni').length).to.equal(1);
+    expect(cookbook.findRecipes('Sesame Cookies').length).to.equal(0);
+  });
+
+  it('Should filter recipes by tag', () => {
+    expect(cookbook.findRecipes('dinner').length).to.equal(1);
+    expect(cookbook.findRecipes('comfort').length).to.equal(2);
+    expect(cookbook.findRecipes('rasberry').length).to.equal(0);
   });
 })
