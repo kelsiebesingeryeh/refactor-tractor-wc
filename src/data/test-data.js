@@ -28,18 +28,17 @@ export let testUsers = [{
     ]
 }]
 
-export let testRecipeData = [
-  {
-    name: "Simple Macaroni and Cheese",
-    id: 595736,
-    image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
-    ingredients: [
-      {
-        name: "elbow macaroni",
-        id: 5555,
-        quantity: {
-          amount: 8,
-          unit: "oz",
+export let testRecipeData = [{
+    "name": "Simple Macaroni and Cheese",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [{
+            "name": "elbow macaroni",
+            "id": 5555,
+            "quantity": {
+                "amount": 8,
+                "unit": "oz"
+            }
         },
       },
       {
@@ -73,21 +72,22 @@ export let testRecipeData = [
           amount: 0.5,
           unit: "tsp",
         },
-      },
-      {
-        name: "milk",
-        id: 777,
-        quantity: {
-          amount: 1,
-          unit: "c",
+        {
+            "name": "milk",
+            "id": 777,
+            "quantity": {
+                "amount": 1,
+                "unit": "c"
+            }
         },
-      },
-      {
-        name: "shredded cheddar cheese",
-        id: 1919,
-        quantity: {
-          amount: 2,
-          unit: "c",
+
+        {
+            "name": "shredded cheddar cheese",
+            "id": 1919,
+            "quantity": {
+                "amount": 2,
+                "unit": "c"
+            }
         },
       },
     ],
@@ -249,16 +249,14 @@ export let testIngredientsData = [
             "estimatedCostInCents": 130
         },
         {
-            "id": 7777,
+            "id": 777,
             "name": "milk",
             "estimatedCostInCents": 305
         },
+    
         {
             "id": 1919,
             "name": "shredded cheddar cheese",
             "estimatedCostInCents": 555
-        },
-
+        }
 ]
-
-export default { testUsers, testIngredientsData, testRecipeData };
