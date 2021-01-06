@@ -7,11 +7,12 @@ import {
   testRecipeData,
 } from "../src/data/test-data.js";
 
-let user1 = testUsers[0]
+let userData = testUsers[0]
+let user1;
 
-describe.only('User', () => {
+describe('User', () => {
   beforeEach(() => {
-    user1 = new User(user1.id, user1.name, user1.pantry, user1.favoriteRecipes);
+    user1 = new User(userData.id, userData.name, userData.pantry, userData.favoriteRecipes);
   });
 
   it('Should have a property of favoriteRecipes with a default value', () => {
@@ -43,13 +44,14 @@ describe.only('User', () => {
   it('Should be able to check ingredients in User/s pantry for a given recipe', () => {
     user1.addToFavorites(testRecipeData[0]);
     user1.addToFavorites(testRecipeData[1]);
+    console.log(testUsers.pantry)
     expect(user1.checkPantry('Simple Macaroni and Cheese')).to.eql('You have the ingredients!');
   });
-  
+
   it('Should inform User if they lack required ingredients for a given recipe', () => {
     user1.addToFavorites(testRecipeData[0]);
     user1.addToFavorites(testRecipeData[1]);
     expect(user1.checkPantry("Maple Dijon Apple Cider Grilled Pork Chops")).to.eql(`Sorry, you don't have the ingredients`);
   });
-  
+
 });
