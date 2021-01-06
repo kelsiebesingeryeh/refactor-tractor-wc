@@ -32,8 +32,20 @@ class User {
     });
   }
 
-  checkPantry() {
-      this.favoriteRecipes.filter(recipe => pantry.determineEnoughIngredients(recipe))
+  checkPantry(recipe) {
+    let result;
+    let singleRecipe = this.favoriteRecipes.find(item => item.name === recipe)
+    singleRecipe.ingredients.forEach(ingredient => {
+      this.pantry.forEach(item => {
+        if ((ingredient.id === item.ingredient) &&
+          (item.amount >= ingredient.quantity.amount)) {
+          result = "You have the ingredients!";
+        } else {
+          result = `Sorry, you don't have the ingredients`;
+        }
+      })
+    })
+      return result;
   }
 }
 
