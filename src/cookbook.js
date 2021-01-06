@@ -3,7 +3,7 @@ class Cookbook {
     this.recipes = recipeData;
   }
 
-  findRecipe(searchText) {
+  findRecipes(searchText) {
     return this.recipes.filter(recipe => {
       return recipe.ingredients.find(ingredient => {
         return ingredient.name.includes(searchText) ||

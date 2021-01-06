@@ -92,7 +92,7 @@ export let testRecipeData = [{
                 "amount": 2,
                 "unit": "c"
             }
-        },
+        }
     ],
     "instructions": [{
             "number": 1,
@@ -111,8 +111,51 @@ export let testRecipeData = [{
         "cheese",
         "dinner",
         "pasta",
-        "comfort food",
+        "comfort",
     ]
+},
+{
+  "name": "Pumpkin Cheesecake Breakfast Smoothie",
+  "id": 543687,
+  "image": "https://spoonacular.com/recipeImages/543687-556x370.jpg",
+  "ingredients": [
+    {
+      "name": "almond milk",
+      "id": 93607,
+      "quantity": {
+        "amount": 1,
+        "unit": "cup"
+      }
+    },
+    {
+      "name": "graham cracker pie crust",
+      "id": 18942,
+      "quantity": {
+        "amount": 1,
+        "unit": "Tbsp"
+      }
+    },
+    {
+      "name": "pumpkin puree",
+      "id": 11424,
+      "quantity": {
+        "amount": 0.5,
+        "unit": "cup"
+      }
+    }
+  ],
+  "instructions": [
+    {
+      "number": 1,
+      "instruction": "Add all ingredients to a blender (except graham crackers if using). Cover and blend until well pureed then serve topped with crushed graham crackers if desired.*The banana is mostly what gives this smoothie it's sweetness, so I recommend using one that is speckled (not mushy though).Recipe Source: Cooking Classy"
+    }
+  ],
+  "tags": [
+    "morning meal",
+    "brunch",
+    "breakfast",
+    "comfort"
+  ]
 }]
 
 export let testIngredientsData = [
@@ -146,7 +189,7 @@ export let testIngredientsData = [
             "name": "milk",
             "estimatedCostInCents": 305
         },
-    
+
         {
             "id": 1919,
             "name": "shredded cheddar cheese",
