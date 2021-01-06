@@ -64,7 +64,7 @@ describe.only('Pantry', () => {
       ])
   })
 
-  it.only('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', () => {
+  it('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', () => {
     pantry.removeIngredientsFromPantry(recipe)
     expect(pantry.determineIngredientsNeeded(recipe)).to.deep.equal(['elbow macaroni', 'milk', 'shredded cheddar cheese'])
   })

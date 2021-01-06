@@ -19,34 +19,33 @@ class Pantry {
   }
 
   removeIngredientsFromPantry(recipe){
-    let newArr = [];
-    let newInventory = this.contents.forEach(item => {
+    return this.contents.reduce((acc, item) => {
       recipe.ingredients.forEach(ing => {
         if(ing.id === item.ingredient){
-          let obj = {"ingredient": item.ingredient, "amount": item.amount -= ing.quantity.amount }
-          newArr.push(obj)
+          let obj = {
+            "ingredient": item.ingredient,
+            "amount": item.amount -= ing.quantity.amount
+          }
+          acc.push(obj)
         }
       })
-      return newArr
-    })
-    return this.contents = newArr
+      return acc;
+    }, [])
   }
 
   determineIngredientsNeeded(recipe){
-    let neededIng = [];
     if(this.determineEnoughIngredients(recipe) === false){
-      recipe.ingredients.forEach(ing => {
+      return recipe.ingredients.reduce((acc, ing) => {
         this.contents.forEach(item => {
           if((ing.id === item.ingredient)
           && (ing.quantity.amount > item.amount)){
-            return neededIng.push(ing.name);
+            acc.push(ing.name);
           }
         })
-      })
+        return acc;
+      }, [])
     }
-    return neededIng;
   }
-
 
 
 }
