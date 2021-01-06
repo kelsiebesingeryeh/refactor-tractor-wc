@@ -26,13 +26,13 @@ describe.only('Pantry', () => {
     expect(pantry.contents).to.equal(user1.pantry);
   })
 
-  it.only('should determine wheter a users pantry has enough ingredients to cook a given recipe', () => {
+  it('should determine wheter a users pantry has enough ingredients to cook a given recipe', () => {
     expect(pantry.determineEnoughIngredients(recipe)).to.equal(true)
   })
 
   it('should remove the ingredients used for a given meal from my pantry, once that meal has been cooked', () => {
-    pantry.removeIngredientsFromPantry()
-    expect(pantry.contents).to.equal([
+    pantry.removeIngredientsFromPantry(recipe)
+    expect(pantry.contents).to.deep.equal([
         {
             "ingredient": 5555,
             "amount": 1
@@ -64,9 +64,9 @@ describe.only('Pantry', () => {
       ])
   })
 
-  it('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', () => {
-    pantry.removeIngredientsFromPantry()
-    expect(pantry.determineIngredientsNeeded()).to.equal('You need more:', ['elbow macaroni', 'shredded cheddar cheese'])
+  it.only('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', () => {
+    pantry.removeIngredientsFromPantry(recipe)
+    expect(pantry.determineIngredientsNeeded(recipe)).to.deep.equal(['elbow macaroni', 'milk', 'shredded cheddar cheese'])
   })
 
 })

@@ -18,12 +18,33 @@ class Pantry {
     return result;
   }
 
-  determineIngredientsNeeded(){
-
+  removeIngredientsFromPantry(recipe){
+    let newArr = [];
+    let newInventory = this.contents.forEach(item => {
+      recipe.ingredients.forEach(ing => {
+        if(ing.id === item.ingredient){
+          let obj = {"ingredient": item.ingredient, "amount": item.amount -= ing.quantity.amount }
+          newArr.push(obj)
+        }
+      })
+      return newArr
+    })
+    return this.contents = newArr
   }
 
-  removeIngredientsFromPantry(){
-
+  determineIngredientsNeeded(recipe){
+    let neededIng = [];
+    if(this.determineEnoughIngredients(recipe) === false){
+      recipe.ingredients.forEach(ing => {
+        this.contents.forEach(item => {
+          if((ing.id === item.ingredient)
+          && (ing.quantity.amount > item.amount)){
+            return neededIng.push(ing.name);
+          }
+        })
+      })
+    }
+    return neededIng;
   }
 
 
