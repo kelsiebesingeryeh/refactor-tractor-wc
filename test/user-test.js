@@ -9,7 +9,7 @@ import {
 
 let user1 = testUsers[0]
 
-describe.only('User', () => {
+describe('User', () => {
   beforeEach(() => {
     user1 = new User(user1.id, user1.name, user1.pantry, user1.favoriteRecipes);
   });
@@ -43,10 +43,14 @@ describe.only('User', () => {
   it('Should be able to check ingredients in User/s pantry for a given recipe', () => {
     user1.addToFavorites(testRecipeData[0]);
     user1.addToFavorites(testRecipeData[1]);
-    expect(user1.checkPantry()).to.eql('You have the ingredients!');
+    expect(user1.checkPantry('Simple Macaroni and Cheese')).to.eql('You have the ingredients!');
   });
-
+  
   it('Should inform User if they lack required ingredients for a given recipe', () => {
-    expect(user1.checkPantry("butter")).to.eql(617);
+    user1.addToFavorites(testRecipeData[0]);
+    user1.addToFavorites(testRecipeData[1]);
+    expect(
+      user1.checkPantry("Maple Dijon Apple Cider Grilled Pork Chops")
+    ).to.eql(`Sorry, you don't have the ingredients`);
   });
 });
