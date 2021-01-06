@@ -17,17 +17,35 @@ class Pantry {
     })
     return result;
   }
-
-  determineIngredientsNeeded(){
-
+  
+  removeIngredientsFromPantry(recipe){
+    return this.contents.reduce((acc, item) => {
+      recipe.ingredients.forEach(ing => {
+        if(ing.id === item.ingredient){
+          let obj = {
+            "ingredient": item.ingredient,
+            "amount": item.amount -= ing.quantity.amount
+          }
+          acc.push(obj)
+        }
+      })
+      return acc;
+    }, [])
   }
 
-  removeIngredientsFromPantry(){
-
-  }
-
-
-
+  determineIngredientsNeeded(recipe){
+    if(this.determineEnoughIngredients(recipe) === false){
+      return recipe.ingredients.reduce((acc, ing) => {
+        this.contents.forEach(item => {
+          if((ing.id === item.ingredient)
+          && (ing.quantity.amount > item.amount)){
+            acc.push(ing.name);
+          }
+        })
+        return acc;
+      }, [])
+    }
+    
 }
 
 

@@ -9,7 +9,7 @@ import {
 
 let user1 = testUsers[0]
 
-describe('User', () => {
+describe.only('User', () => {
   beforeEach(() => {
     user1 = new User(user1.id, user1.name, user1.pantry, user1.favoriteRecipes);
   });
@@ -49,8 +49,7 @@ describe('User', () => {
   it('Should inform User if they lack required ingredients for a given recipe', () => {
     user1.addToFavorites(testRecipeData[0]);
     user1.addToFavorites(testRecipeData[1]);
-    expect(
-      user1.checkPantry("Maple Dijon Apple Cider Grilled Pork Chops")
-    ).to.eql(`Sorry, you don't have the ingredients`);
+    expect(user1.checkPantry("Maple Dijon Apple Cider Grilled Pork Chops")).to.eql(`Sorry, you don't have the ingredients`);
   });
+  
 });

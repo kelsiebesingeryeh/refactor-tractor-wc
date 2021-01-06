@@ -30,7 +30,6 @@ export let testUsers = [
     ],
   },
 ];
-
 export let testRecipeData = [
   {
     name: "Simple Macaroni and Cheese",
@@ -263,7 +262,6 @@ export let testRecipeData = [
     tags: ["morning meal", "brunch", "breakfast", "comfort"],
   },
 ];
-
 export let testIngredientsData = [
   {
     id: 5555,
@@ -295,7 +293,6 @@ export let testIngredientsData = [
     name: "milk",
     estimatedCostInCents: 305,
   },
-
   {
     id: 1919,
     name: "shredded cheddar cheese",
