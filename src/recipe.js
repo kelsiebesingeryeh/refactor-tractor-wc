@@ -18,6 +18,10 @@ class Recipe {
     return this.ingredients.reduce(costReducer, 0)
   }
 
+  getInstructions() {
+    return this.instructions;
+  }
+
 }
 
 export default Recipe;
