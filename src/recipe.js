@@ -12,13 +12,9 @@ class Recipe {
 
 
   calculateCost() {
-    console.log(this.ingredients);
     const totalCents = this.ingredients.reduce((costTally, ingredient) => {
-      costTally += ingredient.estimatedCostInCents;
-      console.log(costTally);
-      return costTally;
+      return costTally += ingredient.estimatedCostInCents;
     }, 0);
-    console.log(totalCents);
     return totalCents / 100;
   }
 

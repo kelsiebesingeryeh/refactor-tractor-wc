@@ -8,7 +8,7 @@ import {
 
 let recipe;
 
-describe.only('Recipe', () => {
+describe('Recipe', () => {
   beforeEach(() => {
     recipe = new Recipe(testRecipeData[0], testIngredientsData);
   });
@@ -46,7 +46,11 @@ describe.only('Recipe', () => {
           quantity: { amount: 0.5, unit: 'tsp' },
           estimatedCostInCents: 130
         },
-        { name: 'milk', id: 777, quantity: { amount: 1, unit: 'c' }, estimatedCostInCents: 305 },
+        {
+          name: 'milk',
+          id: 777,
+          quantity: { amount: 1, unit: 'c' },
+          estimatedCostInCents: 305 },
         {
           name: 'shredded cheddar cheese',
           id: 1919,
@@ -76,6 +80,5 @@ describe.only('Recipe', () => {
   it('Should be able to calculate the cost of its ingredients', () => {
     expect(recipe.calculateCost()).to.equal(24.92);
   });
-
 
 });
