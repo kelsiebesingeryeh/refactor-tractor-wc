@@ -2,7 +2,7 @@ import './css/base.scss';
 import './css/styles.scss';
 
 import recipeData from './data/recipes';
-import ingredientData from './data/ingredients';
+import ingredientsData from './data/ingredients';
 import users from './data/users';
 
 import Pantry from './pantry';
@@ -13,6 +13,8 @@ import Cookbook from './cookbook';
 let favButton = document.querySelector('.view-favorites');
 let homeButton = document.querySelector('.home')
 let cardArea = document.querySelector('.all-cards');
+let searchButton = document.querySelector('.search-button');
+let searchInput = document.querySelector('.search-input');
 let cookbook = new Cookbook(recipeData);
 let user, pantry;
 
@@ -21,6 +23,7 @@ window.onload = onStartup();
 homeButton.addEventListener("click", displayCardButtons);
 favButton.addEventListener('click', viewFavorites);
 cardArea.addEventListener("click", displayCardButtons);
+searchButton.addEventListener("click", displaySearchRecipes);
 
 function onStartup() {
   let userId = (Math.floor(Math.random() * 49) + 1)
@@ -34,13 +37,15 @@ function onStartup() {
 }
 
 function viewFavorites() {
-   if (user.favoriteRecipes.length) {
+  if (user.favoriteRecipes.length) {
     favButton.classList.add('hidden')
     displayCards(user.favoriteRecipes);
+    getFavorites();
   }
 }
 
 function displayCards(recipesList) {
+  cardArea.classList.remove('all')
   cardArea.innerHTML = '';
   recipesList.forEach(recipe => {
     cardArea.insertAdjacentHTML('afterbegin', `<div id='${recipe.id}'
@@ -60,23 +65,16 @@ function displayCards(recipesList) {
     src='${recipe.image}' alt='Food from recipe'>
     </div>`)
   })
-  getFavorites();
 }
-
 
 
 function greetUser() {
-  const userName = document.querySelector('.user-name');
-  userName.innerHTML =
-  user.name.split(' ')[0] + ' ' + user.name.split(' ')[1][0];
+  const userName = document.querySelector('.user-info');
+  userName.innerText = `Welcome, ${user.name}.`;
 }
 
 function favoriteCard(event) {
-  let specificRecipe = cookbook.recipes.find(recipe => {
-    if (recipe.id  === Number(event.target.id)) {
-      return recipe;
-    }
-  })
+  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   if (!event.target.classList.contains('favorite-active')) {
     event.target.classList.add('favorite-active');
     favButton.innerHTML = 'View Favorites';
@@ -85,9 +83,10 @@ function favoriteCard(event) {
     event.target.classList.remove('favorite-active');
     user.removeFromFavorites(specificRecipe)
     displayCards(user.favoriteRecipes);
-      if (!user.favoriteRecipes.length) {
-        favButton.innerHTML = 'You have no favorites!'
-      }
+    getFavorites();
+    if (!user.favoriteRecipes.length) {
+      favButton.innerHTML = 'You have no favorites!'
+    }
   }
 }
 
@@ -99,16 +98,14 @@ function displayCardButtons(event) {
   } else if (event.target.classList.contains('home')) {
     favButton.classList.remove("hidden");
     displayCards(cookbook.recipes);
+    getFavorites();
   }
 }
 
 
 function displayDirections(event) {
-  let newRecipeInfo = cookbook.recipes.find(recipe => {
-    if (recipe.id === Number(event.target.id)) {
-      return recipe;
-    }
-  })
+  favButton.classList.remove("hidden");
+  let newRecipeInfo = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   let recipeObject = new Recipe(newRecipeInfo, ingredientsData);
   let cost = recipeObject.calculateCost()
   let costInDollars = (cost / 100).toFixed(2)
@@ -142,4 +139,16 @@ function getFavorites() {
       document.querySelector(`.favorite${recipe.id}`).classList.add('favorite-active')
     })
   }
+}
+
+function displaySearchRecipes(event) {
+  let filteredRecipes = cookbook.findRecipes(searchInput.value.toLowerCase());
+  displayCards(filteredRecipes);
+  filteredRecipes.forEach(recipe => {
+    if (user.favoriteRecipes.includes(recipe)) {
+      document
+        .querySelector(`.favorite${recipe.id}`)
+        .classList.add("favorite-active");
+    }
+  })
 }
