@@ -120,14 +120,9 @@ function addCardToCookList(event) {
   if (!event.target.classList.contains('cook-list-active')) {
     event.target.classList.add('cook-list-active');
     user.addToList(specificRecipe, 'recipesToCook');
-  } else if (event.target.classList.contains('favorite-active')) {
-    event.target.classList.remove('favorite-active');
-    user.removeFromList(specificRecipe,'favoriteRecipes')
-    displayCards(user.favoriteRecipes);
-    getFavorites();
-    if (!user.favoriteRecipes.length) {
-      favButton.innerHTML = 'You have no favorites!'
-    }
+  } else if (event.target.classList.contains('cook-list-active')) {
+    event.target.classList.remove('cook-list-active');
+    user.removeFromList(specificRecipe,'recipesToCook')
   }
 }
 
