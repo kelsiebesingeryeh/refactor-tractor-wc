@@ -11,6 +11,7 @@ import User from './user';
 import Cookbook from './cookbook';
 
 let favButton = document.querySelector('.view-favorites');
+let toCookButton = document.querySelector('.view-to-cook-list')
 let homeButton = document.querySelector('.home')
 let cardArea = document.querySelector('.all-cards');
 let searchButton = document.querySelector('.search-button');
@@ -22,6 +23,7 @@ window.onload = onStartup();
 
 homeButton.addEventListener("click", displayCardButtons);
 favButton.addEventListener('click', viewFavorites);
+toCookButton.addEventListener('click', viewRecipesToCook);
 cardArea.addEventListener("click", displayCardButtons);
 searchButton.addEventListener("click", displaySearchRecipes);
 
@@ -44,6 +46,29 @@ function viewFavorites() {
   }
 }
 
+function viewRecipesToCook() {
+  if (user.recipesToCook.length) {
+    displayCards(user.recipesToCook);
+  }
+}
+
+function compilePantryData(recipe) {
+  let missingIngredients = pantry.determineIngredientsNeeded(recipe);
+  let partialRecipeData = pantry.convertMissingToRecipeSyntax(missingIngredients, recipe);
+  let newRecipe = new Recipe(partialRecipeData, ingredientsData);
+  let costOfRemainingIngredients = newRecipe.calculateCost();
+  let message;
+  if (missingIngredients.length === 0){
+    message = `You have the ingredients!`;
+  } else {
+    message = `Sorry, you don't have the ingredients`
+  };
+  return `<p>${message}</p>
+  <p>Missing Ingredients:${missingIngredients.join(',')}</p>
+  <p>To restock these ingredients will cost: $${costOfRemainingIngredients} </p>`
+}
+
+
 function displayCards(recipesList) {
   cardArea.classList.remove('all')
   cardArea.innerHTML = '';
@@ -63,7 +88,7 @@ function displayCards(recipesList) {
     <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
     <img id='${recipe.id}' tabindex='0' class='card-picture'
     src='${recipe.image}' alt='Food from recipe'>
-    </div>`)
+    ${compilePantryData(recipe)}</div>`)
   })
 }
 
@@ -81,7 +106,7 @@ function favoriteCard(event) {
     user.addToList(specificRecipe, 'favoriteRecipes');
   } else if (event.target.classList.contains('favorite-active')) {
     event.target.classList.remove('favorite-active');
-    user.removeFromFavorites(specificRecipe)
+    user.removeFromList(specificRecipe,'favoriteRecipes')
     displayCards(user.favoriteRecipes);
     getFavorites();
     if (!user.favoriteRecipes.length) {
@@ -90,9 +115,22 @@ function favoriteCard(event) {
   }
 }
 
+function addCardToCookList(event) {
+  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
+  if (!event.target.classList.contains('cook-list-active')) {
+    event.target.classList.add('cook-list-active');
+    user.addToList(specificRecipe, 'recipesToCook');
+  } else if (event.target.classList.contains('cook-list-active')) {
+    event.target.classList.remove('cook-list-active');
+    user.removeFromList(specificRecipe,'recipesToCook')
+  }
+}
+
 function displayCardButtons(event) {
   if (event.target.classList.contains('favorite')) {
     favoriteCard(event);
+  } else if (event.target.classList.contains('add-button')) {
+    addCardToCookList(event);
   } else if (event.target.classList.contains('card-picture')) {
     displayDirections(event);
   } else if (event.target.classList.contains('home')) {

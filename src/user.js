@@ -7,15 +7,15 @@ class User {
     this.recipesToCook = [];
   }
 
-  addToList(item, list) {
-    if (!this[list].includes(item)) {
-      this[list].push(item)
+  addToList(recipe, list) {
+    if (!this[list].includes(recipe)) {
+      this[list].push(recipe)
     }
   }
 
-  removeFromFavorites(recipe) {
-    const i = this.favoriteRecipes.indexOf(recipe);
-    this.favoriteRecipes.splice(i, 1)
+  removeFromList(recipe, list) {
+    const i = this[list].indexOf(recipe);
+    this[list].splice(i, 1)
   }
 
   filterFavorites(tag) {
