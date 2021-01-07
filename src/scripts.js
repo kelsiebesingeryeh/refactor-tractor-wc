@@ -52,6 +52,23 @@ function viewRecipesToCook() {
   }
 }
 
+function compilePantryData(recipe) {
+  let missingIngredients = pantry.determineIngredientsNeeded(recipe);
+  let partialRecipeData = pantry.convertMissingToRecipeSyntax(missingIngredients, recipe);
+  let newRecipe = new Recipe(partialRecipeData, ingredientsData);
+  let costOfRemainingIngredients = newRecipe.calculateCost();
+  let message;
+  if (missingIngredients.length === 0){
+    message = `You have the ingredients!`;
+  } else {
+    message = `Sorry, you don't have the ingredients`
+  };
+  return `<p>${message}</p>
+  <p>Missing Ingredients:${missingIngredients.join(',')}</p>
+  <p>To restock these ingredients will cost: $${costOfRemainingIngredients} </p>`
+}
+
+
 function displayCards(recipesList) {
   cardArea.classList.remove('all')
   cardArea.innerHTML = '';
@@ -71,7 +88,7 @@ function displayCards(recipesList) {
     <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
     <img id='${recipe.id}' tabindex='0' class='card-picture'
     src='${recipe.image}' alt='Food from recipe'>
-    </div>`)
+    ${compilePantryData(recipe)}</div>`)
   })
 }
 

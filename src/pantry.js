@@ -39,7 +39,9 @@ class Pantry {
         this.contents.forEach(item => {
           if((ing.id === item.ingredient)
           && (ing.quantity.amount > item.amount)){
-            acc.push(ing.name);
+            if (!acc.includes(ing.name)){
+              acc.push(ing.name);
+            }
           }
         })
         return acc;
