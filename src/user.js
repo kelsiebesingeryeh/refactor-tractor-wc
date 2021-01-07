@@ -4,11 +4,12 @@ class User {
     this.name = name;
     this.pantry = pantry;
     this.favoriteRecipes = [];
+    this.recipesToCook = [];
   }
 
-  addToFavorites(recipe) {
-    if (!this.favoriteRecipes.includes(recipe)) {
-      this.favoriteRecipes.push(recipe)
+  addToList(item, list) {
+    if (!this[list].includes(item)) {
+      this[list].push(item)
     }
   }
 
@@ -47,6 +48,9 @@ class User {
     })
       return result;
   }
+
+
+
 }
 
 

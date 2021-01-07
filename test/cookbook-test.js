@@ -25,8 +25,8 @@ describe('Cookbook', () => {
   });
 
   it('Should filter recipes by name', () => {
-    expect(cookbook.findRecipes('Macaroni').length).to.equal(1);
-    expect(cookbook.findRecipes('Sesame Cookies').length).to.equal(0);
+    expect(cookbook.findRecipes('macaroni').length).to.equal(1);
+    expect(cookbook.findRecipes('sesame cookies').length).to.equal(0);
   });
 
   it('Should filter recipes by tag', () => {
