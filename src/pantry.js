@@ -46,6 +46,25 @@ class Pantry {
       }, [])
     }
   }
+
+  convertMissingToRecipeSyntax(missingIngredients, recipe){
+    return missingIngredients.reduce((acc, item) => {
+      let obj = {};
+      recipe.ingredients.forEach(ing => {
+        this.contents.forEach(content => {
+        if((item === ing.name) && (content.ingredient === ing.id)){
+          obj.name = item;
+          obj.id = ing.id;
+          obj.quantity = {amount: (ing.quantity.amount - content.amount)}
+        }
+        })
+      })
+      if(!acc.ingredients.includes(obj)){
+        acc.ingredients.push(obj)
+      }
+      return acc;
+    }, {name: "Shopping List", id: 0, image: "", ingredients: [], instructions: [], tags: []})
+  }
 }
 
 
