@@ -68,6 +68,40 @@ export let testUsers = [
       },
     ],
   },
+  {
+    id: 502,
+    name: "Biff Tannen",
+    pantry: [
+      {
+        ingredient: 5555,
+        amount: 9,
+      },
+      {
+        ingredient: 1145,
+        amount: 1,
+      },
+      {
+        ingredient: 1111,
+        amount: 3,
+      },
+      {
+        ingredient: 2047,
+        amount: 5,
+      },
+      {
+        ingredient: 11220,
+        amount: 4,
+      },
+      {
+        ingredient: 777,
+        amount: 1,
+      },
+      {
+        ingredient: 1919,
+        amount: 3,
+      },
+    ],
+  },
 ];
 export let testRecipeData = [
   {
