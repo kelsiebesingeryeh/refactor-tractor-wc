@@ -11,6 +11,7 @@ import User from './user';
 import Cookbook from './cookbook';
 
 let favButton = document.querySelector('.view-favorites');
+let toCookButton = document.querySelector('.view-to-cook-list')
 let homeButton = document.querySelector('.home')
 let cardArea = document.querySelector('.all-cards');
 let searchButton = document.querySelector('.search-button');
@@ -22,6 +23,7 @@ window.onload = onStartup();
 
 homeButton.addEventListener("click", displayCardButtons);
 favButton.addEventListener('click', viewFavorites);
+toCookButton.addEventListener('click', viewRecipesToCook);
 cardArea.addEventListener("click", displayCardButtons);
 searchButton.addEventListener("click", displaySearchRecipes);
 
@@ -41,6 +43,12 @@ function viewFavorites() {
     favButton.classList.add('hidden')
     displayCards(user.favoriteRecipes);
     getFavorites();
+  }
+}
+
+function viewRecipesToCook() {
+  if (user.recipesToCook.length) {
+    displayCards(user.recipesToCook);
   }
 }
 
@@ -81,7 +89,7 @@ function favoriteCard(event) {
     user.addToList(specificRecipe, 'favoriteRecipes');
   } else if (event.target.classList.contains('favorite-active')) {
     event.target.classList.remove('favorite-active');
-    user.removeFromFavorites(specificRecipe)
+    user.removeFromList(specificRecipe,'favoriteRecipes')
     displayCards(user.favoriteRecipes);
     getFavorites();
     if (!user.favoriteRecipes.length) {

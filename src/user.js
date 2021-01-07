@@ -18,11 +18,6 @@ class User {
     this[list].splice(i, 1)
   }
 
-  removeFromFavorites(recipe) {
-    const i = this.favoriteRecipes.indexOf(recipe);
-    this.favoriteRecipes.splice(i, 1)
-  }
-
   filterFavorites(tag) {
     return this.favoriteRecipes.filter(recipe => {
       return recipe.tags.includes(tag);
