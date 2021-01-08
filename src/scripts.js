@@ -3,7 +3,7 @@ import './css/styles.scss';
 
 import recipeData from './data/recipes';
 import ingredientsData from './data/ingredients';
-import users from './data/users';
+// import users from './data/users';
 
 import Pantry from './pantry';
 import Recipe from './recipe';
@@ -18,14 +18,22 @@ let searchButton = document.querySelector('.search-button');
 let searchInput = document.querySelector('.search-input');
 let cookbook = new Cookbook(recipeData);
 let user, pantry;
+let users;
 
-window.onload = onStartup();
+window.onload = getUserData();
 
 homeButton.addEventListener("click", displayCardButtons);
 favButton.addEventListener('click', viewFavorites);
 toCookButton.addEventListener('click', viewRecipesToCook);
 cardArea.addEventListener("click", displayCardButtons);
 searchButton.addEventListener("click", displaySearchRecipes);
+
+function getUserData() {
+  fetch("http://localhost:3001/api/v1/users")
+  .then((response) => response.json())
+  .then(userData => users = userData)
+  .then((userData) => onStartup());
+} 
 
 function onStartup() {
   let userId = (Math.floor(Math.random() * 49) + 1)
@@ -37,6 +45,8 @@ function onStartup() {
   displayCards(cookbook.recipes);
   greetUser();
 }
+
+
 
 function viewFavorites() {
   if (user.favoriteRecipes.length) {
