@@ -16,11 +16,9 @@ let homeButton = document.querySelector('.home')
 let cardArea = document.querySelector('.all-cards');
 let searchButton = document.querySelector('.search-button');
 let searchInput = document.querySelector('.search-input');
-let cookbook = new Cookbook(recipeData);
-let user, pantry;
-let users;
+let user, pantry, cookbook, users;
 
-window.onload = getUserData();
+window.onload = loadData();
 
 homeButton.addEventListener("click", displayCardButtons);
 favButton.addEventListener('click', viewFavorites);
@@ -28,12 +26,25 @@ toCookButton.addEventListener('click', viewRecipesToCook);
 cardArea.addEventListener("click", displayCardButtons);
 searchButton.addEventListener("click", displaySearchRecipes);
 
+function loadData() {
+  getRecipeData();
+  getUserData();
+}
 function getUserData() {
   fetch("http://localhost:3001/api/v1/users")
   .then((response) => response.json())
   .then(userData => users = userData)
   .then((userData) => onStartup());
 } 
+
+function getRecipeData() {
+  fetch("http://localhost:3001/api/v1/recipes")
+    .then((response) => response.json())
+    .then((recipeData) => { 
+      cookbook = new Cookbook(recipeData)
+      displayCards(cookbook.recipes)
+    })
+}
 
 function onStartup() {
   let userId = (Math.floor(Math.random() * 49) + 1)
@@ -42,10 +53,14 @@ function onStartup() {
   });
   user = new User(userId, newUser.name, newUser.pantry)
   pantry = new Pantry(newUser.pantry)
-  displayCards(cookbook.recipes);
   greetUser();
 }
 
+function getIngredientData() {
+  fetch("http://localhost:3001/api/v1/ingredients")
+  .then(response => response.json())
+  .then(ingredientData => console.log(ingredientData))
+}
 
 
 function viewFavorites() {
