@@ -110,7 +110,6 @@ function favoriteCard(event) {
   let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   if (!domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
     domUpdates.interactWithClassList('add', 'favorite-active', event);
-    domUpdates.displayOneLiners(favButton, 'View Favorites')
     user.addToList(specificRecipe, 'favoriteRecipes');
   } else if (domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
     domUpdates.interactWithClassList('remove', 'favorite-active', event);
@@ -163,9 +162,6 @@ function getFavorites() {
       let recipeID = document.querySelector(`.favorite${recipe.id}`);
       domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
     })
-  }
-  if (!user.favoriteRecipes.length) {
-    domUpdates.displayOneLiners(favButton, 'You have no favorites!')
   }
 }
 

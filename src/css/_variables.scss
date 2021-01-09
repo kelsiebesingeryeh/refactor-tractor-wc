@@ -1,21 +1,5 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-/* VARIABLES
-main background color #FBF9F3
-background color (card grid) #FBF9F3
-background color of header #FFF
-background color of cards #FFF
-background color of card header #E95E3E
-text - title text #51364C
-recipe text #51364C
-text - what's cooking - #FAAC18
-favorite star - yellow color
+/* 
 add button - could change color (when you add - getRecipesToCook function like favorite ones)
-background color - recipe/directions #FBF9F3
-text of recipe/directions #51364C
-border color - shadow
-header buttons (home, viewFavs, viewRecipes, search) - #FFF
-button text #51364C
-hover colors for buttons - take away border and have hover border #E95E3E
 favorite button - get rid of border around buttons - border of star that is white and when you fill it, filled with white color
 add button - plus rotate to an x when it has been added
 */
@@ -26,8 +10,5 @@ $white: #FFF;
 $copper-rust: #E95E3E;
 $eggplant: #51364C;
 $sun-yellow: #FAAC18;
-
-
-body {
-  background-color: $off-white;
-}
+$poppins-font: 'Poppins', sans-serif;
+$raleway-font: 'Raleway', sans-serif;

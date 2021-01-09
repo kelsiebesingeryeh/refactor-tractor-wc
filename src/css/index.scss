@@ -1,44 +1,53 @@
 @import 'variables';
 @import 'buttons';
+@import 'cards';
+// @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 
 html {
-  background-color: #37515C;
-  border: 2px solid #000;
+  border: 2px solid $eggplant;
   height: 100vh;
+  color: $eggplant;
 }
 
 body {
   box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif;
+  font-family: $raleway-font;
   margin: auto;
 }
 
-
+main {
+  background-color: $off-white;
+  height: 100%;
+  width: 100%;
+}
 .main-header {
-  background-color: #EBF5EE;
-  border: 2px solid #000;
+  background-color: $white;
+  box-shadow: 0px -1px 3px 2px $eggplant;
+  position: fixed;
+  top: 0;
   display: flex;
   height: auto;
   justify-content: space-between;
   width: 100%;
+  font-family: $poppins-font;
 }
 
-
 h1 {
-  border-right: 2px solid #000;
   font-size: 255%;
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 10px;
   text-align: center;
   width: 30%;
+  color: $sun-yellow;
 }
 
 .user-info {
   font-size: 180%;
   margin: auto;
   text-align: center;
-  width: 40%
+  width: 40%;
+  font-style: italic;
 }
 
 .search-bar {
@@ -52,31 +61,14 @@ h1 {
   display: none;
 }
 
-
 .all-cards {
   display: grid;
-  grid-gap: 30px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 3rem;
+  grid-template-columns: repeat(3, 1fr);
   padding: 30px 0 30px 30px;
-  width: 95.5vw;
-}
-
-img {
-  cursor: pointer;
-}
-
-.card {
-  background-color: #D7F2FE;
-  border: 3px solid #000;
-  width: 100%;
-}
-
-
-.card-header {
-  background-color: #EBF5EE;
-  border-bottom: 1px solid #000;
-  display: flex;
-  justify-content: space-between;
+  width: 80vw;
+  margin: auto;
+  margin-top: 7rem;
 }
 
 .all {
@@ -86,41 +78,13 @@ img {
 
 .all-recipe-info,
 ol {
-  color: #EBF5EE;
+  color: $eggplant;
   font-size: 220%;
   width: 100%;
 }
 
 h3 {
-  color: #EBF5EE;
+  color: $eggplant;
   font-size: 250%;
-}
-
-.recipe-name {
-
-  display: block;
-  font-size: 150%;
-  text-align: center;
-}
-
-.card-picture:hover {
-  opacity: 0.7;
-}
-
-.card-picture:active {
-  border: 2px solid #000;
-}
-
-.card-picture {
-  border: 1px solid #000;
-  height: 200px;
-  margin: 10px 3% 8px 2.6%;
-  width: 94%;
-}
-
-main {
-  background-color: #37515C;
-  height: 100%;
-  width: 100%;
 }
 

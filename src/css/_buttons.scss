@@ -1,31 +1,29 @@
-.card-button {
-    border: none;
-    height: 27px;
-    margin: 3px;
+@mixin hover-button($color) {
+    border-bottom: 10px solid $color;
 }
 
-.add-button {
-    background-color: $copper-rust;
-    display: flex;
-    width: 12%;
+.navButton {
+    background-color: $white;
+    color: $eggplant;
+    border: none;
+    font-size: 130%;
+    margin: 1%;
+    cursor: pointer;
+    font-family: $poppins-font;
 }
 
 .search-button {
     background-color: $white;
-    border: 1px solid $eggplant;
+    border: none;
     width: 20%;
     height: 58px;
-    margin-top: 3px;
+    margin-top: 11px;
 }
 
-.search-image:hover,
 .card-button:hover,
-.navButton:hover,
-.search-button:hover {
-    border-bottom:
-    10px solid $copper-rust;
+.navButton:hover {
+    @include hover-button($copper-rust)
 }
-
 
 .search-image:active,
 .card-button:active,
@@ -41,13 +39,21 @@
     margin: 3px 7px 0px 0px;
     padding-left: 10px;
     width: 90%;
+    font-family: 'Poppins',
+    sans-serif;
 }
 
-.navButton {
-    background-color: $white;
+.card-button {
     border: none;
-    font-size: 130%;
-    margin: 1%;
+    height: 27px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.add-button {
+    background-color: $copper-rust;
+    display: flex;
+    width: 12%;
 }
 
 .add {
