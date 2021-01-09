@@ -15,9 +15,9 @@ let domUpdates = {
       </label>
       <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite${recipe.id} card-button'>
       </button></header>
-      <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
       <img id='${recipe.id}' tabindex='0' class='card-picture'
       src='${recipe.image}' alt='Food from recipe'>
+      <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
       $compilePantryData(recipe)</div>`)
     })
   },
