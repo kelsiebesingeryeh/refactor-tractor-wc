@@ -28,9 +28,9 @@ cardArea.addEventListener("click", displayCardButtons);
 searchButton.addEventListener("click", displaySearchRecipes);
 
 function loadData() {
-  getRecipeData();
-  getUserData();
+  // getRecipeData();
   getIngredientData();
+  getUserData();
 }
 function getUserData() {
   fetch("http://localhost:3001/api/v1/users")
@@ -43,7 +43,7 @@ function getRecipeData() {
   fetch("http://localhost:3001/api/v1/recipes")
     .then((response) => response.json())
     .then((recipeData) => {
-      cookbook = new Cookbook(recipeData)
+      cookbook = new Cookbook(recipeData, ingredientData)
       domUpdates.displayCards(cookbook.recipes, cardArea)
     })
   }
@@ -51,7 +51,10 @@ function getRecipeData() {
   function getIngredientData() {
     fetch("http://localhost:3001/api/v1/ingredients")
     .then(response => response.json())
-    .then(data => ingredientData = data)
+    .then(data => {
+      ingredientData = data;
+      getRecipeData();
+    })
   }
 
 function onStartup() {
@@ -66,10 +69,9 @@ function onStartup() {
 }
 
 
-
 function viewFavorites() {
   if (user.favoriteRecipes.length) {
-    favButton.classList.add('hidden')
+    domUpdates.interactWithClassList('add', 'hidden', event, favButton);
     domUpdates.displayCards(user.favoriteRecipes, cardArea);
     getFavorites();
   }
@@ -79,6 +81,12 @@ function viewRecipesToCook() {
   if (user.recipesToCook.length) {
     domUpdates.displayCards(user.recipesToCook, cardArea);
   }
+  user.recipesToCook.forEach(recipe => {
+    if (user.favoriteRecipes.includes(recipe)) {
+      let recipeID = document.querySelector(`.favorite${recipe.id}`);
+      domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
+    }
+  })
 }
 
 // function compilePantryData(recipe) {
@@ -140,39 +148,20 @@ function displayCardButtons(event) {
 
 
 function displayDirections(event) {
-  favButton.classList.remove("hidden");
+  domUpdates.interactWithClassList('remove', 'hidden', event, favButton)
   let newRecipeInfo = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   let recipeObject = new Recipe(newRecipeInfo, ingredientData);
-  let cost = recipeObject.calculateCost()
-  let costInDollars = (cost / 100).toFixed(2)
-  cardArea.classList.add('all');
-  cardArea.innerHTML = `<h3>${recipeObject.name}</h3>
-  <p class='all-recipe-info'>
-  <strong>It will cost: </strong><span class='cost recipe-info'>
-  $${costInDollars}</span><br><br>
-  <strong>You will need: </strong><span class='ingredients recipe-info'></span>
-  <strong>Instructions: </strong><ol><span class='instructions recipe-info'>
-  </span></ol>
-  </p>`;
-  let ingredientsSpan = document.querySelector('.ingredients');
-  let instructionsSpan = document.querySelector('.instructions');
-  recipeObject.ingredients.forEach(ingredient => {
-    ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
-    ${ingredient.quantity.amount.toFixed(2)} ${ingredient.quantity.unit}
-    ${ingredient.name}</li></ul>
-    `)
-  })
-  recipeObject.instructions.forEach(instruction => {
-    instructionsSpan.insertAdjacentHTML('beforebegin', `<li>
-    ${instruction.instruction}</li>
-    `)
-  })
+  let cost = recipeObject.calculateCost();
+  let costInDollars = (cost / 100).toFixed(2);
+  domUpdates.interactWithClassList('add', 'all', event, cardArea);
+  domUpdates.populateRecipeCard(cardArea, recipeObject, costInDollars);
 }
 
 function getFavorites() {
   if (user.favoriteRecipes.length) {
     user.favoriteRecipes.forEach(recipe => {
-      document.querySelector(`.favorite${recipe.id}`).classList.add('favorite-active')
+      let recipeID = document.querySelector(`.favorite${recipe.id}`);
+      domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
     })
   }
   if (!user.favoriteRecipes.length) {
@@ -185,9 +174,8 @@ function displaySearchRecipes(event) {
   domUpdates.displayCards(filteredRecipes, cardArea);
   filteredRecipes.forEach(recipe => {
     if (user.favoriteRecipes.includes(recipe)) {
-      document
-        .querySelector(`.favorite${recipe.id}`)
-        .classList.add("favorite-active");
+      let recipeID = document.querySelector(`.favorite${recipe.id}`);
+      domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
     }
   })
 }

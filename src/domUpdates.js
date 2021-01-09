@@ -40,6 +40,29 @@ let domUpdates = {
   },
   displayOneLiners(element, text) {
     element.innerText = text;
+  },
+  populateRecipeCard(cardArea, recipeObject, costInDollars) {
+    cardArea.innerHTML = `<h3>${recipeObject.name}</h3>
+    <p class='all-recipe-info'>
+    <strong>It will cost: </strong><span class='cost recipe-info'>
+    $${costInDollars}</span><br><br>
+    <strong>You will need: </strong><span class='ingredients recipe-info'></span>
+    <strong>Instructions: </strong><ol><span class='instructions recipe-info'>
+    </span></ol>
+    </p>`;
+    let ingredientsSpan = document.querySelector('.ingredients');
+    let instructionsSpan = document.querySelector('.instructions');
+    recipeObject.ingredients.forEach(ingredient => {
+      ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
+      ${ingredient.quantity.amount.toFixed(2)} ${ingredient.quantity.unit}
+      ${ingredient.name}</li></ul>
+      `)
+    })
+    recipeObject.instructions.forEach(instruction => {
+      instructionsSpan.insertAdjacentHTML('beforebegin', `<li>
+      ${instruction.instruction}</li>
+      `)
+    })
   }
 }
 
