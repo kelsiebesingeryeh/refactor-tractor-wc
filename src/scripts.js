@@ -62,6 +62,7 @@ function onStartup() {
   user = new User(userId, newUser.name, newUser.pantry)
   pantry = new Pantry(newUser.pantry)
   domUpdates.greetUser(user);
+  getFavorites();
 }
 
 
@@ -101,16 +102,13 @@ function favoriteCard(event) {
   let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   if (!domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
     domUpdates.interactWithClassList('add', 'favorite-active', event);
-    favButton.innerHTML = 'View Favorites';
+    domUpdates.displayOneLiners(favButton, 'View Favorites')
     user.addToList(specificRecipe, 'favoriteRecipes');
   } else if (domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
     domUpdates.interactWithClassList('remove', 'favorite-active', event);
     user.removeFromList(specificRecipe,'favoriteRecipes')
     domUpdates.displayCards(user.favoriteRecipes, cardArea);
     getFavorites();
-    if (!user.favoriteRecipes.length) {
-      favButton.innerHTML = 'You have no favorites!'
-    }
   }
 }
 
@@ -176,6 +174,9 @@ function getFavorites() {
     user.favoriteRecipes.forEach(recipe => {
       document.querySelector(`.favorite${recipe.id}`).classList.add('favorite-active')
     })
+  }
+  if (!user.favoriteRecipes.length) {
+    domUpdates.displayOneLiners(favButton, 'You have no favorites!')
   }
 }
 

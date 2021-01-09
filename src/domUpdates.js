@@ -37,6 +37,9 @@ let domUpdates = {
     } else if (method === 'contains') {
       return event.target.classList.contains(className);
     }
+  },
+  displayOneLiners(element, text) {
+    element.innerText = text;
   }
 }
 
