@@ -39,14 +39,21 @@ let domUpdates = {
     element.innerText = text;
   },
   populateRecipeCard(cardArea, recipeObject, costInDollars) {
-    cardArea.innerHTML = `<h3>${recipeObject.name}</h3>
-    <p class='all-recipe-info'>
+    cardArea.innerHTML = `
+    <article class= "recipe-details">
+    <h3>${recipeObject.name}</h3>
+    <div class='all-recipe-info'>
+    <p class='recipe-ingredients'>
     <strong>It will cost: </strong><span class='cost recipe-info'>
     $${costInDollars}</span><br><br>
     <strong>You will need: </strong><span class='ingredients recipe-info'></span>
+    </p>
+    <div class='recipe-instructions'>
     <strong>Instructions: </strong><ol><span class='instructions recipe-info'>
     </span></ol>
-    </p>`;
+    </div>
+    </div>
+    </article>`;
     let ingredientsSpan = document.querySelector('.ingredients');
     let instructionsSpan = document.querySelector('.instructions');
     recipeObject.ingredients.forEach(ingredient => {
@@ -56,7 +63,7 @@ let domUpdates = {
       `)
     })
     recipeObject.instructions.forEach(instruction => {
-      instructionsSpan.insertAdjacentHTML('beforebegin', `<li>
+      instructionsSpan.insertAdjacentHTML('beforebegin', `<li class='instruction-li'>
       ${instruction.instruction}</li>
       `)
     })

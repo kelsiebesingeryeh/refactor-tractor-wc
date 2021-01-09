@@ -1,7 +1,7 @@
 @import 'variables';
 @import 'buttons';
 @import 'cards';
-// @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import 'recipe-details';
 
 html {
   border: 2px solid $eggplant;
@@ -75,16 +75,7 @@ h1 {
 .all {
   grid-gap: 0px;
   grid-template-columns: repeat(1, 1fr);
-}
-
-.all-recipe-info,
-ol {
-  color: $eggplant;
-  font-size: 220%;
-  width: 100%;
-}
-
-h3 {
-  color: $eggplant;
-  font-size: 250%;
+  justify-items: center;
+  height: 80vh;
+  margin-top: 9rem;
 }

@@ -1,16 +1,3 @@
-@mixin hover-button($color) {
-    border-bottom: 10px solid $color;
-}
-
-@mixin card-button($image, $size, $color) {
-  background-color: $color;
-  height: $size;
-  width: $size;
-  background-image: url($image);
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
 .navButton {
     background-color: $white;
     color: $eggplant;
