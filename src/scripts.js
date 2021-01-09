@@ -1,5 +1,5 @@
-import './css/base.scss';
-import './css/styles.scss';
+// import './css/_variables.scss';
+import './css/index.scss';
 
 // import recipeData from './data/recipes';
 // import ingredientsData from './data/ingredients';
