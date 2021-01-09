@@ -9,6 +9,7 @@ import Pantry from './pantry';
 import Recipe from './recipe';
 import User from './user';
 import Cookbook from './cookbook';
+import domUpdates from './domUpdates';
 
 let favButton = document.querySelector('.view-favorites');
 let toCookButton = document.querySelector('.view-to-cook-list')
@@ -36,14 +37,14 @@ function getUserData() {
   .then((response) => response.json())
   .then(userData => users = userData)
   .then((userData) => onStartup());
-} 
+}
 
 function getRecipeData() {
   fetch("http://localhost:3001/api/v1/recipes")
     .then((response) => response.json())
-    .then((recipeData) => { 
+    .then((recipeData) => {
       cookbook = new Cookbook(recipeData)
-      displayCards(cookbook.recipes)
+      domUpdates.displayCards(cookbook.recipes, cardArea)
     })
   }
 
@@ -60,7 +61,7 @@ function onStartup() {
   });
   user = new User(userId, newUser.name, newUser.pantry)
   pantry = new Pantry(newUser.pantry)
-  greetUser();
+  domUpdates.greetUser(user);
 }
 
 
@@ -68,14 +69,14 @@ function onStartup() {
 function viewFavorites() {
   if (user.favoriteRecipes.length) {
     favButton.classList.add('hidden')
-    displayCards(user.favoriteRecipes);
+    domUpdates.displayCards(user.favoriteRecipes, cardArea);
     getFavorites();
   }
 }
 
 function viewRecipesToCook() {
   if (user.recipesToCook.length) {
-    displayCards(user.recipesToCook);
+    domUpdates.displayCards(user.recipesToCook, cardArea);
   }
 }
 
@@ -96,45 +97,16 @@ function viewRecipesToCook() {
 // }
 
 
-function displayCards(recipesList) {
-  cardArea.classList.remove('all')
-  cardArea.innerHTML = '';
-  recipesList.forEach(recipe => {
-    cardArea.insertAdjacentHTML('afterbegin', `<div id='${recipe.id}'
-    class='card'>
-    <header id='${recipe.id}' class='card-header'>
-    <label for='add-button' class='hidden'>Click to add recipe</label>
-    <button id='${recipe.id}' aria-label='add-button' class='add-button card-button'>
-    <img id='${recipe.id}' class='add'
-    src='https://image.flaticon.com/icons/svg/32/32339.svg' alt='Add to
-    recipes to cook'></button>
-    <label for='favorite-button' class='hidden'>Click to favorite recipe
-    </label>
-    <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite${recipe.id} card-button'>
-    </button></header>
-    <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
-    <img id='${recipe.id}' tabindex='0' class='card-picture'
-    src='${recipe.image}' alt='Food from recipe'>
-    $compilePantryData(recipe)</div>`)
-  })
-}
-
-
-function greetUser() {
-  const userName = document.querySelector('.user-info');
-  userName.innerText = `Welcome, ${user.name}.`;
-}
-
 function favoriteCard(event) {
   let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
-  if (!event.target.classList.contains('favorite-active')) {
-    event.target.classList.add('favorite-active');
+  if (!domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
+    domUpdates.interactWithClassList('add', 'favorite-active', event);
     favButton.innerHTML = 'View Favorites';
     user.addToList(specificRecipe, 'favoriteRecipes');
-  } else if (event.target.classList.contains('favorite-active')) {
-    event.target.classList.remove('favorite-active');
+  } else if (domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
+    domUpdates.interactWithClassList('remove', 'favorite-active', event);
     user.removeFromList(specificRecipe,'favoriteRecipes')
-    displayCards(user.favoriteRecipes);
+    domUpdates.displayCards(user.favoriteRecipes, cardArea);
     getFavorites();
     if (!user.favoriteRecipes.length) {
       favButton.innerHTML = 'You have no favorites!'
@@ -144,28 +116,29 @@ function favoriteCard(event) {
 
 function addCardToCookList(event) {
   let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
-  if (!event.target.classList.contains('cook-list-active')) {
-    event.target.classList.add('cook-list-active');
+  if (!domUpdates.interactWithClassList('contains', 'cook-list-active', event)) {
+    domUpdates.interactWithClassList('add', 'cook-list-active', event);
     user.addToList(specificRecipe, 'recipesToCook');
-  } else if (event.target.classList.contains('cook-list-active')) {
-    event.target.classList.remove('cook-list-active');
+  } else if (domUpdates.interactWithClassList('contains', 'cook-list-active', event)) {
+    domUpdates.interactWithClassList('remove', 'cook-list-active', event);
     user.removeFromList(specificRecipe,'recipesToCook')
   }
 }
 
 function displayCardButtons(event) {
-  if (event.target.classList.contains('favorite')) {
+  if (domUpdates.interactWithClassList('contains', 'favorite', event)) {
     favoriteCard(event);
-  } else if (event.target.classList.contains('add-button')) {
+  } else if (domUpdates.interactWithClassList('contains', 'add-button', event) || domUpdates.interactWithClassList('contains', 'add', event)) {
     addCardToCookList(event);
-  } else if (event.target.classList.contains('card-picture')) {
+  } else if (domUpdates.interactWithClassList('contains', 'card-picture', event)) {
     displayDirections(event);
-  } else if (event.target.classList.contains('home')) {
-    favButton.classList.remove("hidden");
-    displayCards(cookbook.recipes);
+  } else if (domUpdates.interactWithClassList('contains', 'home', event)) {
+    domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
+    domUpdates.displayCards(cookbook.recipes, cardArea);
     getFavorites();
   }
 }
+
 
 
 function displayDirections(event) {
@@ -208,7 +181,7 @@ function getFavorites() {
 
 function displaySearchRecipes(event) {
   let filteredRecipes = cookbook.findRecipes(searchInput.value.toLowerCase());
-  displayCards(filteredRecipes);
+  domUpdates.displayCards(filteredRecipes, cardArea);
   filteredRecipes.forEach(recipe => {
     if (user.favoriteRecipes.includes(recipe)) {
       document
