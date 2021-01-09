@@ -121,11 +121,11 @@ function favoriteCard(event) {
 
 function addCardToCookList(event) {
   let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
-  if (!domUpdates.interactWithClassList('contains', 'add-active', event)) {
-    domUpdates.interactWithClassList('add', 'add-active', event);
+  if (!domUpdates.interactWithClassList('contains', 'cook-list-active', event)) {
+    domUpdates.interactWithClassList('add', 'cook-list-active', event);
     user.addToList(specificRecipe, 'recipesToCook');
-  } else if (domUpdates.interactWithClassList('contains', 'add-active', event)) {
-    domUpdates.interactWithClassList('remove', 'add-active', event);
+  } else if (domUpdates.interactWithClassList('contains', 'cook-list-active', event)) {
+    domUpdates.interactWithClassList('remove', 'cook-list-active', event);
     user.removeFromList(specificRecipe,'recipesToCook')
   }
 }
