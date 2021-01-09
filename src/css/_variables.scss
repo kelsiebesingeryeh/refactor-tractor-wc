@@ -1,3 +1,9 @@
+/* 
+add button - could change color (when you add - getRecipesToCook function like favorite ones)
+favorite button - get rid of border around buttons - border of star that is white and when you fill it, filled with white color
+add button - plus rotate to an x when it has been added
+*/
+
 
 $off-white: #FBF9F3;
 $white: #FFF;
@@ -6,26 +12,3 @@ $eggplant: #51364C;
 $sun-yellow: #FAAC18;
 $poppins-font: 'Poppins', sans-serif;
 $raleway-font: 'Raleway', sans-serif;
-$shadow: 0px 3px 10px 2px $eggplant;
-
-@mixin hover-button($color) {
-    border-bottom: 10px solid $color;
-}
-
-@mixin card-button($image, $size, $color) {
-  background-color: $color;
-  height: $size;
-  width: $size;
-  background-image: url($image);
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-@mixin recipe-info($width) {
-  width: $width;
-  height: 45vh;
-  overflow: scroll;
-  margin-left: 10px;
-  margin-top: .5rem;
-  padding: 10px;
-}

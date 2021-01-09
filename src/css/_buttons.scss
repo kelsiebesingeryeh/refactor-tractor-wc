@@ -1,3 +1,7 @@
+@mixin hover-button($color) {
+    border-bottom: 10px solid $color;
+}
+
 .navButton {
     background-color: $white;
     color: $eggplant;
@@ -9,22 +13,11 @@
 }
 
 .search-button {
-    @include card-button('../images/search.png', 60px, $white)
+    background-color: $white;
     border: none;
+    width: 20%;
+    height: 58px;
     margin-top: 11px;
-    margin-right: 11px;
-
-    &:hover{
-      background-image: url('../images/search-hover.png');
-      cursor: pointer;
-    }
-}
-
-.card-button {
-  border: none;
-  height: 27px;
-  margin: 3px;
-  cursor: pointer;
 }
 
 .card-button:hover,
@@ -48,22 +41,34 @@
     width: 90%;
     font-family: 'Poppins',
     sans-serif;
-    border-radius: 10px;
 }
 
+.card-button {
+    border: none;
+    height: 27px;
+    margin: 3px;
+    cursor: pointer;
+}
 
 .add-button {
-    @include card-button('../images/plus.png', 30px, $copper-rust);
+    background-color: $copper-rust;
+    display: flex;
+    width: 12%;
 }
 
-.add-active {
-    background-image: url('../images/checkmark.png');
+.add {
+    width: 100%;
 }
 
 .favorite {
-    @include card-button('../images/star.png', 40px, $copper-rust);
+    background-color: $copper-rust;
+    background-image: url(https://image.flaticon.com/icons/svg/149/149222.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13%;
 }
 
 .favorite-active {
-    background-image: url('../images/star-filled.png');
+    background-image: url(https://image.flaticon.com/icons/svg/148/148841.svg);
+    background-repeat: no-repeat;
 }
