@@ -89,21 +89,21 @@ function viewRecipesToCook() {
   })
 }
 
-// function compilePantryData(recipe) {
-//   let missingIngredients = pantry.determineIngredientsNeeded(recipe);
-//   let partialRecipeData = pantry.convertMissingToRecipeSyntax(missingIngredients, recipe);
-//   let newRecipe = new Recipe(partialRecipeData, ingredientsData);
-//   let costOfRemainingIngredients = newRecipe.calculateCost();
-//   let message;
-//   if (missingIngredients.length === 0){
-//     message = `You have the ingredients!`;
-//   } else {
-//     message = `Sorry, you don't have the ingredients`
-//   };
-//   return `<p>${message}</p>
-//   <p>Missing Ingredients:${missingIngredients.join(',')}</p>
-//   <p>To restock these ingredients will cost: $${costOfRemainingIngredients} </p>`
-// }
+function compilePantryData(recipe) {
+  let missingIngredients = pantry.determineIngredientsNeeded(recipe);
+  let partialRecipeData = pantry.convertMissingToRecipeSyntax(missingIngredients, recipe);
+  let newRecipe = new Recipe(partialRecipeData, ingredientsData);
+  let costOfRemainingIngredients = newRecipe.calculateCost();
+  let message;
+  if (missingIngredients.length === 0){
+    message = `You have the ingredients!`;
+  } else {
+    message = `Sorry, you don't have the ingredients`
+  };
+  return `<p>${message}</p>
+  <p>Missing Ingredients:${missingIngredients.join(',')}</p>
+  <p>To restock these ingredients will cost: $${costOfRemainingIngredients} </p>`
+}
 
 
 function favoriteCard(event) {
