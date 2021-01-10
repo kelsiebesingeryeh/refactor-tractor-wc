@@ -7,10 +7,7 @@ let domUpdates = {
       class='card'>
       <header id='${recipe.id}' class='card-header'>
       <label for='add-button' class='hidden'>Click to add recipe</label>
-      <button id='${recipe.id}' aria-label='add-button' class='add-button card-button'>
-      <img id='${recipe.id}' class='add'
-      src='https://image.flaticon.com/icons/svg/32/32339.svg' alt='Add to
-      recipes to cook'></button>
+      <button id='${recipe.id}' aria-label='add-button' class='add-button card-button'></button>
       <label for='favorite-button' class='hidden'>Click to favorite recipe
       </label>
       <button id='${recipe.id}' aria-label='favorite-button' class='favorite favorite${recipe.id} card-button'>
@@ -42,14 +39,21 @@ let domUpdates = {
     element.innerText = text;
   },
   populateRecipeCard(cardArea, recipeObject, costInDollars) {
-    cardArea.innerHTML = `<h3>${recipeObject.name}</h3>
-    <p class='all-recipe-info'>
+    cardArea.innerHTML = `
+    <article class= "recipe-details">
+    <h3>${recipeObject.name}</h3>
+    <div class='all-recipe-info'>
+    <p class='recipe-ingredients'>
     <strong>It will cost: </strong><span class='cost recipe-info'>
     $${costInDollars}</span><br><br>
     <strong>You will need: </strong><span class='ingredients recipe-info'></span>
+    </p>
+    <div class='recipe-instructions'>
     <strong>Instructions: </strong><ol><span class='instructions recipe-info'>
     </span></ol>
-    </p>`;
+    </div>
+    </div>
+    </article>`;
     let ingredientsSpan = document.querySelector('.ingredients');
     let instructionsSpan = document.querySelector('.instructions');
     recipeObject.ingredients.forEach(ingredient => {
@@ -59,7 +63,7 @@ let domUpdates = {
       `)
     })
     recipeObject.instructions.forEach(instruction => {
-      instructionsSpan.insertAdjacentHTML('beforebegin', `<li>
+      instructionsSpan.insertAdjacentHTML('beforebegin', `<li class='instruction-li'>
       ${instruction.instruction}</li>
       `)
     })
