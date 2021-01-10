@@ -43,8 +43,9 @@ function getRecipeData() {
   fetch("http://localhost:3001/api/v1/recipes")
     .then((response) => response.json())
     .then((recipeData) => {
-      cookbook = new Cookbook(recipeData, ingredientData)
-      domUpdates.displayCards(cookbook.recipes, cardArea)
+      cookbook = new Cookbook(recipeData, ingredientData);
+      domUpdates.displayCards(cookbook.recipes, cardArea);
+      compilePantryData(cookbook.recipes);
     })
   }
 
@@ -68,11 +69,25 @@ function onStartup() {
   getFavorites();
 }
 
+function compilePantryData(recipesList) {
+  recipesList.forEach(recipe => {
+    let missingIngredients = pantry.getMissingPartOfRecipe(recipe).ingredients.map(ingredient => {
+      let specificIngredient = ingredientData.find(item => item.id === ingredient.id);
+      return specificIngredient.name;
+    });
+
+    let newRecipe = new Recipe(pantry.getMissingPartOfRecipe(recipe), ingredientData);
+    let costOfRemainingIngredients = newRecipe.calculateCost();
+    domUpdates.displayCostMessage(pantry.determineEnoughIngredients(recipe), recipe.id, missingIngredients, costOfRemainingIngredients);
+  });
+}
+
 
 function viewFavorites() {
   if (user.favoriteRecipes.length) {
     domUpdates.interactWithClassList('add', 'hidden', event, favButton);
     domUpdates.displayCards(user.favoriteRecipes, cardArea);
+    compilePantryData(user.favoriteRecipes);
     getFavorites();
   }
 }
@@ -80,6 +95,7 @@ function viewFavorites() {
 function viewRecipesToCook() {
   if (user.recipesToCook.length) {
     domUpdates.displayCards(user.recipesToCook, cardArea);
+    compilePantryData(user.recipesToCook);
   }
   user.recipesToCook.forEach(recipe => {
     if (user.favoriteRecipes.includes(recipe)) {
@@ -87,22 +103,6 @@ function viewRecipesToCook() {
       domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
     }
   })
-}
-
-function compilePantryData(recipe) {
-  let missingIngredients = pantry.determineIngredientsNeeded(recipe);
-  let partialRecipeData = pantry.convertMissingToRecipeSyntax(missingIngredients, recipe);
-  let newRecipe = new Recipe(partialRecipeData, ingredientsData);
-  let costOfRemainingIngredients = newRecipe.calculateCost();
-  let message;
-  if (missingIngredients.length === 0){
-    message = `You have the ingredients!`;
-  } else {
-    message = `Sorry, you don't have the ingredients`
-  };
-  return `<p>${message}</p>
-  <p>Missing Ingredients:${missingIngredients.join(',')}</p>
-  <p>To restock these ingredients will cost: $${costOfRemainingIngredients} </p>`
 }
 
 
@@ -115,6 +115,7 @@ function favoriteCard(event) {
     domUpdates.interactWithClassList('remove', 'favorite-active', event);
     user.removeFromList(specificRecipe,'favoriteRecipes')
     domUpdates.displayCards(user.favoriteRecipes, cardArea);
+    compilePantryData(user.favoriteRecipes);
     getFavorites();
   }
 }
@@ -140,6 +141,7 @@ function displayCardButtons(event) {
   } else if (domUpdates.interactWithClassList('contains', 'home', event)) {
     domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
     domUpdates.displayCards(cookbook.recipes, cardArea);
+    compilePantryData(cookbook.recipes);
     getFavorites();
   }
 }
@@ -168,6 +170,7 @@ function getFavorites() {
 function displaySearchRecipes(event) {
   let filteredRecipes = cookbook.findRecipes(searchInput.value.toLowerCase());
   domUpdates.displayCards(filteredRecipes, cardArea);
+  compilePantryData(filteredRecipes);
   filteredRecipes.forEach(recipe => {
     if (user.favoriteRecipes.includes(recipe)) {
       let recipeID = document.querySelector(`.favorite${recipe.id}`);

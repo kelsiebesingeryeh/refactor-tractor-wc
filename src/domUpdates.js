@@ -1,5 +1,5 @@
 let domUpdates = {
-  displayCards(recipesList, cardArea) {
+  displayCards(recipesList, cardArea, pantry) {
     cardArea.classList.remove('all')
     cardArea.innerHTML = '';
     recipesList.forEach(recipe => {
@@ -14,10 +14,25 @@ let domUpdates = {
       </button></header>
       <img id='${recipe.id}' tabindex='0' class='card-picture'
       src='${recipe.image}' alt='Food from recipe'>
-      <span id='${recipe.id}' class='recipe-name'>${recipe.name}</span>
-      $compilePantryData(recipe)</div>`)
+      <p id='${recipe.id}' class='recipe-name'>${recipe.name}</p>
+      <div class='cost${recipe.id}'>COST</div>
+      </div>
+      `)
     })
   },
+
+  displayCostMessage(enoughIngredients, id, missingIngredients, costOfRemainingIngredients) {
+    let costDiv = document.querySelector(`.cost${id}`);
+    if(enoughIngredients){
+      let message = `You have the ingredients!`;
+      costDiv.innerHTML = `<p>You have the ingredients!</p>;
+      <button>Cook</button>`
+    } else {
+      costDiv.innerHTML = `<p>You do not have the ingredients!</p><p>Missing Ingredients: ${missingIngredients.join(', ')}</p>
+      <p>To restock these ingredients will cost: $${costOfRemainingIngredients}</p>`;
+    };
+  },
+
   greetUser(user) {
     const userName = document.querySelector('.user-info');
     userName.innerText = `Welcome, ${user.name}.`;
