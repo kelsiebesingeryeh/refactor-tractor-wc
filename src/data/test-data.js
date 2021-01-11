@@ -94,7 +94,7 @@ export let testUsers = [
       },
       {
         ingredient: 777,
-        amount: 1,
+        amount: 0,
       },
       {
         ingredient: 1919,
