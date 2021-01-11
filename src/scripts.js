@@ -71,11 +71,14 @@ function onStartup() {
 
 function compilePantryData(recipesList) {
   recipesList.forEach(recipe => {
-    let missingIngredients = pantry.getMissingPartOfRecipe(recipe).ingredients.map(ingredient => {
-      let specificIngredient = ingredientData.find(item => item.id === ingredient.id);
-      return specificIngredient.name;
-    });
-
+    let missingIngredients = pantry.getMissingPartOfRecipe(recipe).ingredients.reduce((acc, ingredient) => {
+      if(ingredient.quantity.amount > 0) {
+        let specificIngredient = ingredientData.find(item => item.id === ingredient.id);
+        acc.push(specificIngredient.name);
+      }
+      return acc;
+      }, []
+    );
     let newRecipe = new Recipe(pantry.getMissingPartOfRecipe(recipe), ingredientData);
     let costOfRemainingIngredients = newRecipe.calculateCost();
     domUpdates.displayCostMessage(pantry.determineEnoughIngredients(recipe), recipe.id, missingIngredients, costOfRemainingIngredients);
