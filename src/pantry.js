@@ -3,6 +3,20 @@ class Pantry {
     this.contents = userIngredients;
   }
 
+  determineEnoughIngredients(recipe){
+    let result;
+    recipe.ingredients.forEach(ingredient => {
+      this.contents.forEach(item => {
+        if((ingredient.id === item.ingredient)
+        && (ingredient.quantity.amount >= item.amount)){
+          result = true;
+        } else {
+          result = false;
+        }
+      })
+    })
+    return result;
+  }
 
   determineEnoughIngredients(recipe) {
     let result;
@@ -21,10 +35,16 @@ class Pantry {
 
   getMissingPartOfRecipe(recipe) {
     let newIngredients;
+    let newRecipe = Object.keys(recipe).reduce((acc, key) => {
+      acc[key] = recipe[key]
+      return acc;
+    }, {})
+    newRecipe.id = "shopping list"
+    console.log(this.determineEnoughIngredients(recipe))
     if(this.determineEnoughIngredients(recipe)) {
-      return recipe;
+      return newRecipe;
     } else {
-      newIngredients = recipe.ingredients.map(ingredient => {
+      newIngredients = newRecipe.ingredients.map(ingredient => {
         if(!this.contents.some(entry => entry.ingredient === ingredient.id)) {
           return ingredient;
         } else {
@@ -42,10 +62,45 @@ class Pantry {
           return newIngredient;
         }
       });
-      recipe.ingredients = newIngredients;
-      return recipe;
+      newRecipe.ingredients = newIngredients;
+      return newRecipe;
     }
   }
+///TEST
+  // getMissingPartOfRecipe(missingIngredients, recipe){
+  //   return missingIngredients.reduce((acc, item) => {
+  //     let obj = {};
+  //     recipe.ingredients.forEach(ing => {
+  //       this.contents.forEach(content => {
+  //       if((item === ing.name) && (content.ingredient === ing.id)){
+  //         obj.name = item;
+  //         obj.id = ing.id;
+  //         obj.quantity = {amount: (ing.quantity.amount - content.amount)}
+  //       }
+  //       })
+  //     })
+  //     if(!acc.ingredients.includes(obj)){
+  //       acc.ingredients.push(obj)
+  //     }
+  //     return acc;
+  //   }, {name: "Shopping List", id: 0, image: "", ingredients: [], instructions: [], tags: []})
+  // }
+  //
+  //   determineIngredientsNeeded(recipe){
+  //     if(this.determineEnoughIngredients(recipe) === false){
+  //       return recipe.ingredients.reduce((acc, ing) => {
+  //         this.contents.forEach(item => {
+  //           if((ing.id === item.ingredient)
+  //           && (ing.quantity.amount > item.amount)){
+  //             if (!acc.includes(ing.name)){
+  //               acc.push(ing.name);
+  //             }
+  //           }
+  //         })
+  //         return acc;
+  //       }, [])
+  //     }
+  //   }
 
 }
 
@@ -78,20 +133,20 @@ class Pantry {
 
 
 
-//   determineEnoughIngredients(recipe){
-//     let result;
-//     recipe.ingredients.forEach(ingredient => {
-//       this.contents.forEach(item => {
-//         if((ingredient.id === item.ingredient)
-//         && (ingredient.quantity.amount <= item.amount)){
-//           result = true;
-//         } else {
-//           result = false;
-//         }
-//       })
-//     })
-//     return result;
-//   }
+  // determineEnoughIngredients(recipe){
+  //   let result;
+  //   recipe.ingredients.forEach(ingredient => {
+  //     this.contents.forEach(item => {
+  //       if((ingredient.id === item.ingredient)
+  //       && (ingredient.quantity.amount <= item.amount)){
+  //         result = true;
+  //       } else {
+  //         result = false;
+  //       }
+  //     })
+  //   })
+  //   return result;
+  // }
 //
 //   removeIngredientsFromPantry(recipe){
 //     return this.contents.reduce((acc, item) => {

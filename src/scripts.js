@@ -17,7 +17,7 @@ let homeButton = document.querySelector('.home')
 let cardArea = document.querySelector('.all-cards');
 let searchButton = document.querySelector('.search-button');
 let searchInput = document.querySelector('.search-input');
-let user, pantry, cookbook, users, ingredientData;
+let user, pantry, cookbook, users, recipes, ingredientData, clonedRecipes;
 
 window.onload = loadData();
 
@@ -28,34 +28,28 @@ cardArea.addEventListener("click", displayCardButtons);
 searchButton.addEventListener("click", displaySearchRecipes);
 
 function loadData() {
-  // getRecipeData();
-  getIngredientData();
-  getUserData();
+  return Promise.all([getUserData(), getRecipeData(), getIngredientData()]).then(data => {
+    onStartup();
+  })
 }
+
 function getUserData() {
-  fetch("http://localhost:3001/api/v1/users")
-  .then((response) => response.json())
+  return fetch("http://localhost:3001/api/v1/users")
+  .then(response => response.json())
   .then(userData => users = userData)
-  .then((userData) => onStartup());
 }
 
 function getRecipeData() {
-  fetch("http://localhost:3001/api/v1/recipes")
-    .then((response) => response.json())
-    .then((recipeData) => {
-      cookbook = new Cookbook(recipeData, ingredientData);
-      domUpdates.displayCards(cookbook.recipes, cardArea);
-      compilePantryData(cookbook.recipes);
-    })
+  return fetch("http://localhost:3001/api/v1/recipes")
+    .then(response => response.json())
+    .then(recipeData => recipes = recipeData)
+      // cookbook = new Cookbook(recipeData, ingredientData);
   }
 
   function getIngredientData() {
-    fetch("http://localhost:3001/api/v1/ingredients")
+    return fetch("http://localhost:3001/api/v1/ingredients")
     .then(response => response.json())
-    .then(data => {
-      ingredientData = data;
-      getRecipeData();
-    })
+    .then(data => ingredientData = data)
   }
 
 function onStartup() {
@@ -65,11 +59,15 @@ function onStartup() {
   });
   user = new User(userId, newUser.name, newUser.pantry)
   pantry = new Pantry(newUser.pantry)
+  clonedRecipes = recipes.map(recipe => recipe);
   domUpdates.greetUser(user);
   getFavorites();
+  domUpdates.displayCards(recipes, cardArea);
+  compilePantryData(clonedRecipes);
 }
 
 function compilePantryData(recipesList) {
+  console.log(recipesList)
   recipesList.forEach(recipe => {
     let missingIngredients = pantry.getMissingPartOfRecipe(recipe).ingredients.reduce((acc, ingredient) => {
       if(ingredient.quantity.amount > 0) {
@@ -80,7 +78,7 @@ function compilePantryData(recipesList) {
       }, []
     );
     let newRecipe = new Recipe(pantry.getMissingPartOfRecipe(recipe), ingredientData);
-    let costOfRemainingIngredients = newRecipe.calculateCost();
+    let costOfRemainingIngredients = newRecipe.calculateCost().toFixed(2);
     domUpdates.displayCostMessage(pantry.determineEnoughIngredients(recipe), recipe.id, missingIngredients, costOfRemainingIngredients);
   });
 }
@@ -143,8 +141,8 @@ function displayCardButtons(event) {
     displayDirections(event);
   } else if (domUpdates.interactWithClassList('contains', 'home', event)) {
     domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
-    domUpdates.displayCards(cookbook.recipes, cardArea);
-    compilePantryData(cookbook.recipes);
+    domUpdates.displayCards(recipes, cardArea);
+    compilePantryData(clonedRecipes);
     getFavorites();
   }
 }
@@ -152,6 +150,7 @@ function displayCardButtons(event) {
 
 
 function displayDirections(event) {
+  cookbook = new Cookbook(recipes, ingredientData);
   domUpdates.interactWithClassList('remove', 'hidden', event, favButton)
   let newRecipeInfo = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   let recipeObject = new Recipe(newRecipeInfo, ingredientData);

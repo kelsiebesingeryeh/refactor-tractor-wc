@@ -37,6 +37,7 @@ let domUpdates = {
     const userName = document.querySelector('.user-info');
     userName.innerText = `Welcome, ${user.name}.`;
   },
+
   interactWithClassList(method, className, event, element) {
     if (method === 'add' && element) {
       element.classList.add(className);
