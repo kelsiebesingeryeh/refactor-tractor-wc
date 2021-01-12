@@ -4,6 +4,7 @@ class Recipe {
     this.id = recipe.id;
     this.ingredients = recipe.ingredients.map(recipeIngredient => {
       let ingredientInfo = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id);
+      recipeIngredient.missing = 0;
       return {...recipeIngredient,...ingredientInfo};
     });
     this.instructions = recipe.instructions;
@@ -16,7 +17,7 @@ class Recipe {
       let costForRecipe = ingredient.estimatedCostInCents * ingredient.quantity.amount;
       return costTally += costForRecipe;
     }, 0);
-    return totalCents / 100;
+    return (totalCents / 100).toFixed(2);
   }
 
   getInstructions() {

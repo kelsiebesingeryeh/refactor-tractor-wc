@@ -71,18 +71,24 @@ function onStartup() {
 
 function compilePantryData(recipesList) {
   recipesList.forEach(recipe => {
-    let shoppingList = pantry.getMissingPartOfRecipe(recipe, ingredientData);
-    let missingIngredients = shoppingList.ingredients.reduce((acc, ingredient) => {
-      if(ingredient.quantity.amount > 0) {
+    let currentRecipe = new Recipe(recipe, ingredientData)
+    let missingIngredients = []
+    let costOfRemainingIngredients;
+    if(!pantry.determineEnoughIngredients(currentRecipe)){
+    missingIngredients = pantry.getMissingPartOfRecipe(currentRecipe).ingredients.reduce((acc, ingredient) => {
+      if(ingredient.missing > 0) {
         let specificIngredient = ingredientData.find(item => item.id === ingredient.id);
         acc.push(specificIngredient.name);
       }
       return acc;
       }, []
     );
-    let newRecipe = new Recipe(pantry.getMissingPartOfRecipe(recipe, ingredientData), ingredientData);
-    let costOfRemainingIngredients = newRecipe.calculateCost();
-    domUpdates.displayCostMessage(pantry.determineEnoughIngredients(recipe), recipe.id, missingIngredients, costOfRemainingIngredients);
+    costOfRemainingIngredients = pantry.calculateMissingCost(currentRecipe)
+    domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+  } else {
+    costOfRemainingIngredients = pantry.calculateMissingCost(currentRecipe)
+    domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+  }
   });
 }
 
@@ -167,9 +173,8 @@ function displayDirections(event) {
   let newRecipeInfo = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   let recipeObject = new Recipe(newRecipeInfo, ingredientData);
   let cost = recipeObject.calculateCost();
-  let costInDollars = (cost / 100).toFixed(2);
   domUpdates.interactWithClassList('add', 'all', event, cardArea);
-  domUpdates.populateRecipeCard(cardArea, recipeObject, costInDollars);
+  domUpdates.populateRecipeCard(cardArea, recipeObject, cost);
 }
 
 function getFavorites() {
