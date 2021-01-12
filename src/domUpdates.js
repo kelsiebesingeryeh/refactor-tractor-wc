@@ -48,6 +48,8 @@ let domUpdates = {
       event.target.classList.remove(className);
     } else if (method === 'contains') {
       return event.target.classList.contains(className);
+    } else if (method === 'toggle' && element) {
+      element.classList.toggle(className);
     }
   },
   displayOneLiners(element, text) {
