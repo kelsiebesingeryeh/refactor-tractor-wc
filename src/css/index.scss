@@ -80,37 +80,48 @@ h1 {
   margin-top: 9rem;
 }
 
-@media screen and (min-width: 601px) and (max-width: 1024px) {
-  .all-cards {
-    grid-template-columns: repeat(2, 1fr);
-    width: auto;
-  }
+@media screen and (min-width: 451px) and (max-width: 1024px) {
+ .all-cards {
+   grid-template-columns: 2fr;
+   width: auto;
+   margin-top: 0;
+ }
 
-  .card {
-    margin: auto;
-  }
+ .card {
+   width: 40vw;
+   margin: auto;
+ }
 
-  .navButton {
-    font-size: .80rem;
-  }
+ .navButton {
+   font-size: .80rem;
+ }
 
-  .search-input {
-    display: none;
-  }
 
-  h1 {
-    font-size: 1rem;
-    margin: auto;
-  }
+ h1 {
+   font-size: 1rem;
+   margin: auto;
+   width: 22%;
+ }
 
-  .search-button {
-    margin: auto;
-  }
+ .search-bar {
+   width: 60%;
+   font-size: .65rem;
+   text-align: center;
+   margin: auto;
+ }
 
-  .user-info {
-    font-size: .80rem;
-    margin: auto;
-  }
+ .search-button {
+   margin: auto;
+   margin-right: 3px;
+   background-size: 40px;
+ }
+
+ .user-info {
+   font-size: 1rem;
+   width: 80%;
+   margin: auto;
+   margin-top: 6rem;
+ }
 }
 
 
