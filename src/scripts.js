@@ -1,10 +1,4 @@
-// import './css/_variables.scss';
 import './css/index.scss';
-
-// import recipeData from './data/recipes';
-// import ingredientsData from './data/ingredients';
-// import users from './data/users';
-
 import Pantry from './pantry';
 import Recipe from './recipe';
 import User from './user';
@@ -14,18 +8,31 @@ import domUpdates from './domUpdates';
 let favButton = document.querySelector('.view-favorites');
 let toCookButton = document.querySelector('.view-to-cook-list')
 let homeButton = document.querySelector('.home')
+let mobileFavButton = document.querySelector(".view-favorites-mobile");
+let mobileToCookButton = document.querySelector(".view-to-cook-list-mobile");
+let mobileHomeButton = document.querySelector(".home-mobile");
 let cardArea = document.querySelector('.all-cards');
 let searchButton = document.querySelector('.search-button');
 let searchInput = document.querySelector('.search-input');
+let hamburgerMenu = document.querySelector('.hamburger');
+let hamburgerMenuContent = document.querySelector(".hamburger-content");
 let user, pantry, cookbook, users, recipes, ingredientData;
 
 window.onload = loadData();
 
-homeButton.addEventListener("click", displayCardButtons);
+homeButton.addEventListener("click", returnHome);
 favButton.addEventListener('click', viewFavorites);
 toCookButton.addEventListener('click', viewRecipesToCook);
+mobileFavButton.addEventListener("click", viewFavorites);
+mobileToCookButton.addEventListener("click", viewRecipesToCook);
+mobileHomeButton.addEventListener("click", returnHome);
 cardArea.addEventListener("click", displayCardButtons);
 searchButton.addEventListener("click", displaySearchRecipes);
+hamburgerMenu.addEventListener('click', toggleMenu);
+
+function toggleMenu() {
+  domUpdates.interactWithClassList("toggle", "hidden", event, hamburgerMenuContent);
+}
 
 function loadData() {
   return Promise.all([getUserData(), getRecipeData(), getIngredientData()])
@@ -157,16 +164,16 @@ function displayCardButtons(event) {
     addCardToCookList(event);
   } else if (domUpdates.interactWithClassList('contains', 'card-picture', event)) {
     displayDirections(event);
-  } else if (domUpdates.interactWithClassList('contains', 'home', event)) {
+  }
+}
+  
+function returnHome() {
     domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
     domUpdates.displayCards(cookbook.recipes, cardArea);
     compilePantryData(cookbook.recipes);
     getFavorites();
     getRecipesToCook();
-  }
 }
-
-
 
 function displayDirections(event) {
   domUpdates.interactWithClassList('remove', 'hidden', event, favButton)
