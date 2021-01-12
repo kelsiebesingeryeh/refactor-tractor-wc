@@ -5,25 +5,33 @@
     <title>Whats Cookin</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Raleway&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <header class='main-header'>
+      <div class="hamburger hidden">
+        <div class="hamburger-content">
+          <span class="dropdown-item home navButton">Home</span>
+          <span class="dropdown-item view-favorites navButton">Favorites</span>
+          <span class="dropdown-item view-to-cook-list navButton">Recipes</span>
+        </div>
+      </div>
       <h1>What's Cookin'</h1>
-      <p class='user-info'></p>
       <label for='home-button' class='hidden'>Homepage button</label>
       <button id='home-button' class='home navButton'>Home</button>
-      <label for='view-favorites-button' class='hidden'>View favorites</label>
-      <button id='view-favorites-button' class=' view-favorites navButton'>My Favorites</button>
-      <button id='view-to-cook-list-button' class='view-to-cook-list navButton'>My Recipes</button>
+      <label for='view-favorites-button' class='hidden'>View Favorites</label>
+      <button id='view-favorites-button' class="view-favorites navButton">My Favorites</button>
+      <button id='view-to-cook-list-button' class="view-to-cook-list navButton">My Recipes</button>
       <form class='search-bar'>
         <label for='search-button' class='hidden'>Click here to search here</label>
         <button id='search-button' class='search-button' type='button'>
         </button>
         <label for='search-input' class='hidden'>Type search query here</label>
-        <input id='search-input' class='search-input' type='text' placeholder='Search recipes by name or ingredients' value=''>
+        <input id='search-input' class='search-input' type='text' placeholder='Search recipes by keyword' value=''>
       </form>
     </header>
     <main>
+      <p class='user-info'></p>
       <section class='all-cards'>
       </section>
     </main>

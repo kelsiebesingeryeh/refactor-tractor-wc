@@ -66,7 +66,7 @@ h1 {
   display: grid;
   grid-gap: 3rem;
   grid-template-columns: repeat(3, 1fr);
-  padding: 30px 0 30px 30px;
+  padding: 30px 30px 30px 30px;
   width: 80vw;
   margin: auto;
   margin-top: 7rem;
@@ -78,4 +78,88 @@ h1 {
   justify-items: center;
   height: 80vh;
   margin-top: 9rem;
+}
+
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+  .all-cards {
+    grid-template-columns: repeat(2, 1fr);
+    width: auto;
+  }
+
+  .card {
+    margin: auto;
+  }
+
+  .navButton {
+    font-size: .80rem;
+  }
+
+  .search-input {
+    display: none;
+  }
+
+  h1 {
+    font-size: 1rem;
+    margin: auto;
+  }
+
+  .search-button {
+    margin: auto;
+  }
+
+  .user-info {
+    font-size: .80rem;
+    margin: auto;
+  }
+}
+
+
+@media screen and (max-width: 450px) {
+  .all-cards {
+    grid-template-columns: 1fr;
+    width: auto;
+    margin-top: 0;
+  }
+
+  .card {
+    width: 80vw;
+    margin: auto;
+  }
+
+  .navButton {
+    display: none;
+    font-size: .80rem;
+  }
+
+  .hamburger {
+    display: flex;
+   @include card-button('../images/hamburger.png', 60px, $white);
+  }
+
+  h1 {
+    font-size: 1rem;
+    margin: auto;
+    width: 22%;
+  }
+
+  .search-bar {
+    width: 60%;
+    font-size: .65rem;
+    text-align: center;
+    margin: auto;
+  }
+
+  .search-button {
+    margin: auto;
+    margin-right: 3px;
+    background-size: 40px;
+  }
+
+  .user-info {
+    font-size: 1rem;
+     width: 80%;
+     margin: auto;
+     margin-top: 6rem;
+  }
+
 }
