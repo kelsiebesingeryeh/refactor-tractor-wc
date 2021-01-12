@@ -1,3 +1,5 @@
+import Recipe from './recipe';
+
 class Pantry {
   constructor(userIngredients) {
     this.contents = userIngredients;
@@ -19,12 +21,13 @@ class Pantry {
     return result;
   }
 
-  getMissingPartOfRecipe(recipe) {
+  getMissingPartOfRecipe(recipe, ingredientsData) {
+    let recipeShoppingList = new Recipe(recipe, ingredientsData);
     let newIngredients;
-    if(this.determineEnoughIngredients(recipe)) {
-      return recipe;
+    if(this.determineEnoughIngredients(recipeShoppingList)) {
+      return recipeShoppingList;
     } else {
-      newIngredients = recipe.ingredients.map(ingredient => {
+      newIngredients = recipeShoppingList.ingredients.map(ingredient => {
         if(!this.contents.some(entry => entry.ingredient === ingredient.id)) {
           return ingredient;
         } else {
@@ -42,8 +45,8 @@ class Pantry {
           return newIngredient;
         }
       });
-      recipe.ingredients = newIngredients;
-      return recipe;
+      recipeShoppingList.ingredients = newIngredients;
+      return recipeShoppingList;
     }
   }
 

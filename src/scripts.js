@@ -28,7 +28,6 @@ cardArea.addEventListener("click", displayCardButtons);
 searchButton.addEventListener("click", displaySearchRecipes);
 
 function loadData() {
-  // getRecipeData();
   getIngredientData();
   getUserData();
 }
@@ -36,7 +35,8 @@ function getUserData() {
   fetch("http://localhost:3001/api/v1/users")
   .then((response) => response.json())
   .then(userData => users = userData)
-  .then((userData) => onStartup());
+  .then((userData) => onStartup())
+  .catch(error => console.log(error))
 }
 
 function getRecipeData() {
@@ -45,8 +45,9 @@ function getRecipeData() {
     .then((recipeData) => {
       cookbook = new Cookbook(recipeData, ingredientData);
       domUpdates.displayCards(cookbook.recipes, cardArea);
-      compilePantryData(cookbook.recipes);
+      compilePantryData(recipeData)
     })
+    .catch(error => console.log(error))
   }
 
   function getIngredientData() {
@@ -56,6 +57,7 @@ function getRecipeData() {
       ingredientData = data;
       getRecipeData();
     })
+    .catch(error => console.log(error))
   }
 
 function onStartup() {
@@ -71,7 +73,9 @@ function onStartup() {
 
 function compilePantryData(recipesList) {
   recipesList.forEach(recipe => {
-    let missingIngredients = pantry.getMissingPartOfRecipe(recipe).ingredients.reduce((acc, ingredient) => {
+    // pantry.getMissingPartOfRecipe(recipe, ingredientData);
+    let shoppingList = pantry.getMissingPartOfRecipe(recipe, ingredientData);
+    let missingIngredients = shoppingList.ingredients.reduce((acc, ingredient) => {
       if(ingredient.quantity.amount > 0) {
         let specificIngredient = ingredientData.find(item => item.id === ingredient.id);
         acc.push(specificIngredient.name);
@@ -79,7 +83,7 @@ function compilePantryData(recipesList) {
       return acc;
       }, []
     );
-    let newRecipe = new Recipe(pantry.getMissingPartOfRecipe(recipe), ingredientData);
+    let newRecipe = new Recipe(pantry.getMissingPartOfRecipe(recipe, ingredientData), ingredientData);
     let costOfRemainingIngredients = newRecipe.calculateCost();
     domUpdates.displayCostMessage(pantry.determineEnoughIngredients(recipe), recipe.id, missingIngredients, costOfRemainingIngredients);
   });
@@ -93,12 +97,19 @@ function viewFavorites() {
     compilePantryData(user.favoriteRecipes);
     getFavorites();
   }
+  user.favoriteRecipes.forEach(recipe => {
+    if (user.recipesToCook.includes(recipe)) {
+      let recipeID = document.querySelector(`.add-button${recipe.id}`);
+      domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
+    }
+  })
 }
 
 function viewRecipesToCook() {
   if (user.recipesToCook.length) {
     domUpdates.displayCards(user.recipesToCook, cardArea);
     compilePantryData(user.recipesToCook);
+    getRecipesToCook();
   }
   user.recipesToCook.forEach(recipe => {
     if (user.favoriteRecipes.includes(recipe)) {
@@ -130,7 +141,9 @@ function addCardToCookList(event) {
     user.addToList(specificRecipe, 'recipesToCook');
   } else if (domUpdates.interactWithClassList('contains', 'add-active', event)) {
     domUpdates.interactWithClassList('remove', 'add-active', event);
-    user.removeFromList(specificRecipe,'recipesToCook')
+    user.removeFromList(specificRecipe,'recipesToCook');
+    domUpdates.displayCards(user.recipesToCook, cardArea);
+    getRecipesToCook();
   }
 }
 
@@ -146,6 +159,7 @@ function displayCardButtons(event) {
     domUpdates.displayCards(cookbook.recipes, cardArea);
     compilePantryData(cookbook.recipes);
     getFavorites();
+    getRecipesToCook();
   }
 }
 
@@ -170,6 +184,15 @@ function getFavorites() {
   }
 }
 
+function getRecipesToCook() {
+  if (user.recipesToCook.length) {
+    user.recipesToCook.forEach(recipe => {
+      let recipeID = document.querySelector(`.add-button${recipe.id}`);
+      domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
+    })
+  }
+}
+
 function displaySearchRecipes(event) {
   let filteredRecipes = cookbook.findRecipes(searchInput.value.toLowerCase());
   domUpdates.displayCards(filteredRecipes, cardArea);
@@ -178,6 +201,10 @@ function displaySearchRecipes(event) {
     if (user.favoriteRecipes.includes(recipe)) {
       let recipeID = document.querySelector(`.favorite${recipe.id}`);
       domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
+    }
+    if (user.recipesToCook.includes(recipe)) {
+      let recipeID = document.querySelector(`.add-button${recipe.id}`);
+      domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
     }
   })
 }
