@@ -73,7 +73,6 @@ function onStartup() {
 
 function compilePantryData(recipesList) {
   recipesList.forEach(recipe => {
-    // pantry.getMissingPartOfRecipe(recipe, ingredientData);
     let shoppingList = pantry.getMissingPartOfRecipe(recipe, ingredientData);
     let missingIngredients = shoppingList.ingredients.reduce((acc, ingredient) => {
       if(ingredient.quantity.amount > 0) {
