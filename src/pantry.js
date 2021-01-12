@@ -19,6 +19,7 @@ class Pantry {
     return result;
   }
 
+
   getMissingPartOfRecipe(recipe) {
     let newIngredients;
     if(this.determineEnoughIngredients(recipe)) {
