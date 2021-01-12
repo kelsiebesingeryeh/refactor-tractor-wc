@@ -65,7 +65,8 @@ h1 {
 .all-cards {
   display: grid;
   grid-gap: 3rem;
-  grid-template-columns: repeat(3, 1fr);
+  // grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   padding: 30px 30px 30px 30px;
   width: 80vw;
   margin: auto;
@@ -80,34 +81,38 @@ h1 {
   margin-top: 9rem;
 }
 
-@media screen and (min-width: 451px) and (max-width: 1024px) {
+@media screen and (min-width: 601px) and (max-width: 1024px) {
  .all-cards {
-   grid-template-columns: 2fr;
-   width: auto;
-   margin-top: 0;
- }
+     grid-template-columns: repeat(2, 1fr);
+     width: auto;
+     margin-top: 8px;
+   }
 
- .card {
-   width: 40vw;
-   margin: auto;
- }
+   .card {
+     margin: auto;
+    margin-top: 0;
+   }
 
  .navButton {
-   font-size: .80rem;
+   font-size: 1.25rem;
  }
 
-
  h1 {
-   font-size: 1rem;
+   font-size: 1.25rem;
    margin: auto;
    width: 22%;
  }
 
  .search-bar {
-   width: 60%;
-   font-size: .65rem;
+   width: 50%;
+   font-size: 1rem;
    text-align: center;
    margin: auto;
+   align-items: center;
+ }
+
+ .search-input {
+   height: 3.5vh;
  }
 
  .search-button {
@@ -117,15 +122,15 @@ h1 {
  }
 
  .user-info {
-   font-size: 1rem;
+   font-size: 2rem;
    width: 80%;
    margin: auto;
-   margin-top: 6rem;
+   margin-top: 8rem;
  }
 }
 
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 600px) {
   .all-cards {
     grid-template-columns: 1fr;
     width: auto;
@@ -154,12 +159,18 @@ h1 {
     font-size: .65rem;
     text-align: center;
     margin: auto;
+    padding: 1px;
+    align-items: center;
   }
   
   .search-button {
     margin: auto;
     margin-right: 3px;
     background-size: 40px;
+  }
+
+  .search-input {
+    height: 5vh;
   }
   
   .user-info {
