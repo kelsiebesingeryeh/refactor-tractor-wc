@@ -21,9 +21,9 @@ let domUpdates = {
     })
   },
 
-  displayCostMessage(enoughIngredients, id, missingIngredients, costOfRemainingIngredients) {
+  displayCostMessage(id, missingIngredients, costOfRemainingIngredients) {
     let costDiv = document.querySelector(`.cost${id}`);
-    if(enoughIngredients){
+    if(missingIngredients.length === 0){
       let message = `You have the ingredients!`;
       costDiv.innerHTML = `<p>You have the ingredients!</p>;
       <button>Cook</button>`

@@ -17,7 +17,7 @@ let homeButton = document.querySelector('.home')
 let cardArea = document.querySelector('.all-cards');
 let searchButton = document.querySelector('.search-button');
 let searchInput = document.querySelector('.search-input');
-let user, pantry, cookbook, users, ingredientData;
+let user, pantry, cookbook, users, recipes, ingredientData;
 
 window.onload = loadData();
 
@@ -28,34 +28,28 @@ cardArea.addEventListener("click", displayCardButtons);
 searchButton.addEventListener("click", displaySearchRecipes);
 
 function loadData() {
-  // getRecipeData();
-  getIngredientData();
-  getUserData();
+  return Promise.all([getUserData(), getRecipeData(), getIngredientData()]).then(data => {
+    onStartup();
+  })
 }
+
 function getUserData() {
-  fetch("http://localhost:3001/api/v1/users")
-  .then((response) => response.json())
+  return fetch("http://localhost:3001/api/v1/users")
+  .then(response => response.json())
   .then(userData => users = userData)
-  .then((userData) => onStartup());
 }
 
 function getRecipeData() {
-  fetch("http://localhost:3001/api/v1/recipes")
-    .then((response) => response.json())
-    .then((recipeData) => {
-      cookbook = new Cookbook(recipeData, ingredientData);
-      domUpdates.displayCards(cookbook.recipes, cardArea);
-      compilePantryData(cookbook.recipes);
-    })
+  return fetch("http://localhost:3001/api/v1/recipes")
+    .then(response => response.json())
+    .then(recipeData => recipes = recipeData)
+      // cookbook = new Cookbook(recipeData, ingredientData);
   }
 
   function getIngredientData() {
-    fetch("http://localhost:3001/api/v1/ingredients")
+    return fetch("http://localhost:3001/api/v1/ingredients")
     .then(response => response.json())
-    .then(data => {
-      ingredientData = data;
-      getRecipeData();
-    })
+    .then(data => ingredientData = data)
   }
 
 function onStartup() {
@@ -67,21 +61,36 @@ function onStartup() {
   pantry = new Pantry(newUser.pantry)
   domUpdates.greetUser(user);
   getFavorites();
+  domUpdates.displayCards(recipes, cardArea);
+  compilePantryData(recipes);
 }
 
 function compilePantryData(recipesList) {
+  let recipeCount = 0;
   recipesList.forEach(recipe => {
-    let missingIngredients = pantry.getMissingPartOfRecipe(recipe).ingredients.reduce((acc, ingredient) => {
-      if(ingredient.quantity.amount > 0) {
+    let currentRecipe = new Recipe(recipe, ingredientData)
+    let missingIngredients = []
+    let costOfRemainingIngredients;
+    if(!pantry.determineEnoughIngredients(currentRecipe)){
+    missingIngredients = pantry.getMissingPartOfRecipe(currentRecipe).ingredients.reduce((acc, ingredient) => {
+      if(ingredient.missing > 0) {
         let specificIngredient = ingredientData.find(item => item.id === ingredient.id);
         acc.push(specificIngredient.name);
       }
       return acc;
       }, []
     );
-    let newRecipe = new Recipe(pantry.getMissingPartOfRecipe(recipe), ingredientData);
-    let costOfRemainingIngredients = newRecipe.calculateCost();
-    domUpdates.displayCostMessage(pantry.determineEnoughIngredients(recipe), recipe.id, missingIngredients, costOfRemainingIngredients);
+    costOfRemainingIngredients = pantry.calculateMissingCost(currentRecipe)
+    console.log(costOfRemainingIngredients)
+    domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+    recipeCount ++
+    console.log(false,recipeCount,recipe ,missingIngredients, costOfRemainingIngredients)
+  } else {
+    costOfRemainingIngredients = pantry.calculateMissingCost(currentRecipe)
+    domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+    recipeCount ++
+    console.log(true,recipeCount, "NONE",missingIngredients, "0", costOfRemainingIngredients)
+  }
   });
 }
 
@@ -143,8 +152,8 @@ function displayCardButtons(event) {
     displayDirections(event);
   } else if (domUpdates.interactWithClassList('contains', 'home', event)) {
     domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
-    domUpdates.displayCards(cookbook.recipes, cardArea);
-    compilePantryData(cookbook.recipes);
+    domUpdates.displayCards(recipes, cardArea);
+    compilePantryData(recipes);
     getFavorites();
   }
 }
@@ -152,6 +161,7 @@ function displayCardButtons(event) {
 
 
 function displayDirections(event) {
+  cookbook = new Cookbook(recipes, ingredientData);
   domUpdates.interactWithClassList('remove', 'hidden', event, favButton)
   let newRecipeInfo = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   let recipeObject = new Recipe(newRecipeInfo, ingredientData);
@@ -181,3 +191,30 @@ function displaySearchRecipes(event) {
     }
   })
 }
+
+// function compilePantryData(recipesList) {
+//   let recipeCount = 0;
+//   recipesList.forEach(recipe => {
+//     let currentRecipe = new Recipe(recipe, ingredientData)
+//     let missingIngredients = []
+//     let costOfRemainingIngredients = 0
+//     if(!pantry.determineEnoughIngredients(currentRecipe)){
+//     missingIngredients = pantry.getMissingPartOfRecipe(currentRecipe).ingredients.reduce((acc, ingredient) => {
+//       if(ingredient.missing > 0) {
+//         let specificIngredient = ingredientData.find(item => item.id === ingredient.id);
+//         acc.push(specificIngredient.name);
+//       }
+//       return acc;
+//       }, []
+//     );
+//     let costOfRemainingIngredients = pantry.calculateMissingCost(currentRecipe).toFixed(2);
+//     domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+//     recipeCount ++
+//     console.log(recipeCount,recipe ,missingIngredients, costOfRemainingIngredients)
+//   } else {
+//     domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+//     recipeCount ++
+//     console.log(recipeCount, "NONE",missingIngredients, "0", costOfRemainingIngredients)
+//   }
+//   });
+// }
