@@ -46,7 +46,7 @@
     margin: 3px 7px 0px 0px;
     padding-left: 10px;
     width: 90%;
-    font-family: 'Poppins',
+    font-family: $poppins-font,
     sans-serif;
     border-radius: 10px;
 }
@@ -66,4 +66,24 @@
 
 .favorite-active {
     background-image: url('../images/star-filled.png');
+}
+
+.view-details,
+.add-indredients-to-pantry,
+.cook-recipe-button {
+  background-color: $copper-rust;
+  font-family: $raleway-font;
+  font-size: 1rem;
+  color: $white;
+  border: none;
+  border-radius: .25rem;
+  height: 2.5rem;
+  width: 50%;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+
+.add-ingredients-to-pantry {
+  @extend .view-details;
+  width: 40%;
 }

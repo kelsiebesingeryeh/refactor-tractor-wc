@@ -76,9 +76,9 @@ h1 {
 }
 
 .all {
-  grid-gap: 0px;
-  grid-template-columns: repeat(1, 1fr);
-  justify-items: center;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  // justify-items: center;
   height: 70vh;
   margin-top: 9rem;
 }
@@ -229,5 +229,3 @@ h1 {
   .recipe-details {
     margin: auto;
   }
-
-}

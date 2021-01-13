@@ -3,7 +3,7 @@
   flex-direction: column;
   color: $eggplant;
   height: 60vh;
-  width: 80vw;
+  width: 50vw;
   background-color: $white;
   border-radius: 10px;
   box-shadow: $shadow;
@@ -37,4 +37,40 @@ h3 {
 
 .instruction-li {
   margin-bottom: 10px;
+}
+
+.cook-recipe {
+  @extend .recipe-details;
+  width: 28vw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cook-it{
+  width: 25.75vw;
+}
+
+.details-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  width: auto;
+}
+
+.details-message {
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+.details-missing {
+  font-size: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.details-cost {
+  margin-bottom: 1rem;
 }
