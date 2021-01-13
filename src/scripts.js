@@ -127,8 +127,7 @@ function viewRecipesToCook() {
 
 
 function favoriteCard(event) {
-  let specicId = Number(event.target.id.replace('-fav', ''))
-  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === specicId)
+  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   if (!domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
     domUpdates.interactWithClassList('add', 'favorite-active', event);
     user.addToList(specificRecipe, 'favoriteRecipes');
@@ -141,8 +140,7 @@ function favoriteCard(event) {
 }
 
 function addCardToCookList(event) {
-  let specicId = Number(event.target.id.replace('-add', ''))
-  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === specicId)
+  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   if (!domUpdates.interactWithClassList('contains', 'add-active', event)) {
     domUpdates.interactWithClassList('add', 'add-active', event);
     user.addToList(specificRecipe, 'recipesToCook');
