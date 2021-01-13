@@ -10,6 +10,7 @@ getMissingPartOfRecipe(recipe) {
   }, {})
   let newIngredients = newRecipe.ingredients.map(ingredient => {
       if(!this.contents.some(entry => entry.ingredient === ingredient.id)) {
+        ingredient.missing = ingredient.quantity.amount;
         return ingredient;
       } else {
         this.contents.forEach(entry => {
@@ -39,6 +40,41 @@ getMissingPartOfRecipe(recipe) {
       return costTally += costForRecipe;
     }, 0);
     return (totalCents / 100).toFixed(2);
+  }
+
+  removeIngredientsFromPantry(recipe){
+  let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
+    this.contents.forEach(item => {
+      if(ingredient.id === item.ingredient){
+        let obj = {
+          "ingredient": item.ingredient,
+          "amountToRemove":  -1 * ingredient.quantity.amount
+        }
+        acc.push(obj)
+      }
+    })
+    return acc;
+  }, [])
+  this.contents = ingredientsInPantry;
+  // return ingredientsInPantry;
+}
+
+addIngredientsToPantry(recipe){
+let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
+    console.log('OUT',ingredient.missing, ingredient.missing > 0)
+  if(ingredient.missing > 0){
+      console.log('IN',ingredient.id)
+      console.log('true')
+        let obj = {
+          "ingredient": ingredient.id,
+          "amountToAdd": ingredient.missing,
+          };
+        acc.push(obj)
+      }
+      return acc
+    }, [])
+    this.contents = ingredientsInPantry;
+    // return ingredientsInPantry;
   }
 
 
