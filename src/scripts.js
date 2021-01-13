@@ -19,7 +19,7 @@ let mobileHomeButton = document.querySelector(".home-mobile");
 
 let cardArea = document.querySelector('.all-cards');
 
-let user, pantry, cookbook, userData, recipeData, ingredientData;
+let user, pantry, cookbook;
 
 window.onload = onStartup();
 
@@ -38,7 +38,10 @@ cardArea.addEventListener("click", handleCardAreaButtons);
 function onStartup() {
   return Promise.all([getUserData(), getRecipeData(), getIngredientData()])
     .then(data => {
-      buildPage();
+      let userData = data[0];
+      let recipeData = data[1];
+      let ingredientData = data[2];
+      buildPage(userData, recipeData, ingredientData);
     })
     .catch(error => console.log(error))
 }
@@ -46,38 +49,38 @@ function onStartup() {
 function getUserData() {
   return fetch("http://localhost:3001/api/v1/users")
     .then(response => response.json())
-    .then(data => userData = data)
+    .then(data => data)
     .catch(error => console.log(error))
 }
 
 function getRecipeData() {
   return fetch("http://localhost:3001/api/v1/recipes")
     .then(response => response.json())
-    .then(data => recipeData = data)
+    .then(data => data)
     .catch(error => console.log(error))
 }
 
 function getIngredientData() {
   return fetch("http://localhost:3001/api/v1/ingredients")
     .then(response => response.json())
-    .then(data => ingredientData = data)
+    .then(data => data)
     .catch(error => console.log(error))
 }
 
-function buildPage() {
-  createUserWorld();
+function buildPage(users, recipes, ingredients) {
+  createUserWorld(users, recipes, ingredients);
   domUpdates.greetUser(user);
   domUpdates.displayCards(cookbook.recipes, cardArea, ['','','']);
 }
 
-function createUserWorld() {
+function createUserWorld(users, recipes, ingredients) {
   let userId = (Math.floor(Math.random() * 49) + 1)
-  let newUser = userData.find(user => {
+  let newUser = users.find(user => {
     return user.id === Number(userId);
   });
   user = new User(userId, newUser.name, newUser.pantry)
   pantry = new Pantry(newUser.pantry)
-  cookbook = new Cookbook(recipeData, ingredientData);
+  cookbook = new Cookbook(recipes, ingredients);
 }
 
 function handleCardAreaButtons(event) {
@@ -273,7 +276,8 @@ function addMissingIngredientsNeededForRecipe(event) {
         console.log(message);
         Promise.all([getUserData(), getRecipeData(), getIngredientData()])
       .then((data) => {
-        user.pantry = userData.find(entry => entry.id === user.id).pantry
+        let updatedUserData = data[0];
+        user.pantry = updatedUserData.find(entry => entry.id === user.id).pantry
         pantry.contents = user.pantry
         compilePantryData(replaceRecipe)
           })
@@ -303,7 +307,8 @@ function removeIngredientsUsedToCookRecipe(event) {
         console.log(message);
         Promise.all([getUserData(), getRecipeData(), getIngredientData()])
       .then((data) => {
-        user.pantry = userData.find(entry => entry.id === user.id).pantry
+        let updatedUserData = data[0];
+        user.pantry = updatedUserData.find(entry => entry.id === user.id).pantry
         pantry.contents = user.pantry
         compilePantryData(cookedRecipe);
           })
