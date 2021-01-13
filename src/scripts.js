@@ -99,7 +99,6 @@ function viewRecipesToCook() {
 }
 
 function returnHome() {
-    domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
     domUpdates.displayCards(cookbook.recipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
     displayRecipeFavoriteOrCooklistLabels(cookbook.recipes);
 }
@@ -110,17 +109,13 @@ function toggleHamburgerMenuDropdown() {
 
 function searchRecipes() {
   viewSearchedRecipes();
-  clearSearchInput();
+  searchInput.value = "";
 }
 
 function viewSearchedRecipes() {
   let filteredRecipes = cookbook.findRecipesByTagNameOrIngredient(searchInput.value.toLowerCase());
   domUpdates.displayCards(filteredRecipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
   displayRecipeFavoriteOrCooklistLabels(filteredRecipes);
-}
-
-function clearSearchInput() {
-  searchInput.value = "";
 }
 
 function handleCardAreaButtons(event) {
