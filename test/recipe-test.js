@@ -8,55 +8,62 @@ import {
 
 let recipe;
 
-describe('Recipe', () => {
+describe.only('Recipe', () => {
   beforeEach(() => {
     recipe = new Recipe(testRecipeData[0], testIngredientsData);
   });
 
   it('Should hold its own ingredient data', () => {
-    expect(recipe.ingredients).to.deep.equal(
-      [
-        {
-          name: 'elbow macaroni',
-          id: 5555,
-          quantity: { amount: 8, unit: 'oz' },
-          estimatedCostInCents: 580
-        },
-        {
-          name: 'butter',
-          id: 1145,
-          quantity: { amount: 0.25, unit: 'c' },
-          estimatedCostInCents: 617
-        },
-        {
-          name: 'all purpose flour',
-          id: 1111,
-          quantity: { amount: 0.25, unit: 'c' },
-          estimatedCostInCents: 205
-        },
-        {
-          name: 'salt',
-          id: 2047,
-          quantity: { amount: 0.5, unit: 'tsp' },
-          estimatedCostInCents: 100
-        },
-        {
-          name: 'ground black pepper',
-          id: 11220,
-          quantity: { amount: 0.5, unit: 'tsp' },
-          estimatedCostInCents: 130
-        },
-        {
-          name: 'milk',
-          id: 777,
-          quantity: { amount: 1, unit: 'c' },
-          estimatedCostInCents: 305 },
-        {
-          name: 'shredded cheddar cheese',
-          id: 1919,
-          quantity: { amount: 2, unit: 'c' },
-          estimatedCostInCents: 555
-        }
+    expect(recipe.ingredients).to.deep.equal([
+      {
+        id: 5555,
+        quantity: { amount: 8, unit: "oz" },
+        missing: 0,
+        name: "elbow macaroni",
+        estimatedCostInCents: 580,
+      },
+      {
+        id: 1145,
+        quantity: { amount: 0.25, unit: "c" },
+        missing: 0,
+        name: "butter",
+        estimatedCostInCents: 617,
+      },
+      {
+        id: 1111,
+        quantity: { amount: 0.25, unit: "c" },
+        missing: 0,
+        name: "all purpose flour",
+        estimatedCostInCents: 205,
+      },
+      {
+        id: 2047,
+        quantity: { amount: 0.5, unit: "tsp" },
+        missing: 0,
+        name: "salt",
+        estimatedCostInCents: 100,
+      },
+      {
+        id: 11220,
+        quantity: { amount: 0.5, unit: "tsp" },
+        missing: 0,
+        name: "ground black pepper",
+        estimatedCostInCents: 130,
+      },
+      {
+        id: 777,
+        quantity: { amount: 1, unit: "c" },
+        missing: 0,
+        name: "milk",
+        estimatedCostInCents: 305,
+      },
+      {
+        id: 1919,
+        quantity: { amount: 2, unit: "c" },
+        missing: 0,
+        name: "shredded cheddar cheese",
+        estimatedCostInCents: 555,
+      },
     ]);
   })
 
@@ -78,7 +85,7 @@ describe('Recipe', () => {
   })
 
   it('Should be able to calculate the cost of its ingredients', () => {
-    expect(recipe.calculateCost()).to.equal(63.755);
+    expect(recipe.calculateCost()).to.equal('63.76');
   });
 
 });
