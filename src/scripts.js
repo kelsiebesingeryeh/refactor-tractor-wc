@@ -26,7 +26,8 @@ window.onload = onStartup();
 homeButton.addEventListener("click", returnHome);
 favButton.addEventListener('click', viewFavorites);
 toCookButton.addEventListener('click', viewRecipesToCook);
-searchButton.addEventListener("click", viewSearchedRecipes);
+searchButton.addEventListener("click", searchRecipes);
+searchInput.addEventListener("keyup", viewSearchedRecipes);
 
 hamburgerMenu.addEventListener('click', toggleMenu);
 mobileFavButton.addEventListener("click", viewFavorites);
@@ -83,6 +84,41 @@ function createUserWorld(users, recipes, ingredients) {
   cookbook = new Cookbook(recipes, ingredients);
 }
 
+function viewFavorites() {
+  if (user.favoriteRecipes.length) {
+    domUpdates.displayCards(user.favoriteRecipes, cardArea, ['favoriteRecipes','recipesToCook','']);
+  }
+  displayRecipeFavoriteOrCooklistLabels(user.favoriteRecipes);
+}
+
+function viewRecipesToCook() {
+  if (user.recipesToCook.length) {
+    domUpdates.displayCards(user.recipesToCook, cardArea, ['recipesToCook','favoriteRecipes','']);
+  }
+  displayRecipeFavoriteOrCooklistLabels(user.recipesToCook);
+}
+
+function returnHome() {
+    domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
+    domUpdates.displayCards(cookbook.recipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
+    displayRecipeFavoriteOrCooklistLabels(cookbook.recipes);
+}
+
+function searchRecipes() {
+  viewSearchedRecipes();
+  clearSearchInput();
+}
+
+function viewSearchedRecipes() {
+  let filteredRecipes = cookbook.findRecipes(searchInput.value.toLowerCase());
+  domUpdates.displayCards(filteredRecipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
+  displayRecipeFavoriteOrCooklistLabels(filteredRecipes);
+}
+
+function clearSearchInput() {
+  searchInput.value = "";
+}
+
 function handleCardAreaButtons(event) {
   if (domUpdates.interactWithClassList('contains', 'favorite', event)) {
     addCardToFavoritesOrCookList(event, 'favoriteRecipes', 'favorite-active');
@@ -91,7 +127,6 @@ function handleCardAreaButtons(event) {
   } else if (domUpdates.interactWithClassList('contains', 'view-details', event)) {
     viewRecipeDetails(event);
   } else if (domUpdates.interactWithClassList('contains', 'cook-recipe-button', event)) {
-    console.log(event.target)
     removeIngredientsUsedToCookRecipe(event);
   } else if (domUpdates.interactWithClassList('contains', 'add-indredients-to-pantry', event)) {
     addMissingIngredientsNeededForRecipe(event);
@@ -106,90 +141,19 @@ function addCardToFavoritesOrCookList(event, listCategory, activeClassName) {
   } else if (domUpdates.interactWithClassList('contains', activeClassName, event)) {
     domUpdates.interactWithClassList('remove', activeClassName, event);
     user.removeFromList(specificRecipe, listCategory)
-    refreshCurrentCardFilter(listCategory);
+    refreshCurrentCardFilterWithUpdatedList(listCategory);
   }
 }
 
-function refreshCurrentCardFilter(cardFilterCategory) {
-  if(domUpdates.interactWithClassList('contains', `${cardFilterCategory}`, event, cardArea)){
-    domUpdates.displayCards(user[cardFilterCategory], cardArea, [`${cardFilterCategory}`,'','']);
-    user[cardFilterCategory].forEach(recipe => {
-      if (user.favoriteRecipes.includes(recipe)) {
-        let recipeID = document.querySelector(`.favorite${recipe.id}`);
-        domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
-      }
-      if (user.recipesToCook.includes(recipe)) {
-        let recipeID = document.querySelector(`.add-button${recipe.id}`);
-        domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
-      }
-    });
+function refreshCurrentCardFilterWithUpdatedList(listCategory) {
+  if(domUpdates.interactWithClassList('contains', `${listCategory}`, event, cardArea)){
+    domUpdates.displayCards(user[listCategory], cardArea, [`${listCategory}`,'','']);
+    displayRecipeFavoriteOrCooklistLabels(user[listCategory]);
   }
 }
 
-function viewFavorites() {
-  if (user.favoriteRecipes.length) {
-    domUpdates.displayCards(user.favoriteRecipes, cardArea, ['favoriteRecipes','recipesToCook','']);
-    getFavorites();
-  }
-  user.favoriteRecipes.forEach(recipe => {
-    if (user.recipesToCook.includes(recipe)) {
-      let recipeID = document.querySelector(`.add-button${recipe.id}`);
-      domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
-    }
-  })
-}
-
-function viewRecipesToCook() {
-  if (user.recipesToCook.length) {
-    domUpdates.displayCards(user.recipesToCook, cardArea, ['recipesToCook','favoriteRecipes','']);
-    getRecipesToCook();
-  }
-  user.recipesToCook.forEach(recipe => {
-    if (user.favoriteRecipes.includes(recipe)) {
-      let recipeID = document.querySelector(`.favorite${recipe.id}`);
-      domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
-    }
-  })
-}
-
-function returnHome() {
-    domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
-    domUpdates.displayCards(cookbook.recipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
-    getFavorites();
-    getRecipesToCook();
-}
-
-function getFavorites() {
-  if (user.favoriteRecipes.length) {
-    user.favoriteRecipes.forEach(recipe => {
-      let recipeID = document.querySelector(`.favorite${recipe.id}`);
-      domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
-    })
-  }
-}
-
-function getRecipesToCook() {
-  if (user.recipesToCook.length) {
-    user.recipesToCook.forEach(recipe => {
-      let recipeID = document.querySelector(`.add-button${recipe.id}`);
-      domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
-    })
-  }
-}
-
-// fupopulateCardLabels(filter) {
-//   user.recipesToCook.forEach(recipe => {
-//     if (user.favoriteRecipes.includes(recipe)) {
-//       let recipeID = document.querySelector(`.favorite${recipe.id}`);
-//       domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
-//     }
-//   })
-// }
-
-function viewSearchedRecipes(event) {
-  let filteredRecipes = cookbook.findRecipes(searchInput.value.toLowerCase());
-  domUpdates.displayCards(filteredRecipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
-  filteredRecipes.forEach(recipe => {
+function displayRecipeFavoriteOrCooklistLabels(currentCardFilter) {
+  currentCardFilter.forEach(recipe => {
     if (user.favoriteRecipes.includes(recipe)) {
       let recipeID = document.querySelector(`.favorite${recipe.id}`);
       domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
@@ -198,12 +162,7 @@ function viewSearchedRecipes(event) {
       let recipeID = document.querySelector(`.add-button${recipe.id}`);
       domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
     }
-    clearInputs(searchInput);
-  })
-}
-
-function clearInputs(element) {
-  element.value = "";
+  });
 }
 
 function viewRecipeDetails(event) {
