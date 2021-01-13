@@ -160,7 +160,7 @@ function displayCardButtons(event) {
     addCardToCookList(event);
   } else if (domUpdates.interactWithClassList('contains', 'view-details', event)) {
     displayDirections(event);
-  } else if (domUpdates.interactWithClassList('contains', 'cook-recipe', event)) {
+  } else if (domUpdates.interactWithClassList('contains', 'cook-recipe-button', event)) {
     console.log(event.target)
     removeIngredients(event);
   } else if (domUpdates.interactWithClassList('contains', 'add-indredients-to-pantry', event)){
@@ -206,7 +206,7 @@ function removeIngredients(event){
       body: JSON.stringify({
         "userID": user.id,
         "ingredientID": ingredient.ingredient,
-        'ingredientModification': ingredient.amountToRemove
+        'ingredientModification': +ingredient.amountToRemove
       }),
     }
     return fetch("http://localhost:3001/api/v1/users", postOption)
@@ -229,7 +229,7 @@ function addIngredients(event){
       body: JSON.stringify({
         "userID": user.id,
         "ingredientID": ingredient.ingredient,
-        'ingredientModification': ingredient.amountToAdd,
+        'ingredientModification': +ingredient.amountToAdd,
       }),
     }
     return fetch("http://localhost:3001/api/v1/users", postOption)

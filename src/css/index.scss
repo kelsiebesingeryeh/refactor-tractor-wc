@@ -74,9 +74,9 @@ h1 {
 }
 
 .all {
-  grid-gap: 0px;
-  grid-template-columns: repeat(1, 1fr);
-  justify-items: center;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  // justify-items: center;
   height: 70vh;
   margin-top: 9rem;
 }
@@ -147,13 +147,13 @@ h1 {
     font-size: .80rem;
   }
 
-  
+
   h1 {
     font-size: 1rem;
     margin: auto;
     width: 22%;
   }
-  
+
   .search-bar {
     width: 60%;
     font-size: .65rem;
@@ -162,7 +162,7 @@ h1 {
     padding: 1px;
     align-items: center;
   }
-  
+
   .search-button {
     margin: auto;
     margin-right: 3px;
@@ -172,7 +172,7 @@ h1 {
   .search-input {
     height: 5vh;
   }
-  
+
   .user-info {
     font-size: 1rem;
     width: 80%;
