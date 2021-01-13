@@ -9,13 +9,13 @@ class Cookbook {
       return recipe.ingredients.find(ingredient => {
         let ingredientName = this.convertIngredientIdToName(ingredient);
         return ingredientName.includes(searchText)
-         || recipe.name.toLowerCase().includes(searchText)
-         || recipe.tags.includes(searchText)
+        || recipe.name.toLowerCase().includes(searchText)
+        || recipe.tags.includes(searchText)
       });
     });
   }
-
-
+  
+  
   convertIngredientIdToName(ingredient) {
     let ingredientData = this.ingredients.find(entry => entry.id === ingredient.id);
     return ingredientData.name;

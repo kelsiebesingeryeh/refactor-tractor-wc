@@ -59,7 +59,7 @@ let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
   if (ingredient.missing > 0){
         let obj = {
           "ingredient": ingredient.id,
-          "amountToAdd": ingredient.missing
+          "amountToAdd": (ingredient.missing * 5)
           };
         acc.push(obj)
       }

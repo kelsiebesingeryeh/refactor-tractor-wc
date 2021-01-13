@@ -8,9 +8,9 @@ import {
 
 let cookbook;
 
-describe('Cookbook', () => {
+describe.only('Cookbook', () => {
   beforeEach(() => {
-    cookbook = new Cookbook(testRecipeData);
+    cookbook = new Cookbook(testRecipeData, testIngredientsData);
   });
 
   it('Should store all recipes', () => {
@@ -19,19 +19,18 @@ describe('Cookbook', () => {
   });
 
   it('Should filter recipes by ingredients', () => {
-    expect(cookbook.findRecipes('milk').length).to.equal(2);
-    expect(cookbook.findRecipes('almond').length).to.equal(1);
-    expect(cookbook.findRecipes('blue').length).to.equal(0);
+    expect(cookbook.findRecipesByTagNameOrIngredient("milk").length).to.equal(
+      2
+    );
+    expect(cookbook.findRecipesByTagNameOrIngredient('almond').length).to.equal(0);
   });
-
   it('Should filter recipes by name', () => {
-    expect(cookbook.findRecipes('macaroni').length).to.equal(1);
-    expect(cookbook.findRecipes('sesame cookies').length).to.equal(0);
+    expect(cookbook.findRecipesByTagNameOrIngredient('macaroni').length).to.equal(1);
+    expect(cookbook.findRecipesByTagNameOrIngredient('sesame cookies').length).to.equal(0);
   });
-
   it('Should filter recipes by tag', () => {
-    expect(cookbook.findRecipes('pasta').length).to.equal(1);
-    expect(cookbook.findRecipes('comfort food').length).to.equal(2);
-    expect(cookbook.findRecipes('rasberry').length).to.equal(0);
+    expect(cookbook.findRecipesByTagNameOrIngredient('pasta').length).to.equal(1);
+    expect(cookbook.findRecipesByTagNameOrIngredient('comfort food').length).to.equal(2);
+    expect(cookbook.findRecipesByTagNameOrIngredient('rasberry').length).to.equal(0);
   });
 })

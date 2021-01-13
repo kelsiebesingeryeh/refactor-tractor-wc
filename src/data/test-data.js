@@ -110,7 +110,6 @@ export let testRecipeData = [
     image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
     ingredients: [
       {
-        name: "elbow macaroni",
         id: 5555,
         quantity: {
           amount: 8,
@@ -118,7 +117,6 @@ export let testRecipeData = [
         },
       },
       {
-        name: "butter",
         id: 1145,
         quantity: {
           amount: 0.25,
@@ -126,7 +124,6 @@ export let testRecipeData = [
         },
       },
       {
-        name: "all purpose flour",
         id: 1111,
         quantity: {
           amount: 0.25,
@@ -134,7 +131,6 @@ export let testRecipeData = [
         },
       },
       {
-        name: "salt",
         id: 2047,
         quantity: {
           amount: 0.5,
@@ -142,7 +138,6 @@ export let testRecipeData = [
         },
       },
       {
-        name: "ground black pepper",
         id: 11220,
         quantity: {
           amount: 0.5,
@@ -150,7 +145,6 @@ export let testRecipeData = [
         },
       },
       {
-        name: "milk",
         id: 777,
         quantity: {
           amount: 1,
@@ -158,7 +152,6 @@ export let testRecipeData = [
         },
       },
       {
-        name: "shredded cheddar cheese",
         id: 1919,
         quantity: {
           amount: 2,
@@ -190,7 +183,6 @@ export let testRecipeData = [
     image: "https://spoonacular.com/recipeImages/678353-556x370.jpg",
     ingredients: [
       {
-        name: "apple cider",
         id: 1009016,
         quantity: {
           amount: 1.5,
@@ -198,7 +190,6 @@ export let testRecipeData = [
         },
       },
       {
-        name: "apples",
         id: 9003,
         quantity: {
           amount: 2,
@@ -206,85 +197,12 @@ export let testRecipeData = [
         },
       },
       {
-        name: "cornstarch",
         id: 20027,
         quantity: {
           amount: 1,
           unit: "tablespoon",
         },
-      },
-      {
-        name: "dijon mustard",
-        id: 1002046,
-        quantity: {
-          amount: 1,
-          unit: "tablespoon",
-        },
-      },
-      {
-        name: "garlic",
-        id: 11215,
-        quantity: {
-          amount: 1,
-          unit: "clove",
-        },
-      },
-      {
-        name: "grainy mustard",
-        id: 1012046,
-        quantity: {
-          amount: 1,
-          unit: "tablespoon",
-        },
-      },
-      {
-        name: "maple syrup",
-        id: 19911,
-        quantity: {
-          amount: 0.25,
-          unit: "cup",
-        },
-      },
-      {
-        name: "Miso Soybean Paste",
-        id: 16112,
-        quantity: {
-          amount: 1,
-          unit: "tablespoon",
-        },
-      },
-      {
-        name: "pork chops",
-        id: 10010062,
-        quantity: {
-          amount: 24,
-          unit: "ounce",
-        },
-      },
-      {
-        name: "salt and pepper",
-        id: 1102047,
-        quantity: {
-          amount: 4,
-          unit: "servings",
-        },
-      },
-      {
-        name: "soy sauce",
-        id: 16124,
-        quantity: {
-          amount: 1,
-          unit: "tablespoon",
-        },
-      },
-      {
-        name: "sriracha",
-        id: 1016168,
-        quantity: {
-          amount: 1,
-          unit: "tablespoon",
-        },
-      },
+      }
     ],
     instructions: [
       {
@@ -301,7 +219,6 @@ export let testRecipeData = [
     image: "https://spoonacular.com/recipeImages/543687-556x370.jpg",
     ingredients: [
       {
-        name: "almond milk",
         id: 93607,
         quantity: {
           amount: 1,
@@ -309,7 +226,6 @@ export let testRecipeData = [
         },
       },
       {
-        name: "graham cracker pie crust",
         id: 18942,
         quantity: {
           amount: 1,
@@ -317,7 +233,6 @@ export let testRecipeData = [
         },
       },
       {
-        name: "pumpkin puree",
         id: 11424,
         quantity: {
           amount: 0.5,
@@ -370,6 +285,36 @@ export let testIngredientsData = [
     id: 1919,
     name: "shredded cheddar cheese",
     estimatedCostInCents: 555,
+  },
+  {
+    id: 1009016,
+    name: "apple cider",
+    estimatedCostInCents: 10,
+  },
+  {
+    id: 9003,
+    name: "pork chops",
+    estimatedCostInCents: 15,
+  },
+  {
+    id: 20027,
+    name: "honey",
+    estimatedCostInCents: 20,
+  },
+  {
+    id: 93607,
+    name: "pumpkin",
+    estimatedCostInCents: 120,
+  },
+  {
+    id: 18942,
+    name: "soy milk",
+    estimatedCostInCents: 220,
+  },
+  {
+    id: 11424,
+    name: "maple syrup",
+    estimatedCostInCents: 230,
   },
 ];
 

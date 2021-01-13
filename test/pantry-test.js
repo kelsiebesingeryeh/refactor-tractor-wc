@@ -48,7 +48,7 @@ describe('Pantry', () => {
     ]);
     let shoppingList = pantryTest2.getMissingPartOfRecipe(recipe);
     expect(pantryTest2.addIngredientsToPantry(shoppingList)).to.deep.equal([
-      { ingredient: 777, amountToAdd: 1 },
+      { ingredient: 777, amountToAdd: 5 },
     ]);
   })
 
