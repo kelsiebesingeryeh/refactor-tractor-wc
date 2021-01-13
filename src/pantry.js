@@ -44,37 +44,30 @@ getMissingPartOfRecipe(recipe) {
 
   removeIngredientsFromPantry(recipe){
   let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
-    this.contents.forEach(item => {
-      if(ingredient.id === item.ingredient){
         let obj = {
-          "ingredient": item.ingredient,
-          "amountToRemove":  -1 * ingredient.quantity.amount
-        }
+          "ingredient": ingredient.id,
+          "amountToRemove": -1 * ingredient.quantity.amount
+        };
         acc.push(obj)
-      }
-    })
     return acc;
   }, [])
-  this.contents = ingredientsInPantry;
-  // return ingredientsInPantry;
+  // this.contents = ingredientsInPantry;
+  return ingredientsInPantry;
 }
 
 addIngredientsToPantry(recipe){
 let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
-    console.log('OUT',ingredient.missing, ingredient.missing > 0)
-  if(ingredient.missing > 0){
-      console.log('IN',ingredient.id)
-      console.log('true')
+  if (ingredient.missing > 0){
         let obj = {
           "ingredient": ingredient.id,
-          "amountToAdd": ingredient.missing,
+          "amountToAdd": ingredient.missing
           };
         acc.push(obj)
       }
       return acc
     }, [])
-    this.contents = ingredientsInPantry;
-    // return ingredientsInPantry;
+    // this.contents = ingredientsInPantry;
+    return ingredientsInPantry;
   }
 
 
