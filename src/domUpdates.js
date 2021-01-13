@@ -74,16 +74,17 @@ let domUpdates = {
     </article>
     <article class='cook-recipe'>
       <h3>Can I Cook It?</h3>
-      <div class='cook-details'>COOK</div>
+      <div class='cook-details'></div>
       <label for='add-ingredients-to-pantry' class='hidden'>Click to add missing ingredients to your pantry
       </label>
-      <button aria-label='add-ingredients-button' class='add-indredients-to-pantry'>Add Ingredients</button>
+      <button aria-label='add-ingredients-button' id='${recipeObject.id}' class='add-indredients-to-pantry'>Add Ingredients</button>
       <label for='cook-recipe' class='hidden'>Click to cook this recipe, and remove ingredients from your pantry
       </label>
-      <button aria-label='add-ingredients-button' class='cook-recipe'>Cook Recipe</button>
+      <button aria-label='cook-recipe-button' id='${recipeObject.id}' class='cook-recipe'>Cook Recipe</button>
     </article>`;
     let ingredientsSpan = document.querySelector('.ingredients');
     let instructionsSpan = document.querySelector('.instructions');
+
     recipeObject.ingredients.forEach(ingredient => {
       ingredientsSpan.insertAdjacentHTML('afterbegin', `<ul><li>
       ${ingredient.quantity.amount.toFixed(2)} ${ingredient.quantity.unit}

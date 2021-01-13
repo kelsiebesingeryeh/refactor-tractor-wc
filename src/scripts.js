@@ -46,6 +46,7 @@ function getUserData() {
   return fetch("http://localhost:3001/api/v1/users")
   .then(response => response.json())
   .then(userData => users = userData)
+  .then(console.log('END'))
   .catch(error => console.log(error))
 }
 
@@ -73,10 +74,10 @@ function onStartup() {
   cookbook = new Cookbook(recipes, ingredientData);
   domUpdates.greetUser(user);
   domUpdates.displayCards(recipes, cardArea);
-  // compilePantryData(cookbook.recipes);
 }
 
 function compilePantryData(recipe) {
+    console.log('BOOM')
     let currentRecipe = new Recipe(recipe, ingredientData)
     let missingIngredients = []
     let costOfRemainingIngredients;
@@ -102,7 +103,6 @@ function viewFavorites() {
   if (user.favoriteRecipes.length) {
     domUpdates.interactWithClassList('add', 'hidden', event, favButton);
     domUpdates.displayCards(user.favoriteRecipes, cardArea);
-    // compilePantryData(user.favoriteRecipes);
     getFavorites();
   }
   user.favoriteRecipes.forEach(recipe => {
@@ -116,7 +116,6 @@ function viewFavorites() {
 function viewRecipesToCook() {
   if (user.recipesToCook.length) {
     domUpdates.displayCards(user.recipesToCook, cardArea);
-    // compilePantryData(user.recipesToCook);
     getRecipesToCook();
   }
   user.recipesToCook.forEach(recipe => {
@@ -137,7 +136,6 @@ function favoriteCard(event) {
     domUpdates.interactWithClassList('remove', 'favorite-active', event);
     user.removeFromList(specificRecipe,'favoriteRecipes')
     domUpdates.displayCards(user.favoriteRecipes, cardArea);
-    // compilePantryData(user.favoriteRecipes);
     getFavorites();
   }
 }
@@ -156,21 +154,23 @@ function addCardToCookList(event) {
 }
 
 function displayCardButtons(event) {
-  console.log(event)
   if (domUpdates.interactWithClassList('contains', 'favorite', event)) {
     favoriteCard(event);
   } else if (domUpdates.interactWithClassList('contains', 'add-button', event) || domUpdates.interactWithClassList('contains', 'add', event)) {
     addCardToCookList(event);
   } else if (domUpdates.interactWithClassList('contains', 'view-details', event)) {
-    console.log('Hi')
     displayDirections(event);
+  } else if (domUpdates.interactWithClassList('contains', 'cook-recipe', event)) {
+    console.log(event.target)
+    removeIngredients(event);
+  } else if (domUpdates.interactWithClassList('contains', 'add-indredients-to-pantry', event)){
+    addIngredients(event);
   }
 }
 
 function returnHome() {
     domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
     domUpdates.displayCards(cookbook.recipes, cardArea);
-    // compilePantryData(cookbook.recipes);
     getFavorites();
     getRecipesToCook();
 }
@@ -194,6 +194,51 @@ function getFavorites() {
   }
 }
 
+function removeIngredients(event){
+  let cookedRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
+  pantry.removeIngredientsFromPantry(cookedRecipe)
+  pantry.contents.forEach(ingredient => {
+    let postOption = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        },
+      body: JSON.stringify({
+        "userID": user.id,
+        "ingredientID": ingredient.ingredient,
+        'ingredientModification': ingredient.amountToRemove
+      }),
+    }
+    return fetch("http://localhost:3001/api/v1/users", postOption)
+      .then(response => response.json())
+      .then(message => console.log(message))
+      .catch(error => console.log(error))
+  })
+}
+
+function addIngredients(event){
+  let replaceRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
+  let shoppingList = pantry.getMissingPartOfRecipe(replaceRecipe)
+  pantry.addIngredientsToPantry(shoppingList)
+  pantry.contents.forEach(ingredient => {
+    let postOption = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        },
+      body: JSON.stringify({
+        "userID": user.id,
+        "ingredientID": ingredient.ingredient,
+        'ingredientModification': ingredient.amountToAdd,
+      }),
+    }
+    return fetch("http://localhost:3001/api/v1/users", postOption)
+      .then(response => response.json())
+      .then(message => console.log(message))
+      .catch(error => console.log(error))
+  })
+}
+
 function getRecipesToCook() {
   if (user.recipesToCook.length) {
     user.recipesToCook.forEach(recipe => {
@@ -206,7 +251,6 @@ function getRecipesToCook() {
 function displaySearchRecipes(event) {
   let filteredRecipes = cookbook.findRecipes(searchInput.value.toLowerCase());
   domUpdates.displayCards(filteredRecipes, cardArea);
-  // compilePantryData(filteredRecipes);
   filteredRecipes.forEach(recipe => {
     if (user.favoriteRecipes.includes(recipe)) {
       let recipeID = document.querySelector(`.favorite${recipe.id}`);
