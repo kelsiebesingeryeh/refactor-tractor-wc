@@ -1,6 +1,9 @@
 let domUpdates = {
-  displayCards(recipesList, cardArea, pantry) {
-    cardArea.classList.remove('all')
+  displayCards(recipesList, cardArea, viewLabels) {
+    this.interactWithClassList('remove', `all`, event, cardArea);
+    this.interactWithClassList('add', `${viewLabels[0]}`, event, cardArea);
+    this.interactWithClassList('remove', `${viewLabels[1]}`, event, cardArea);
+    this.interactWithClassList('remove', `${viewLabels[2]}`, event, cardArea);
     cardArea.innerHTML = '';
     recipesList.forEach(recipe => {
       cardArea.insertAdjacentHTML('afterbegin', `<div id='${recipe.id}'
@@ -25,6 +28,7 @@ let domUpdates = {
     })
   },
 
+
   displayCostMessage(id, missingIngredients, costOfRemainingIngredients) {
     let detailsDiv = document.querySelector(`.cook-details`);
     if(missingIngredients.length === 0){
@@ -41,17 +45,19 @@ let domUpdates = {
     userName.innerText = `Welcome, ${user.name}.`;
   },
   interactWithClassList(method, className, event, element) {
-    if (method === 'add' && element) {
+    if (method === 'add' && element && className) {
       element.classList.add(className);
-    } else if (method === 'remove' && element) {
+    } else if (method === 'remove' && element && className) {
       element.classList.remove(className);
-    } else if (method === 'add' && element === undefined) {
+    } else if (method === 'contains' && className && element) {
+      return element.classList.contains(className);
+    } else if (method === 'add' && element === undefined && className) {
       event.target.classList.add(className);
-    } else if (method === 'remove' && element === undefined) {
+    } else if (method === 'remove' && element === undefined && className) {
       event.target.classList.remove(className);
-    } else if (method === 'contains') {
+    } else if (method === 'contains' && className && element === undefined) {
       return event.target.classList.contains(className);
-    } else if (method === 'toggle' && element) {
+    } else if (method === 'toggle' && element && className) {
       element.classList.toggle(className);
     }
   },

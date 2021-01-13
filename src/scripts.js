@@ -72,7 +72,7 @@ function onStartup() {
   pantry = new Pantry(newUser.pantry)
   cookbook = new Cookbook(recipes, ingredientData);
   domUpdates.greetUser(user);
-  domUpdates.displayCards(recipes, cardArea);
+  domUpdates.displayCards(recipes, cardArea, ['','','']);
 }
 
 function compilePantryData(recipe) {
@@ -100,7 +100,8 @@ function compilePantryData(recipe) {
 function viewFavorites() {
   if (user.favoriteRecipes.length) {
     domUpdates.interactWithClassList('add', 'hidden', event, favButton);
-    domUpdates.displayCards(user.favoriteRecipes, cardArea);
+    console.log(user.favoriteRecipes);
+    domUpdates.displayCards(user.favoriteRecipes, cardArea, ['favoriteRecipes','recipesToCook','']);
     getFavorites();
   }
   user.favoriteRecipes.forEach(recipe => {
@@ -113,7 +114,7 @@ function viewFavorites() {
 
 function viewRecipesToCook() {
   if (user.recipesToCook.length) {
-    domUpdates.displayCards(user.recipesToCook, cardArea);
+    domUpdates.displayCards(user.recipesToCook, cardArea, ['recipesToCook','favoriteRecipes','']);
     getRecipesToCook();
   }
   user.recipesToCook.forEach(recipe => {
@@ -132,9 +133,9 @@ function favoriteCard(event) {
     user.addToList(specificRecipe, 'favoriteRecipes');
   } else if (domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
     domUpdates.interactWithClassList('remove', 'favorite-active', event);
-    user.removeFromList(specificRecipe, 'favoriteRecipes')
-    domUpdates.displayCards(user.favoriteRecipes, cardArea);
+    user.removeFromList(specificRecipe,'favoriteRecipes')
     getFavorites();
+    updateCurrentCardDisplay('favoriteRecipes');
   }
 }
 
@@ -145,9 +146,26 @@ function addCardToCookList(event) {
     user.addToList(specificRecipe, 'recipesToCook');
   } else if (domUpdates.interactWithClassList('contains', 'add-active', event)) {
     domUpdates.interactWithClassList('remove', 'add-active', event);
-    user.removeFromList(specificRecipe, 'recipesToCook');
-    domUpdates.displayCards(user.recipesToCook, cardArea);
+    user.removeFromList(specificRecipe,'recipesToCook');
     getRecipesToCook();
+    updateCurrentCardDisplay('recipesToCook');
+  }
+}
+
+function updateCurrentCardDisplay(cardFilterCategory) {
+  console.log('REMOVE', 'current-action:',cardFilterCategory, 'current-display:',cardArea.classList);
+  if(domUpdates.interactWithClassList('contains', `${cardFilterCategory}`, event, cardArea)){
+    domUpdates.displayCards(user[cardFilterCategory], cardArea, [`${cardFilterCategory}`,'','']);
+    user[cardFilterCategory].forEach(recipe => {
+      if (user.favoriteRecipes.includes(recipe)) {
+        let recipeID = document.querySelector(`.favorite${recipe.id}`);
+        domUpdates.interactWithClassList('add', 'favorite-active', event, recipeID);
+      }
+      if (user.recipesToCook.includes(recipe)) {
+        let recipeID = document.querySelector(`.add-button${recipe.id}`);
+        domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
+      }
+    });
   }
 }
 
@@ -167,10 +185,10 @@ function displayCardButtons(event) {
 }
 
 function returnHome() {
-  domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
-  domUpdates.displayCards(cookbook.recipes, cardArea);
-  getFavorites();
-  getRecipesToCook();
+    domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
+    domUpdates.displayCards(cookbook.recipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
+    getFavorites();
+    getRecipesToCook();
 }
 
 function displayDirections(event) {
@@ -223,11 +241,6 @@ function removeIngredients(event) {
       })
   };
 
-  // chain more and more responses to the .then()
-    // need a function that is doing the get request again after the post request is made
-    // look at domUpdates and call some of those functions
-
-
 function addIngredients(event) {
   let replaceRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   let shoppingList = pantry.getMissingPartOfRecipe(replaceRecipe)
@@ -272,7 +285,7 @@ function getRecipesToCook() {
 
 function displaySearchRecipes(event) {
   let filteredRecipes = cookbook.findRecipes(searchInput.value.toLowerCase());
-  domUpdates.displayCards(filteredRecipes, cardArea);
+  domUpdates.displayCards(filteredRecipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
   filteredRecipes.forEach(recipe => {
     if (user.favoriteRecipes.includes(recipe)) {
       let recipeID = document.querySelector(`.favorite${recipe.id}`);
