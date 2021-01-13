@@ -85,9 +85,9 @@ function createUserWorld(users, recipes, ingredients) {
 
 function handleCardAreaButtons(event) {
   if (domUpdates.interactWithClassList('contains', 'favorite', event)) {
-    favoriteCard(event);
+    addCardToFavoritesOrCookList(event, 'favoriteRecipes', 'favorite-active');
   } else if (domUpdates.interactWithClassList('contains', 'add-button', event) || domUpdates.interactWithClassList('contains', 'add', event)) {
-    addCardToCookList(event);
+    addCardToFavoritesOrCookList(event, 'recipesToCook', 'add-active')
   } else if (domUpdates.interactWithClassList('contains', 'view-details', event)) {
     viewRecipeDetails(event);
   } else if (domUpdates.interactWithClassList('contains', 'cook-recipe-button', event)) {
@@ -98,29 +98,15 @@ function handleCardAreaButtons(event) {
   }
 }
 
-function favoriteCard(event) {
+function addCardToFavoritesOrCookList(event, listCategory, activeClassName) {
   let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
-  if (!domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
-    domUpdates.interactWithClassList('add', 'favorite-active', event);
-    user.addToList(specificRecipe, 'favoriteRecipes');
-  } else if (domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
-    domUpdates.interactWithClassList('remove', 'favorite-active', event);
-    user.removeFromList(specificRecipe,'favoriteRecipes')
-    getFavorites();
-    refreshCurrentCardFilter('favoriteRecipes');
-  }
-}
-
-function addCardToCookList(event) {
-  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
-  if (!domUpdates.interactWithClassList('contains', 'add-active', event)) {
-    domUpdates.interactWithClassList('add', 'add-active', event);
-    user.addToList(specificRecipe, 'recipesToCook');
-  } else if (domUpdates.interactWithClassList('contains', 'add-active', event)) {
-    domUpdates.interactWithClassList('remove', 'add-active', event);
-    user.removeFromList(specificRecipe,'recipesToCook');
-    getRecipesToCook();
-    refreshCurrentCardFilter('recipesToCook');
+  if (!domUpdates.interactWithClassList('contains', activeClassName, event)) {
+    domUpdates.interactWithClassList('add', activeClassName, event);
+    user.addToList(specificRecipe, listCategory);
+  } else if (domUpdates.interactWithClassList('contains', activeClassName, event)) {
+    domUpdates.interactWithClassList('remove', activeClassName, event);
+    user.removeFromList(specificRecipe, listCategory)
+    refreshCurrentCardFilter(listCategory);
   }
 }
 
