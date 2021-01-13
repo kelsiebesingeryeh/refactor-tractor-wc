@@ -80,7 +80,7 @@ let domUpdates = {
       <button aria-label='add-ingredients-button' id='${recipeObject.id}' class='add-indredients-to-pantry'>Add Ingredients</button>
       <label for='cook-recipe' class='hidden'>Click to cook this recipe, and remove ingredients from your pantry
       </label>
-      <button aria-label='cook-recipe-button' id='${recipeObject.id}' class='cook-recipe'>Cook Recipe</button>
+      <button aria-label='cook-recipe-button' id='${recipeObject.id}' class='cook-recipe-button'>Cook Recipe</button>
     </article>`;
     let ingredientsSpan = document.querySelector('.ingredients');
     let instructionsSpan = document.querySelector('.instructions');
