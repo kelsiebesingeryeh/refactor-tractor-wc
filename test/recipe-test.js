@@ -8,7 +8,7 @@ import {
 
 let recipe;
 
-describe.only('Recipe', () => {
+describe('Recipe', () => {
   beforeEach(() => {
     recipe = new Recipe(testRecipeData[0], testIngredientsData);
   });

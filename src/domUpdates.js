@@ -87,7 +87,7 @@ let domUpdates = {
       <div class='cook-details'></div>
       <label for='add-ingredients-to-pantry' class='hidden'>Click to add missing ingredients to your pantry
       </label>
-      <button aria-label='Add Ingredients To Pantry' id='${recipeObject.id}' class='add-indredients-to-pantry'>Add Ingredients</button>
+      <button aria-label='Add Ingredients To Pantry' id='${recipeObject.id}' class='add-ingredients-to-pantry'>Add Ingredients</button>
       <label for='cook-recipe' class='hidden'>Click to cook this recipe, and remove ingredients from your pantry
       </label>
       <button aria-label='Cook This Recipe' id='${recipeObject.id}' class='cook-recipe-button'>Cook Recipe</button>

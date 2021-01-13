@@ -27,7 +27,6 @@ homeButton.addEventListener("click", returnHome);
 favButton.addEventListener('click', viewFavorites);
 toCookButton.addEventListener('click', viewRecipesToCook);
 searchButton.addEventListener("click", searchRecipes);
-searchInput.addEventListener("keyup", viewSearchedRecipes);
 
 hamburgerMenu.addEventListener('click', toggleHamburgerMenuDropdown);
 mobileFavButton.addEventListener("click", viewFavorites);
@@ -79,7 +78,7 @@ function createUserWorld(users, recipes, ingredients) {
   let newUser = users.find(user => {
     return user.id === Number(userId);
   });
-  user = new User(userId, newUser.name, newUser.pantry)
+  user = new User(userId, newUser.name, newUser.pantry, ingredients)
   pantry = new Pantry(newUser.pantry)
   cookbook = new Cookbook(recipes, ingredients);
 }
@@ -113,7 +112,12 @@ function searchRecipes() {
 }
 
 function viewSearchedRecipes() {
-  let filteredRecipes = cookbook.findRecipesByTagNameOrIngredient(searchInput.value.toLowerCase());
+  let filteredRecipes;
+  if (domUpdates.interactWithClassList('contains', 'favoriteRecipes', event, cardArea)) {
+  filteredRecipes = user.findFavorites(searchInput.value);
+  } else {
+  filteredRecipes = cookbook.findRecipesByTagNameOrIngredient(searchInput.value.toLowerCase());
+  }
   domUpdates.displayCards(filteredRecipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
   displayRecipeFavoriteOrCooklistLabels(filteredRecipes);
 }
@@ -127,7 +131,7 @@ function handleCardAreaButtons(event) {
     viewRecipeDetails(event);
   } else if (domUpdates.interactWithClassList('contains', 'cook-recipe-button', event)) {
     removeIngredientsUsedToCookRecipe(event);
-  } else if (domUpdates.interactWithClassList('contains', 'add-indredients-to-pantry', event)) {
+  } else if (domUpdates.interactWithClassList('contains', 'add-ingredients-to-pantry', event)) {
     addMissingIngredientsNeededForRecipe(event);
   }
 }
