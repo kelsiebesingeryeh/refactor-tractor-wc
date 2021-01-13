@@ -260,8 +260,8 @@ function displaySearchRecipes(event) {
       let recipeID = document.querySelector(`.add-button${recipe.id}`);
       domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
     }
+    clearInputs(searchInput);
   })
-  clearInputs(searchInput);
 }
 
 function clearInputs(element) {
