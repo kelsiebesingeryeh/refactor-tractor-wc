@@ -17,11 +17,21 @@
     border-radius: 5px 5px 0px 0px;
 }
 
+.info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 9rem;
+}
+
 .recipe-name {
     display: block;
     font-size: 150%;
     text-align: center;
     font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 0;
 }
 
 .card-picture {
