@@ -51,7 +51,6 @@ getMissingPartOfRecipe(recipe) {
         acc.push(obj)
     return acc;
   }, [])
-  // this.contents = ingredientsInPantry;
   return ingredientsInPantry;
 }
 
@@ -66,7 +65,6 @@ let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
       }
       return acc
     }, [])
-    // this.contents = ingredientsInPantry;
     return ingredientsInPantry;
   }
 
