@@ -29,7 +29,7 @@ toCookButton.addEventListener('click', viewRecipesToCook);
 searchButton.addEventListener("click", searchRecipes);
 searchInput.addEventListener("keyup", viewSearchedRecipes);
 
-hamburgerMenu.addEventListener('click', toggleMenu);
+hamburgerMenu.addEventListener('click', toggleHamburgerMenuDropdown);
 mobileFavButton.addEventListener("click", viewFavorites);
 mobileToCookButton.addEventListener("click", viewRecipesToCook);
 mobileHomeButton.addEventListener("click", returnHome);
@@ -104,6 +104,10 @@ function returnHome() {
     displayRecipeFavoriteOrCooklistLabels(cookbook.recipes);
 }
 
+function toggleHamburgerMenuDropdown() {
+  domUpdates.interactWithClassList("toggle", "hidden", event, hamburgerMenuContent);
+}
+
 function searchRecipes() {
   viewSearchedRecipes();
   clearSearchInput();
@@ -166,25 +170,23 @@ function displayRecipeFavoriteOrCooklistLabels(currentCardFilter) {
 }
 
 function viewRecipeDetails(event) {
-  domUpdates.interactWithClassList('remove', 'hidden', event, favButton)
-  let newRecipeInfo = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
+  let newRecipeInfo = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id));
   let recipeObject = new Recipe(newRecipeInfo, cookbook.ingredients);
   let cost = recipeObject.calculateCost();
   domUpdates.interactWithClassList('add', 'all', event, cardArea);
   domUpdates.populateRecipeDetails(cardArea, recipeObject, cost);
-  compilePantryData(recipeObject)
+  compilePantryData(recipeObject);
 }
 
 function compilePantryData(recipe) {
-  let currentRecipe = new Recipe(recipe, cookbook.ingredients)
   let missingIngredients = []
   let costOfRemainingIngredients;
-  if (!pantry.determineEnoughIngredients(currentRecipe)) {
-    missingIngredients = listMissingIngredients(currentRecipe);
-    costOfRemainingIngredients = pantry.calculateMissingCost(currentRecipe);
+  if (!pantry.determineEnoughIngredients(recipe)) {
+    missingIngredients = listMissingIngredients(recipe);
+    costOfRemainingIngredients = pantry.calculateMissingCost(recipe);
     domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
   } else {
-    costOfRemainingIngredients = pantry.calculateMissingCost(currentRecipe)
+    costOfRemainingIngredients = pantry.calculateMissingCost(recipe)
     domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
   }
 }
@@ -204,38 +206,23 @@ function addMissingIngredientsNeededForRecipe(event) {
   let shoppingList = pantry.getMissingPartOfRecipe(replaceRecipe)
   let newIngredients = pantry.addIngredientsToPantry(shoppingList)
   newIngredients.forEach((ingredient) => {
-    let postOption = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userID: user.id,
-        ingredientID: ingredient.ingredient,
-        ingredientModification: ingredient.amountToAdd
-      }),
-    };
-    return fetch("http://localhost:3001/api/v1/users", postOption)
-      .then((response) => response.json())
-      .then((message) => {
-        console.log(message);
-        Promise.all([getUserData(), getRecipeData(), getIngredientData()])
-      .then((data) => {
-        let updatedUserData = data[0];
-        user.pantry = updatedUserData.find(entry => entry.id === user.id).pantry
-        pantry.contents = user.pantry
-        compilePantryData(replaceRecipe)
-          })
-        })
-      .catch((error) => console.log(error));
-      })
-  };
+    let postOption = createPostOption(ingredient, 'amountToAdd');
+    return updatePantryDataWithNewIngredientQuantities(postOption, replaceRecipe);
+  })
+};
 
 function removeIngredientsUsedToCookRecipe(event) {
-  let cookedRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
+  let newRecipeInfo = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id));
+  let cookedRecipe = new Recipe(newRecipeInfo, cookbook.ingredients);
   let removedIngredients = pantry.removeIngredientsFromPantry(cookedRecipe)
   removedIngredients.forEach((ingredient) => {
-    let postOption = {
+    let postOption = createPostOption(ingredient, 'amountToRemove');
+     return updatePantryDataWithNewIngredientQuantities(postOption, cookedRecipe);
+  })
+};
+
+  function createPostOption(ingredient, modifyingProperty) {
+    return {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -243,26 +230,23 @@ function removeIngredientsUsedToCookRecipe(event) {
       body: JSON.stringify({
         userID: user.id,
         ingredientID: ingredient.ingredient,
-        ingredientModification: ingredient.amountToRemove,
+        ingredientModification: ingredient[modifyingProperty]
       }),
     };
-     return fetch("http://localhost:3001/api/v1/users", postOption)
-      .then((response) => response.json())
-      .then((message) => {
-        console.log(message);
-        Promise.all([getUserData(), getRecipeData(), getIngredientData()])
-      .then((data) => {
-        let updatedUserData = data[0];
-        user.pantry = updatedUserData.find(entry => entry.id === user.id).pantry
-        pantry.contents = user.pantry
-        compilePantryData(cookedRecipe);
-          })
-        })
-      .catch((error) => console.log(error));
-      })
-  };
+  }
 
-
-function toggleMenu() {
-  domUpdates.interactWithClassList("toggle", "hidden", event, hamburgerMenuContent);
+function updatePantryDataWithNewIngredientQuantities(postOption, recipe) {
+  return fetch("http://localhost:3001/api/v1/users", postOption)
+   .then((response) => response.json())
+   .then((message) => {
+     console.log(message);
+     Promise.all([getUserData(), getRecipeData(), getIngredientData()])
+   .then((data) => {
+     let updatedUserData = data[0];
+     user.pantry = updatedUserData.find(entry => entry.id === user.id).pantry
+     pantry.contents = user.pantry
+     compilePantryData(recipe);
+       })
+     })
+   .catch((error) => console.log(error));
 }
