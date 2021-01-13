@@ -114,7 +114,7 @@ function searchRecipes() {
 }
 
 function viewSearchedRecipes() {
-  let filteredRecipes = cookbook.findRecipes(searchInput.value.toLowerCase());
+  let filteredRecipes = cookbook.findRecipesByTagNameOrIngredient(searchInput.value.toLowerCase());
   domUpdates.displayCards(filteredRecipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
   displayRecipeFavoriteOrCooklistLabels(filteredRecipes);
 }
