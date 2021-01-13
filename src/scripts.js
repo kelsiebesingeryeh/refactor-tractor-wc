@@ -127,26 +127,28 @@ function viewRecipesToCook() {
 
 
 function favoriteCard(event) {
-  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
+  let specicId = Number(event.target.id.replace('-fav', ''))
+  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === specicId)
   if (!domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
     domUpdates.interactWithClassList('add', 'favorite-active', event);
-    user.addToList(`${specificRecipe}-fav`, 'favoriteRecipes');
+    user.addToList(specificRecipe, 'favoriteRecipes');
   } else if (domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
     domUpdates.interactWithClassList('remove', 'favorite-active', event);
-    user.removeFromList(`${specificRecipe}-fav`,'favoriteRecipes')
+    user.removeFromList(specificRecipe,'favoriteRecipes')
     getFavorites();
     updateCurrentCardDisplay('favoriteRecipes');
   }
 }
 
 function addCardToCookList(event) {
-  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
+  let specicId = Number(event.target.id.replace('-add', ''))
+  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === specicId)
   if (!domUpdates.interactWithClassList('contains', 'add-active', event)) {
     domUpdates.interactWithClassList('add', 'add-active', event);
-    user.addToList(`${specificRecipe}-add`, 'recipesToCook');
+    user.addToList(specificRecipe, 'recipesToCook');
   } else if (domUpdates.interactWithClassList('contains', 'add-active', event)) {
     domUpdates.interactWithClassList('remove', 'add-active', event);
-    user.removeFromList(`${specificRecipe}-add`,'recipesToCook');
+    user.removeFromList(specificRecipe,'recipesToCook');
     getRecipesToCook();
     updateCurrentCardDisplay('recipesToCook');
   }
