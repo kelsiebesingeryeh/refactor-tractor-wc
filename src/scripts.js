@@ -99,7 +99,6 @@ function compilePantryData(recipe) {
 
 function viewFavorites() {
   if (user.favoriteRecipes.length) {
-    domUpdates.interactWithClassList('add', 'hidden', event, favButton);
     console.log(user.favoriteRecipes);
     domUpdates.displayCards(user.favoriteRecipes, cardArea, ['favoriteRecipes','recipesToCook','']);
     getFavorites();
