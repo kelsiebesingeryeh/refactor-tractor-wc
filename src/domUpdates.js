@@ -33,7 +33,7 @@ let domUpdates = {
 
   displayCostMessage(id, missingIngredients, costOfRemainingIngredients) {
     let detailsDiv = document.querySelector(`.cook-details`);
-    if(missingIngredients.length === 0){
+    if (missingIngredients.length === 0) {
       detailsDiv.innerHTML = `<p class='details-title'>Yes You Can!</p><p class='details-message'>You have ALL the ingredients in your pantry to cook this meal.</p>`
     } else {
       detailsDiv.innerHTML = `<p class='details-title'>No You Can't!</p><p class='details-message'>You will have to go shopping to get some of the ingredients needed to cook this meal.</p>

@@ -1,4 +1,6 @@
-import { expect } from 'chai';
+import {
+  expect
+} from 'chai';
 
 import User from '../src/user.js';
 import {
@@ -24,12 +26,12 @@ describe('User', () => {
     expect(user1.favoriteRecipes).to.eql([]);
   });
 
-  it('Should be able to add recipes to favoriteRecipes', () =>{
+  it('Should be able to add recipes to favoriteRecipes', () => {
     user1.addToList(testRecipeData[0], "favoriteRecipes");
     expect(user1.favoriteRecipes.includes(testRecipeData[0])).to.eql(true);
   });
 
-  it('Should be able to remove recipes from favoriteRecipes', () =>{
+  it('Should be able to remove recipes from favoriteRecipes', () => {
     user1.removeFromList(testRecipeData[0], "favoriteRecipes");
     expect(user1.favoriteRecipes).to.eql([]);
   });

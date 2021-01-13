@@ -26,7 +26,7 @@ class User {
           ingredientName.includes(searchText) ||
           recipe.name.toLowerCase().includes(searchText) ||
           recipe.tags.includes(searchText)
-          );
+        );
       });
     });
   }

@@ -1,4 +1,6 @@
-import {expect} from 'chai';
+import {
+  expect
+} from 'chai';
 
 import Cookbook from '../src/cookbook';
 import {

@@ -1,10 +1,16 @@
-import { expect } from 'chai';
+import {
+  expect
+} from 'chai';
 
 import User from '../src/user.js';
 import Pantry from '../src/pantry.js';
 import Recipe from '../src/recipe.js';
 import Cookbook from '../src/cookbook.js';
-import { testUsers, testIngredientsData, testRecipeData } from '../src/data/test-data.js';
+import {
+  testUsers,
+  testIngredientsData,
+  testRecipeData
+} from '../src/data/test-data.js';
 
 let userData = testUsers[1];
 let userData2 = testUsers[2];
@@ -18,7 +24,7 @@ let pantryTest2;
 let recipe;
 
 describe('Pantry', () => {
-  beforeEach( () => {
+  beforeEach(() => {
     cookbook = new Cookbook(recipeData)
     user1 = new User(userData.id, userData.name, userData.pantry)
     user2 = new User(userData2.id, userData2.name, userData2.pantry)
@@ -37,26 +43,46 @@ describe('Pantry', () => {
   })
 
   it('should return the amounts of ingredients to be removed or added upon cooking recipe', () => {
-    expect(pantryTest.removeIngredientsFromPantry(recipe)).to.deep.equal([
-      { ingredient: 5555, amountToRemove: -8 },
-      { ingredient: 1145, amountToRemove: -0.25 },
-      { ingredient: 1111, amountToRemove: -0.25 },
-      { ingredient: 2047, amountToRemove: -0.5 },
-      { ingredient: 11220, amountToRemove: -0.5 },
-      { ingredient: 777, amountToRemove: -1 },
-      { ingredient: 1919, amountToRemove: -2 },
+    expect(pantryTest.removeIngredientsFromPantry(recipe)).to.deep.equal([{
+        ingredient: 5555,
+        amountToRemove: -8
+      },
+      {
+        ingredient: 1145,
+        amountToRemove: -0.25
+      },
+      {
+        ingredient: 1111,
+        amountToRemove: -0.25
+      },
+      {
+        ingredient: 2047,
+        amountToRemove: -0.5
+      },
+      {
+        ingredient: 11220,
+        amountToRemove: -0.5
+      },
+      {
+        ingredient: 777,
+        amountToRemove: -1
+      },
+      {
+        ingredient: 1919,
+        amountToRemove: -2
+      },
     ]);
     let shoppingList = pantryTest2.getMissingPartOfRecipe(recipe);
-    expect(pantryTest2.addIngredientsToPantry(shoppingList)).to.deep.equal([
-      { ingredient: 777, amountToAdd: 5 },
-    ]);
+    expect(pantryTest2.addIngredientsToPantry(shoppingList)).to.deep.equal([{
+      ingredient: 777,
+      amountToAdd: 5
+    }, ]);
   })
 
   it('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', () => {
     expect(
       pantryTest2.getMissingPartOfRecipe(recipe).ingredients
-    ).to.deep.equal([
-      {
+    ).to.deep.equal([{
         name: "elbow macaroni",
         id: 5555,
         quantity: {
