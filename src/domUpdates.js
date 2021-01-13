@@ -15,8 +15,10 @@ let domUpdates = {
       </label>
       <button id='${recipe.id}-fav' aria-label='Favorite Button' class='favorite favorite${recipe.id} card-button'>
       </button></header>
-      <img id='${recipe.id}-img' tabindex='0' class='card-picture'
-      src='${recipe.image}' alt='Food from recipe'>
+      <div class="image-styling">
+        <img id='${recipe.id}-img' tabindex='0' class='card-picture'
+        src='${recipe.image}' alt='Food from recipe'>
+      </div>
         <div class='info-card'>
           <p id='${recipe.id}-name' class='recipe-name'>${recipe.name}</p>
           <label for='view-details' class='hidden'>Click to view recipe details
@@ -81,7 +83,7 @@ let domUpdates = {
     </div>
     </article>
     <article class='cook-recipe'>
-      <h3 class="cook-it">Can I Cook It?</h3>
+      <h3>Can I Cook It?</h3>
       <div class='cook-details'></div>
       <label for='add-ingredients-to-pantry' class='hidden'>Click to add missing ingredients to your pantry
       </label>
