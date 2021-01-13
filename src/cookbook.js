@@ -4,7 +4,7 @@ class Cookbook {
     this.ingredients = ingredientsData;
   }
 
-  findRecipes(searchText) {
+  findRecipesByTagNameOrIngredient(searchText) {
     return this.recipes.filter(recipe => {
       return recipe.ingredients.find(ingredient => {
         let ingredientName = this.convertIngredientIdToName(ingredient);
