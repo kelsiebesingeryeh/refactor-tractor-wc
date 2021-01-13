@@ -68,7 +68,7 @@
 }
 
 .view-details,
-.add-indredients-to-pantry,
+.add-ingredients-to-pantry,
 .cook-recipe-button {
     background-color: $copper-rust;
     border: none;
@@ -78,7 +78,8 @@
     font-family: $raleway-font;
     font-size: 1.25rem;
     font-weight: bold;
-    height: 2.5rem;
+    // height: 2.5rem;
+    padding: 7px;
     margin-bottom: 0.9rem;
     width: 50%;
 

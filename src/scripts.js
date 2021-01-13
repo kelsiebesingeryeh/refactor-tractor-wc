@@ -185,9 +185,13 @@ function compilePantryData(recipe) {
     missingIngredients = listMissingIngredients(recipe);
     costOfRemainingIngredients = pantry.calculateMissingCost(recipe);
     domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+    domUpdates.interactWithClassList("add", "add-active", event, recipeID);
+    //cookbutton disables
   } else {
     costOfRemainingIngredients = pantry.calculateMissingCost(recipe)
     domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+    //addingrdient disables
+    //cook enabled
   }
 }
 
