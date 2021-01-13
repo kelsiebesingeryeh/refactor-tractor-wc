@@ -261,4 +261,9 @@ function displaySearchRecipes(event) {
       domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
     }
   })
+  clearInputs(searchInput);
 }
+
+function clearInputs(element) {
+    element.value = "";
+  }
