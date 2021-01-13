@@ -64,7 +64,7 @@ let domUpdates = {
   displayOneLiners(element, text) {
     element.innerText = text;
   },
-  populateRecipeCard(cardArea, recipeObject, costInDollars) {
+  populateRecipeDetails(cardArea, recipeObject, costInDollars) {
     cardArea.innerHTML = `
     <article class= "recipe-details">
     <h3>${recipeObject.name}</h3>
