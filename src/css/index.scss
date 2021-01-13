@@ -37,12 +37,13 @@ main {
 
 h1 {
   font-size: 255%;
+  font-weight: bold;
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 10px;
   text-align: center;
   width: 30%;
-  color: $sun-yellow;
+  color: $copper-rust;
 }
 
 .user-info {
@@ -159,7 +160,7 @@ h1 {
 
 
   h1 {
-    font-size: 1rem;
+    font-size: 1.5rem;
     margin: auto;
     width: 22%;
   }
@@ -229,5 +230,4 @@ h1 {
   .recipe-details {
     margin: auto;
   }
-
 }
