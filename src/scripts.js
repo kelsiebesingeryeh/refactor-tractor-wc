@@ -44,10 +44,9 @@ function loadData() {
 
 function getUserData() {
   return fetch("http://localhost:3001/api/v1/users")
-  .then(response => response.json())
-  .then(userData => users = userData)
-  .then(console.log('END'))
-  .catch(error => console.log(error))
+    .then(response => response.json())
+    .then(userData => users = userData)
+    .catch(error => console.log(error))
 }
 
 function getRecipeData() {
@@ -55,14 +54,14 @@ function getRecipeData() {
     .then(response => response.json())
     .then(recipeData => recipes = recipeData)
     .catch(error => console.log(error))
-  }
+}
 
-  function getIngredientData() {
-    return fetch("http://localhost:3001/api/v1/ingredients")
+function getIngredientData() {
+  return fetch("http://localhost:3001/api/v1/ingredients")
     .then(response => response.json())
     .then(data => ingredientData = data)
     .catch(error => console.log(error))
-  }
+}
 
 function onStartup() {
   let userId = (Math.floor(Math.random() * 49) + 1)
@@ -77,19 +76,18 @@ function onStartup() {
 }
 
 function compilePantryData(recipe) {
-    console.log('BOOM')
-    let currentRecipe = new Recipe(recipe, ingredientData)
-    let missingIngredients = []
-    let costOfRemainingIngredients;
-    if(!pantry.determineEnoughIngredients(currentRecipe)){
+  console.log('BOOM')
+  let currentRecipe = new Recipe(recipe, ingredientData)
+  let missingIngredients = []
+  let costOfRemainingIngredients;
+  if (!pantry.determineEnoughIngredients(currentRecipe)) {
     missingIngredients = pantry.getMissingPartOfRecipe(currentRecipe).ingredients.reduce((acc, ingredient) => {
-      if(ingredient.missing > 0) {
+      if (ingredient.missing > 0) {
         let specificIngredient = ingredientData.find(item => item.id === ingredient.id);
         acc.push(specificIngredient.name);
       }
       return acc;
-      }, []
-    );
+    }, []);
     costOfRemainingIngredients = pantry.calculateMissingCost(currentRecipe)
     domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
   } else {
@@ -134,7 +132,7 @@ function favoriteCard(event) {
     user.addToList(specificRecipe, 'favoriteRecipes');
   } else if (domUpdates.interactWithClassList('contains', 'favorite-active', event)) {
     domUpdates.interactWithClassList('remove', 'favorite-active', event);
-    user.removeFromList(specificRecipe,'favoriteRecipes')
+    user.removeFromList(specificRecipe, 'favoriteRecipes')
     domUpdates.displayCards(user.favoriteRecipes, cardArea);
     getFavorites();
   }
@@ -147,7 +145,7 @@ function addCardToCookList(event) {
     user.addToList(specificRecipe, 'recipesToCook');
   } else if (domUpdates.interactWithClassList('contains', 'add-active', event)) {
     domUpdates.interactWithClassList('remove', 'add-active', event);
-    user.removeFromList(specificRecipe,'recipesToCook');
+    user.removeFromList(specificRecipe, 'recipesToCook');
     domUpdates.displayCards(user.recipesToCook, cardArea);
     getRecipesToCook();
   }
@@ -160,19 +158,19 @@ function displayCardButtons(event) {
     addCardToCookList(event);
   } else if (domUpdates.interactWithClassList('contains', 'view-details', event)) {
     displayDirections(event);
-  } else if (domUpdates.interactWithClassList('contains', 'cook-recipe', event)) {
+  } else if (domUpdates.interactWithClassList('contains', 'cook-recipe-button', event)) {
     console.log(event.target)
     removeIngredients(event);
-  } else if (domUpdates.interactWithClassList('contains', 'add-indredients-to-pantry', event)){
+  } else if (domUpdates.interactWithClassList('contains', 'add-indredients-to-pantry', event)) {
     addIngredients(event);
   }
 }
 
 function returnHome() {
-    domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
-    domUpdates.displayCards(cookbook.recipes, cardArea);
-    getFavorites();
-    getRecipesToCook();
+  domUpdates.interactWithClassList('remove', 'hidden', event, favButton);
+  domUpdates.displayCards(cookbook.recipes, cardArea);
+  getFavorites();
+  getRecipesToCook();
 }
 
 function displayDirections(event) {
@@ -194,50 +192,74 @@ function getFavorites() {
   }
 }
 
-function removeIngredients(event){
+function removeIngredients(event) {
   let cookedRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
-  pantry.removeIngredientsFromPantry(cookedRecipe)
-  pantry.contents.forEach(ingredient => {
+  let removedIngredients = pantry.removeIngredientsFromPantry(cookedRecipe)
+  removedIngredients.forEach((ingredient) => {
+    console.log("HI", ingredient);
     let postOption = {
-      method: 'POST',
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
-        },
+      },
       body: JSON.stringify({
-        "userID": user.id,
-        "ingredientID": ingredient.ingredient,
-        'ingredientModification': ingredient.amountToRemove
+        userID: user.id,
+        ingredientID: ingredient.ingredient,
+        ingredientModification: ingredient.amountToRemove,
       }),
-    }
-    return fetch("http://localhost:3001/api/v1/users", postOption)
-      .then(response => response.json())
-      .then(message => console.log(message))
-      .catch(error => console.log(error))
-  })
-}
+    };
+     return fetch("http://localhost:3001/api/v1/users", postOption)
+      .then((response) => response.json())
+      .then((message) => {
+        console.log(message);
+        Promise.all([getUserData(), getRecipeData(), getIngredientData()])
+      .then((data) => {
+        user.pantry = users.find(entry => entry.id === user.id).pantry
+        pantry.contents = user.pantry
+        compilePantryData(cookedRecipe);
+          })
+        })
+      .catch((error) => console.log(error));
+      })
+  };
 
-function addIngredients(event){
+  // chain more and more responses to the .then()
+    // need a function that is doing the get request again after the post request is made
+    // look at domUpdates and call some of those functions
+
+
+function addIngredients(event) {
   let replaceRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   let shoppingList = pantry.getMissingPartOfRecipe(replaceRecipe)
-  pantry.addIngredientsToPantry(shoppingList)
-  pantry.contents.forEach(ingredient => {
+  console.log('SHOPPING LIST', shoppingList)
+  let newIngredients = pantry.addIngredientsToPantry(shoppingList)
+  console.log('NEW', newIngredients)
+  newIngredients.forEach((ingredient) => {
     let postOption = {
-      method: 'POST',
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
-        },
+      },
       body: JSON.stringify({
-        "userID": user.id,
-        "ingredientID": ingredient.ingredient,
-        'ingredientModification': ingredient.amountToAdd,
+        userID: user.id,
+        ingredientID: ingredient.ingredient,
+        ingredientModification: ingredient.amountToAdd
       }),
-    }
+    };
     return fetch("http://localhost:3001/api/v1/users", postOption)
-      .then(response => response.json())
-      .then(message => console.log(message))
-      .catch(error => console.log(error))
-  })
-}
+      .then((response) => response.json())
+      .then((message) => {
+        console.log(message);
+        Promise.all([getUserData(), getRecipeData(), getIngredientData()])
+      .then((data) => {
+        user.pantry = users.find(entry => entry.id === user.id).pantry
+        pantry.contents = user.pantry
+        compilePantryData(replaceRecipe)
+          })
+        })
+      .catch((error) => console.log(error));
+      })
+  };
 
 function getRecipesToCook() {
   if (user.recipesToCook.length) {
@@ -260,5 +282,10 @@ function displaySearchRecipes(event) {
       let recipeID = document.querySelector(`.add-button${recipe.id}`);
       domUpdates.interactWithClassList('add', 'add-active', event, recipeID);
     }
+    clearInputs(searchInput);
   })
+}
+
+function clearInputs(element) {
+  element.value = "";
 }
