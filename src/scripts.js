@@ -125,9 +125,9 @@ function clearSearchInput() {
 
 function handleCardAreaButtons(event) {
   if (domUpdates.interactWithClassList('contains', 'favorite', event)) {
-    addCardToFavoritesOrCookList(event, 'favoriteRecipes', 'favorite-active');
+    addCardToFavoritesOrCookList(event, 'favoriteRecipes', 'favorite-active', '-fav');
   } else if (domUpdates.interactWithClassList('contains', 'add-button', event) || domUpdates.interactWithClassList('contains', 'add', event)) {
-    addCardToFavoritesOrCookList(event, 'recipesToCook', 'add-active')
+    addCardToFavoritesOrCookList(event, 'recipesToCook', 'add-active', '-add')
   } else if (domUpdates.interactWithClassList('contains', 'view-details', event)) {
     viewRecipeDetails(event);
   } else if (domUpdates.interactWithClassList('contains', 'cook-recipe-button', event)) {
@@ -137,8 +137,9 @@ function handleCardAreaButtons(event) {
   }
 }
 
-function addCardToFavoritesOrCookList(event, listCategory, activeClassName) {
-  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
+function addCardToFavoritesOrCookList(event, listCategory, activeClassName, idName) {
+  let specicId = Number(event.target.id.replace(idName, ''))
+  let specificRecipe = cookbook.recipes.find(recipe => recipe.id === specicId)
   if (!domUpdates.interactWithClassList('contains', activeClassName, event)) {
     domUpdates.interactWithClassList('add', activeClassName, event);
     user.addToList(specificRecipe, listCategory);
