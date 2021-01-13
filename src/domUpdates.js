@@ -16,7 +16,7 @@ let domUpdates = {
       <button id='${recipe.id}-fav' aria-label='Favorite Button' class='favorite favorite${recipe.id} card-button'>
       </button></header>
       <div class="image-styling">
-        <img id='${recipe.id}-img' tabindex='0' class='card-picture'
+        <img id='${recipe.id}-img' class='card-picture'
         src='${recipe.image}' alt='Food from recipe'>
       </div>
         <div class='info-card'>

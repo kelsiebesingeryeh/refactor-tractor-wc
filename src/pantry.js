@@ -4,11 +4,7 @@ class Pantry {
   }
 
 getMissingPartOfRecipe(recipe) {
-  let newRecipe = Object.keys(recipe).reduce((acc, key) => {
-    acc[key] = recipe[key]
-    return acc;
-  }, {})
-  let newIngredients = newRecipe.ingredients.map(ingredient => {
+  let newIngredients = recipe.ingredients.map(ingredient => {
       if(!this.contents.some(entry => entry.ingredient === ingredient.id)) {
         ingredient.missing = ingredient.quantity.amount;
         return ingredient;
@@ -24,8 +20,8 @@ getMissingPartOfRecipe(recipe) {
         return ingredient;
       }
     });
-    newRecipe.ingredients = newIngredients;
-    return newRecipe;
+    recipe.ingredients = newIngredients;
+    return recipe;
   }
 
   determineEnoughIngredients(recipe) {
@@ -42,35 +38,25 @@ getMissingPartOfRecipe(recipe) {
     return (totalCents / 100).toFixed(2);
   }
 
-  removeIngredientsFromPantry(recipe){
-  let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
-        let obj = {
-          "ingredient": ingredient.id,
-          "amountToRemove": -1 * ingredient.quantity.amount
-        };
-        acc.push(obj)
-    return acc;
-  }, [])
-  // this.contents = ingredientsInPantry;
-  return ingredientsInPantry;
-}
-
-addIngredientsToPantry(recipe){
-let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
-  if (ingredient.missing > 0){
+  getIngredientsToUpdate(recipe, updateType){
+    let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
+      if(updateType === 'add' && ingredient.missing > 0){
         let obj = {
           "ingredient": ingredient.id,
           "amountToAdd": ingredient.missing
           };
         acc.push(obj)
+      } else if(updateType === 'remove') {
+        let obj = {
+          "ingredient": ingredient.id,
+          "amountToRemove": -1 * ingredient.quantity.amount
+        };
+        acc.push(obj)
       }
       return acc
     }, [])
-    // this.contents = ingredientsInPantry;
-    return ingredientsInPantry;
+    return ingredientsInPantry
   }
-
-
 }
 
 
