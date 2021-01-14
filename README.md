@@ -103,6 +103,11 @@ In the recipe details view, the user is also given a `Can I Cook It?` card. This
 
 At anytime, the user can return to the main page by clicking the `Home` button.
 
+### Mobile Friendly Responsive Design
+
+In addition to all the functionality above, we made the application completely responsive for mobile, tablet and large screens.
+![demo-search](https://media.giphy.com/media/AlQGBKw8TET37hnDHT/giphy.gif)
+
 [Back to Top of Page](#table-of-contents)
 
 ---
