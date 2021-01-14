@@ -38,12 +38,4 @@
 .card-picture {
     height: 300px;
     width: auto;
-
-    &:hover {
-        opacity: 0.7;
-    }
-
-    &:active {
-        border: 2px solid #000;
-    }
 }

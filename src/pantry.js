@@ -3,13 +3,9 @@ class Pantry {
     this.contents = userIngredients;
   }
 
-  getMissingPartOfRecipe(recipe) {
-    let newRecipe = Object.keys(recipe).reduce((acc, key) => {
-      acc[key] = recipe[key]
-      return acc;
-    }, {})
-    let newIngredients = newRecipe.ingredients.map(ingredient => {
-      if (!this.contents.some(entry => entry.ingredient === ingredient.id)) {
+getMissingPartOfRecipe(recipe) {
+  let newIngredients = recipe.ingredients.map(ingredient => {
+      if(!this.contents.some(entry => entry.ingredient === ingredient.id)) {
         ingredient.missing = ingredient.quantity.amount;
         return ingredient;
       } else {
@@ -24,8 +20,8 @@ class Pantry {
         return ingredient;
       }
     });
-    newRecipe.ingredients = newIngredients;
-    return newRecipe;
+    recipe.ingredients = newIngredients;
+    return recipe;
   }
 
   determineEnoughIngredients(recipe) {
@@ -42,33 +38,25 @@ class Pantry {
     return (totalCents / 100).toFixed(2);
   }
 
-  removeIngredientsFromPantry(recipe) {
+  getIngredientsToUpdate(recipe, updateType){
     let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
-      let obj = {
-        "ingredient": ingredient.id,
-        "amountToRemove": -1 * ingredient.quantity.amount
-      };
-      acc.push(obj)
-      return acc;
-    }, [])
-    return ingredientsInPantry;
-  }
-
-  addIngredientsToPantry(recipe) {
-    let ingredientsInPantry = recipe.ingredients.reduce((acc, ingredient) => {
-      if (ingredient.missing > 0) {
+      if(updateType === 'add' && ingredient.missing > 0){
         let obj = {
           "ingredient": ingredient.id,
           "amountToAdd": (ingredient.missing * 5)
+          };
+        acc.push(obj)
+      } else if(updateType === 'remove') {
+        let obj = {
+          "ingredient": ingredient.id,
+          "amountToRemove": -1 * ingredient.quantity.amount
         };
         acc.push(obj)
       }
       return acc
     }, [])
-    return ingredientsInPantry;
+    return ingredientsInPantry
   }
-
-
 }
 
 

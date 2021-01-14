@@ -204,21 +204,23 @@ function listMissingIngredients(recipe) {
 function addMissingIngredientsNeededForRecipe(event) {
   let replaceRecipe = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id))
   let shoppingList = pantry.getMissingPartOfRecipe(replaceRecipe)
-  let newIngredients = pantry.addIngredientsToPantry(shoppingList)
+  let newIngredients = pantry.getIngredientsToUpdate(shoppingList, 'add')
   newIngredients.forEach((ingredient) => {
     let postOption = createPostOption(ingredient, 'amountToAdd');
-    return updatePantryDataWithNewIngredientQuantities(postOption, replaceRecipe);
+    updatePantryDataWithNewIngredientQuantities(postOption, replaceRecipe);
   })
+  displayAlert('add')
 };
 
 function removeIngredientsUsedToCookRecipe(event) {
   let newRecipeInfo = cookbook.recipes.find(recipe => recipe.id === Number(event.target.id));
   let cookedRecipe = new Recipe(newRecipeInfo, cookbook.ingredients);
-  let removedIngredients = pantry.removeIngredientsFromPantry(cookedRecipe)
+  let removedIngredients = pantry.getIngredientsToUpdate(cookedRecipe, 'remove')
   removedIngredients.forEach((ingredient) => {
     let postOption = createPostOption(ingredient, 'amountToRemove');
-    return updatePantryDataWithNewIngredientQuantities(postOption, cookedRecipe);
+   updatePantryDataWithNewIngredientQuantities(postOption, cookedRecipe);
   })
+   displayAlert('remove')
 };
 
 function createPostOption(ingredient, modifyingProperty) {
@@ -237,16 +239,24 @@ function createPostOption(ingredient, modifyingProperty) {
 
 function updatePantryDataWithNewIngredientQuantities(postOption, recipe) {
   return fetch("http://localhost:3001/api/v1/users", postOption)
-    .then((response) => response.json())
-    .then((message) => {
-      console.log(message);
-      Promise.all([getUserData(), getRecipeData(), getIngredientData()])
-        .then((data) => {
-          let updatedUserData = data[0];
-          user.pantry = updatedUserData.find(entry => entry.id === user.id).pantry
-          pantry.contents = user.pantry
-          compilePantryData(recipe);
-        })
-    })
-    .catch((error) => console.log(error));
+   .then((response) => response.json())
+   .then((message) => {
+     console.log(message);
+     Promise.all([getUserData(), getRecipeData(), getIngredientData()])
+   .then((data) => {
+     let updatedUserData = data[0];
+     user.pantry = updatedUserData.find(entry => entry.id === user.id).pantry
+     pantry.contents = user.pantry
+     compilePantryData(recipe);
+       })
+     })
+   .catch((error) => console.log(error));
+}
+
+function displayAlert(alertType){
+  if(alertType === 'add'){
+    alert(`Click OK! To confirm add more of the missing ingredients to your pantry.`);
+  } else {
+    alert(`Click OK! To cook this meal and take the ingredients out of your pantry.`);
+  }
 }
