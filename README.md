@@ -119,8 +119,6 @@ At anytime, the user can return to the main page by clicking the `Home` button.
 ### Appreciation
 Thanks to David Whitaker, Travis Rollins, and Brianna Delvalle
 
-enter appreciation here:
-
 
 [Back to Top of Page](#table-of-contents)
 
