@@ -180,10 +180,10 @@ function compilePantryData(recipe) {
   if (!pantry.determineEnoughIngredients(recipe)) {
     missingIngredients = listMissingIngredients(recipe);
     costOfRemainingIngredients = pantry.calculateMissingCost(recipe);
-    domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+    domUpdates.displayCookDetails(recipe.id, missingIngredients, costOfRemainingIngredients);
   } else {
     costOfRemainingIngredients = pantry.calculateMissingCost(recipe)
-    domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+    domUpdates.displayCookDetails(recipe.id, missingIngredients, costOfRemainingIngredients);
   }
 }
 
