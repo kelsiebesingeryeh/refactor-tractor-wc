@@ -75,21 +75,26 @@ You will see that we have provided a set test data file to make testing much smo
 ## Using Whats Cookin
 A user is randomly selected, and immediately brought to their home page on page load. From here, the user can view all of the recipes available to them.
 
-A user can add recipes to their cook list by simply clicking the ⁺ on any individual card. Notice how the ⁺ turns into a ✓ after a recipe is added to the recipe cook list.
+### Adding Recipes to Cooklist
+A user can add recipes to their cook list by simply clicking the '⁺' on any individual card. Notice how the ⁺ turns into a ✓ after a recipe is added to the recipe cook list.
 
 Then the user can view that specific list to view only recipes they would like to cook.
 
+### Adding Recipes to Favorites
 Similar to adding recipes, a user can favorite recipes. This can be done by clicking on the star on any recipe card. Then, the user can visit their favorites page to view their favorites only.
 
-Additionally, their is a search bar. Here a user can search for any recipe by title, keywords, or tags related to a recipe. This search will filter through the Whats Cookin Cook Book and display any recipes related to the user's serach.
+### Searching Recipes by Tag, Ingredient, or Keyword
+Additionally, their is a search bar. Here a user can search for any recipe by title, ingredients, or tags related to a recipe. This search will filter through the Whats Cookin Cook Book and display any recipes related to the user's serach. If a user uses the search bar while viewing the "My Favorites" tab, the search terms will only filter favorited recipes.
 
 Try it out! Try searching for `dinner`. Notice how the some recipes disappear as they do not relate to dinner.
 
+### Viewing Recipe Details
 At any time, a user can choose to view a selected recipe in more detail. After clicking `View Recipe`, the user is provdied with a recipe card. The recipe card displays all ingredients and instructions for the selected recipe.
 
-The user is also given a `Can I Cook It?` card, this card will either display `Yes You Can!` allowing the user to cook the recipe and remove those ingredients from a user's pantry. Otherwise, the card will display `No You Can't!` and will list all ingredients missing in the user's pantry. From there, A user can click the `Add Ingredients` button which will restock the ingredients needed to cook the chosen recipe in the user's pantry.
+### Cooking Recipes and Shopping for Ingredients
+In the recipe details view, the user is also given a `Can I Cook It?` card. This card will either display `Yes You Can!` (when the user has sufficient ingredients) allowing the user to cook the recipe and remove those required ingredients from their pantry. Otherwise, if the user does not have sufficient ingredients, the card will display `No You Can't!` and will list all ingredients missing in the user's pantry. From there, A user can click the `Add Ingredients,` button which will restock the ingredients needed to cook the chosen recipe in the user's pantry.
 
-At anytime, the user can return to the main page, by clicking the `Home` button.
+At anytime, the user can return to the main page by clicking the `Home` button.
 
 [Back to Top of Page](#table-of-contents)
 
