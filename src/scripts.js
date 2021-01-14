@@ -184,14 +184,10 @@ function compilePantryData(recipe) {
   if (!pantry.determineEnoughIngredients(recipe)) {
     missingIngredients = listMissingIngredients(recipe);
     costOfRemainingIngredients = pantry.calculateMissingCost(recipe);
-    domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
-    domUpdates.interactWithClassList("add", "add-active", event, recipeID);
-    //cookbutton disables
+    domUpdates.displayCookDetails(recipe.id, missingIngredients, costOfRemainingIngredients);
   } else {
     costOfRemainingIngredients = pantry.calculateMissingCost(recipe)
-    domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
-    //addingrdient disables
-    //cook enabled
+    domUpdates.displayCookDetails(recipe.id, missingIngredients, costOfRemainingIngredients);
   }
 }
 

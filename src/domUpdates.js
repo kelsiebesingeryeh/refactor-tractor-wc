@@ -30,24 +30,34 @@ let domUpdates = {
     })
   },
 
-
-  displayCostMessage(id, missingIngredients, costOfRemainingIngredients, addIngredientsButtonClassList, cookButtonClassList) {
-    let detailsDiv = document.querySelector(`.cook-recipe`);
-    if (missingIngredients.length === 0) {
-      detailsDiv.innerHTML = `<p class='details-title'>Yes You Can!</p><p class='details-message'>You have ALL the ingredients in your pantry to cook this meal.</p>`
-    } else {
-      detailsDiv.innerHTML = `<h3>Can I Cook It?</h3>
+  displayCookDetails(id, missingIngredients, costOfRemainingIngredients) {
+    let detailsArticle = document.querySelector(`.cook-recipe`);
+    if(missingIngredients.length === 0){
+      detailsArticle.innerHTML =
+        `<h3>Can I Cook It?</h3>
         <div class='cook-details'>
-          <p class='details-title'>No You Can't!</p><p class='details-message'>You will have to go shopping to get some of the ingredients needed to cook this meal.</p>
-          <p class='details-missing'><b>Missing Ingredients:</b><br>${missingIngredients.join(', ')}</p>
-          <p class='details-cost'>To restock these ingredients will cost: $${costOfRemainingIngredients}</p>
+        <p class='details-title'>Yes You Can!</p><p class='details-message'>You have ALL the ingredients in your pantry to cook this meal.</p>
         </div>
         <label for='add-ingredients-to-pantry' class='hidden'>Click to add missing ingredients to your pantry
         </label>
-        <button aria-label='Add Ingredients To Pantry' id='${recipeObject.id}' class='add-ingredients-to-pantry'>Add Ingredients</button>
+        <button aria-label='Add Ingredients To Pantry' id='${id}' class='add-indredients-to-pantry disabled' disabled>Add Ingredients</button>
         <label for='cook-recipe' class='hidden'>Click to cook this recipe, and remove ingredients from your pantry
         </label>
-        <button aria-label='Cook This Recipe' id='${recipeObject.id}' class='cook-recipe-button disabled'>Cook Recipe</button>`
+        <button aria-label='Cook This Recipe' id='${id}' class='cook-recipe-button'>Cook Recipe</button>`;
+    } else {
+      detailsArticle.innerHTML =
+        `<h3>Can I Cook It?</h3>
+        <div class='cook-details'>
+        <p class='details-title'>No You Can't!</p><p class='details-message'>You will have to go shopping to get some of the ingredients needed to cook this meal.</p>
+        <p class='details-missing'><b>Missing Ingredients:</b><br>${missingIngredients.join(', ')}</p>
+        <p class='details-cost'>To restock these ingredients will cost: $${costOfRemainingIngredients}</p>
+        </div>
+        <label for='add-ingredients-to-pantry' class='hidden'>Click to add missing ingredients to your pantry
+        </label>
+        <button aria-label='Add Ingredients To Pantry' id='${id}' class='add-indredients-to-pantry'>Add Ingredients</button>
+        <label for='cook-recipe' class='hidden'>Click to cook this recipe, and remove ingredients from your pantry
+        </label>
+        <button aria-label='Cook This Recipe' id='${id}' class='cook-recipe-button disabled' disabled>Cook Recipe</button>`;
     };
   },
 
@@ -91,8 +101,8 @@ let domUpdates = {
     </div>
     </div>
     </article>
-    <article class='cook-recipe'>
-    </article>`;
+    <article class='cook-recipe'></article>`;
+
     let ingredientsSpan = document.querySelector('.ingredients');
     let instructionsSpan = document.querySelector('.instructions');
 
