@@ -8,9 +8,9 @@ class Cookbook {
     return this.recipes.filter(recipe => {
       return recipe.ingredients.find(ingredient => {
         let ingredientName = this.convertIngredientIdToName(ingredient);
-        return ingredientName.includes(searchText)
-         || recipe.name.toLowerCase().includes(searchText)
-         || recipe.tags.includes(searchText)
+        return ingredientName.includes(searchText) ||
+          recipe.name.toLowerCase().includes(searchText) ||
+          recipe.tags.includes(searchText)
       });
     });
   }

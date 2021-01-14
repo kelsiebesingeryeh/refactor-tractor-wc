@@ -1,56 +1,62 @@
 class User {
-  constructor(id, name, pantry) {
+  constructor(id, name, pantry, ingredientData) {
     this.id = id;
     this.name = name;
     this.pantry = pantry;
     this.favoriteRecipes = [];
-    this.recipesToCook = [];
+    this.ingredients = ingredientData;
   }
 
   addToList(recipe, list) {
     if (!this[list].includes(recipe)) {
-      this[list].push(recipe)
+      this[list].push(recipe);
     }
   }
 
   removeFromList(recipe, list) {
     const i = this[list].indexOf(recipe);
-    this[list].splice(i, 1)
+    this[list].splice(i, 1);
   }
 
-  filterFavorites(tag) {
-    return this.favoriteRecipes.filter(recipe => {
-      return recipe.tags.includes(tag);
-    });
-  }
-
-  findFavorites(strgToSrch) {
-    return this.favoriteRecipes.filter(recipe => {
-      return recipe.name.includes(strgToSrch)
-      || recipe.ingredients.find(ingredient => {
-        return ingredient.name.includes(strgToSrch)
+  findFavorites(searchText) {
+    return this.favoriteRecipes.filter((recipe) => {
+      return recipe.ingredients.find((ingredient) => {
+        let ingredientName = this.convertIngredientIdToName(ingredient);
+        return (
+          ingredientName.includes(searchText) ||
+          recipe.name.toLowerCase().includes(searchText) ||
+          recipe.tags.includes(searchText)
+        );
       });
     });
   }
 
+  convertIngredientIdToName(ingredient) {
+    let ingredientData = this.ingredients.find(
+      (entry) => entry.id === ingredient.id
+    );
+    return ingredientData.name;
+  }
+
   checkPantry(recipe) {
     let result;
-    let singleRecipe = this.favoriteRecipes.find(item => item.name === recipe)
-    singleRecipe.ingredients.forEach(ingredient => {
-      this.pantry.forEach(item => {
-        if ((ingredient.id === item.ingredient) &&
-          (item.amount >= ingredient.quantity.amount)) {
+    let singleRecipe = this.favoriteRecipes.find(
+      (item) => item.name === recipe
+    );
+    singleRecipe.ingredients.forEach((ingredient) => {
+      this.pantry.forEach((item) => {
+        if (
+          ingredient.id === item.ingredient &&
+          item.amount >= ingredient.quantity.amount
+        ) {
           result = "You have the ingredients!";
         } else {
           result = `Sorry, you don't have the ingredients`;
         }
-      })
-    })
-      return result;
+      });
+    });
+    return result;
   }
-
-
-
 }
 
 

@@ -10,10 +10,10 @@ getMissingPartOfRecipe(recipe) {
         return ingredient;
       } else {
         this.contents.forEach(entry => {
-          if(entry.ingredient === ingredient.id && entry.amount < ingredient.quantity.amount) {
+          if (entry.ingredient === ingredient.id && entry.amount < ingredient.quantity.amount) {
             let missingAmount = ingredient.quantity.amount - entry.amount;
             ingredient.missing = missingAmount;
-          } else if(entry.ingredient === ingredient.id && entry.amount >= ingredient.quantity.amount){
+          } else if (entry.ingredient === ingredient.id && entry.amount >= ingredient.quantity.amount) {
             ingredient.missing = 0;
           }
         })
@@ -27,7 +27,7 @@ getMissingPartOfRecipe(recipe) {
   determineEnoughIngredients(recipe) {
     let recipeCheck = this.getMissingPartOfRecipe(recipe)
     return recipeCheck.ingredients.every(item => item.missing === 0)
-}
+  }
 
   calculateMissingCost(recipe) {
     let shoppingList = this.getMissingPartOfRecipe(recipe);
@@ -43,7 +43,7 @@ getMissingPartOfRecipe(recipe) {
       if(updateType === 'add' && ingredient.missing > 0){
         let obj = {
           "ingredient": ingredient.id,
-          "amountToAdd": ingredient.missing
+          "amountToAdd": (ingredient.missing * 5)
           };
         acc.push(obj)
       } else if(updateType === 'remove') {

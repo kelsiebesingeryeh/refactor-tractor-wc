@@ -1,6 +1,27 @@
-# Webpack Starter Kit
+# Refactor Tractor - What's Cookin'
+#### Turing School of Software Design - Mod2 Group Project
+#### Assigned Repo: WC-A  || Instructor: David Whitaker
 
-## Clone This Repo
+The details of this project are outlined in [this project spec](https://frontend.turing.io/projects/module-2/refactor-tractor-wc.html)
+
+### Contributors
+- Kelsie Besinger-Yeh : [github profile](https://github.com/kelsiebesingeryeh)
+- Kelly Dinneen : [github profile](https://github.com/kellydinneen)
+- Kevin Hartmann : [github profile](https://github.com/kevinhartmann23)
+
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Instructions](#setup-instructions)
+3. [How-To](#using-whats-cookin)
+4. [Challenges & Wins](#challenges-&-wins)
+5. [Appreciation](#appreciation)
+
+## Introduction
+  In this project we were tasked to refactor a project that was made by someone else, and change the data from a hard file to pulling data from an API. The goal of this project was for us to build comfortability around working on someone else's code and ready us for the our first job within the industry. Please follow the [setup instructions](#setup-instructions) below on how to begin!
+
+## Setup Instructions
+
+#### Clone This Repo
 
 That's right, _clone_ not fork. You will use this repo multiple times, but you can only fork a repository once. So here is what you need to do to clone the repo and still be able to push changes to your repo:
 
@@ -12,10 +33,9 @@ That's right, _clone_ not fork. You will use this repo multiple times, but you c
 
 Now try to commit something and push it up to your new repo. If everything is setup correctly, you should see the changes on GitHub.
 
-## Setup
+#### Setup
 
-After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo. 
-
+After you have gone through the steps of cloning down this repo and editing the remote:
 Then install the library dependencies. Run:
 
 ```bash
@@ -24,33 +44,10 @@ npm install
 
 To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:8080/` and you should see a page with some `h1` text and a pink background. If that's the case, you're good to go. Enter `control + c` in your terminal to stop the server at any time.
 
-## Where to Add Your Code
+## View Our Code in Action
+Simply visit our deployed site [here]()
 
-### JavaScript
-
-You have to be very intentional with where you add your feature code. This repo uses a tool called [webpack](https://webpack.js.org/) to combine many JavaScript files into one big file. Webpack enables you to have many, separate JavaScript files to keep your code organized and readable. Webpack expects all of your code files to be in a specific place, or else it doesn't know how to combine them all behind the scenes.
-
-**Create all of your feature code files in the `src` directory.**
-
-Since code is separated into multiple files, you need to use the `import` and `export` syntax to share code across file.
-
-Here is a video that walks through some information about [import and export](https://www.youtube.com/watch?v=_3oSWwapPKQ). There are a lot of resources out there about `import` and `export`, and resources will sometimes call them `ES6 modules`. It's something you will see in React and beyond.
-
-### HTML
-
-Add the HTML you need in the `index.html` file in the `./src` directory. There is some boilerplate HTML that exists from the start that you can modify.
-
-### CSS (SCSS/SASS)
-
-This project is setup to use SCSS/SASS files by default instead of your regular CSS files. Add your SCSS files in the `src/css` directory. There is a `base.scss` file already there, but you can change this file and add multiple SCSS files in this directory.
-
-This might sound weird, but you need to `import` your SCSS files in the JavaScript entry file (`index.js`) for the styles to be applied to your HTML. The example `base.scss` file has already been imported in the JavaScript entry file as an example.
-
-### Images
-
-Add your image files in the `src/images` directory. Similar to CSS files, you need to `import` image files in the JavaScript entry file (`index.js`). Then go into the HTML and add an `img` element with the `src` attribute pointing to the `images` directory. There is an example in the `index.html` file for you to see.
-
-## How to View Your Code in Action
+OR
 
 In the terminal, run:
 
@@ -66,40 +63,60 @@ Project is running at http://localhost:8080/
 
 Go to `http://localhost:8080/` in your browser to view your code running in the browser.
 
----
+### Testing
 
-## Test Files Organization
+We have created a series of tests for our data model. If you would like to run a few of these tests (or add new features), choose a test file and run `npm test test/[selected test file]` in your terminal.
+You will see that we have provided a set test data file to make testing much smoother and easier to read.
 
-Similar to feature code, your test code needs to be put in a specific place for it to run successfully.
-
-**Put all of your test files in the `test` directory.** As a convention, all test filenames should end with `-test.js`. For instance: `box-test.js`.
-
-## Running Your Tests
-
-Run your test suite using the command:
-
-```bash
-npm test
-```
-
-The test results will output to the terminal.
+[Back to Top of Page](#table-of-contents)
 
 ---
 
-## Linting Your Code
+## Using Whats Cookin
+A user is randomly selected, and immediately brought to their home page on page load. From here, the user can view all of the recipes available to them.
 
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit - the linter is still running successfully.
+A user can add recipes to their cook list by simply clicking the ⁺ on any individual card. Notice how the ⁺ turns into a ✓ after a recipe is added to the recipe cook list.
 
-Your linter will look at the JavaScript files you have within the `src` directory and the `test` directory. 
+Then the user can view that specific list to view only recipes they would like to cook.
 
-## Webpack?
+Similar to adding recipes, a user can favorite recipes. This can be done by clicking on the star on any recipe card. Then, the user can visit their favorites page to view their favorites only.
 
-If you look in the `package.json` file, you'll see one of the library dependencies called `webpack`. If you're interested in learning more about what Webpack is and how it works behind the scenes, take a look through the [Webpack configuration documentation](https://webpack.js.org/concepts/).
+Additionally, their is a search bar. Here a user can search for any recipe by title, keywords, or tags related to a recipe. This search will filter through the Whats Cookin Cook Book and display any recipes related to the user's serach.
 
-## Deploying to GitHub Pages
+Try it out! Try searching for `dinner`. Notice how the some recipes disappear as they do not relate to dinner.
+
+At any time, a user can choose to view a selected recipe in more detail. After clicking `View Recipe`, the user is provdied with a recipe card. The recipe card displays all ingredients and instructions for the selected recipe.
+
+The user is also given a `Can I Cook It?` card, this card will either display `Yes You Can!` allowing the user to cook the recipe and remove those ingredients from a user's pantry. Otherwise, the card will display `No You Can't!` and will list all ingredients missing in the user's pantry. From there, A user can click the `Add Ingredients` button which will restock the ingredients needed to cook the chosen recipe in the user's pantry.
+
+At anytime, the user can return to the main page, by clicking the `Home` button.
+
+[Back to Top of Page](#table-of-contents)
+
+---
+
+### Challenges
+- **One:**
+- **Two:**
+- **Three:**
+
+### Wins/Reflections
+- **One:**
+- **Two:**
+- **Three:**
+- **Four:**
+
+### Appreciation
+
+enter appreciation here:
+
+
+[Back to Top of Page](#table-of-contents)
+
+<!-- ## Deploying to GitHub Pages
 
 _If you are finished with the functionality and testing of your project_, then you can consider deploying your project to the web! This way anyone can play it without cloning down your repo.
 
 [GitHub Pages](https://pages.github.com/) is a great way to deploy your project to the web. Don't worry about this until your project is free of bugs and well tested!
 
-If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages.
+If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages. -->
