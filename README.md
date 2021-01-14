@@ -83,13 +83,20 @@ Then the user can view that specific list to view only recipes they would like t
 ### Adding Recipes to Favorites
 Similar to adding recipes, a user can favorite recipes. This can be done by clicking on the star on any recipe card. Then, the user can visit their favorites page to view their favorites only.
 
+![demo-adding-fav](https://media.giphy.com/media/3U7PdzLzDAvCUsTLno/giphy.gif)
+
+
 ### Searching Recipes by Tag, Ingredient, or Keyword
 Additionally, their is a search bar. Here a user can search for any recipe by title, ingredients, or tags related to a recipe. This search will filter through the Whats Cookin Cook Book and display any recipes related to the user's serach. If a user uses the search bar while viewing the "My Favorites" tab, the search terms will only filter favorited recipes.
+
+![demo-search](https://media.giphy.com/media/xkQ20nfeZtgXFS8ub7/giphy.gif)
 
 Try it out! Try searching for `dinner`. Notice how the some recipes disappear as they do not relate to dinner.
 
 ### Viewing Recipe Details
 At any time, a user can choose to view a selected recipe in more detail. After clicking `View Recipe`, the user is provdied with a recipe card. The recipe card displays all ingredients and instructions for the selected recipe.
+
+![demo-search](https://media.giphy.com/media/paymxPquLba1ulgefm/giphy.gif)
 
 ### Cooking Recipes and Shopping for Ingredients
 In the recipe details view, the user is also given a `Can I Cook It?` card. This card will either display `Yes You Can!` (when the user has sufficient ingredients) allowing the user to cook the recipe and remove those required ingredients from their pantry. Otherwise, if the user does not have sufficient ingredients, the card will display `No You Can't!` and will list all ingredients missing in the user's pantry. From there, A user can click the `Add Ingredients,` button which will restock the ingredients needed to cook the chosen recipe in the user's pantry.
