@@ -27,7 +27,6 @@ homeButton.addEventListener("click", returnHome);
 favButton.addEventListener('click', viewFavorites);
 toCookButton.addEventListener('click', viewRecipesToCook);
 searchButton.addEventListener("click", searchRecipes);
-searchInput.addEventListener("keyup", viewSearchedRecipes);
 
 hamburgerMenu.addEventListener('click', toggleHamburgerMenuDropdown);
 mobileFavButton.addEventListener("click", viewFavorites);
@@ -71,7 +70,7 @@ function getIngredientData() {
 function buildPage(users, recipes, ingredients) {
   createUserWorld(users, recipes, ingredients);
   domUpdates.greetUser(user);
-  domUpdates.displayCards(cookbook.recipes, cardArea, ['','','']);
+  domUpdates.displayCards(cookbook.recipes, cardArea, ['', '', '']);
 }
 
 function createUserWorld(users, recipes, ingredients) {
@@ -79,28 +78,28 @@ function createUserWorld(users, recipes, ingredients) {
   let newUser = users.find(user => {
     return user.id === Number(userId);
   });
-  user = new User(userId, newUser.name, newUser.pantry)
+  user = new User(userId, newUser.name, newUser.pantry, ingredients)
   pantry = new Pantry(newUser.pantry)
   cookbook = new Cookbook(recipes, ingredients);
 }
 
 function viewFavorites() {
   if (user.favoriteRecipes.length) {
-    domUpdates.displayCards(user.favoriteRecipes, cardArea, ['favoriteRecipes','recipesToCook','']);
+    domUpdates.displayCards(user.favoriteRecipes, cardArea, ['favoriteRecipes', 'recipesToCook', '']);
   }
   displayRecipeFavoriteOrCooklistLabels(user.favoriteRecipes);
 }
 
 function viewRecipesToCook() {
   if (user.recipesToCook.length) {
-    domUpdates.displayCards(user.recipesToCook, cardArea, ['recipesToCook','favoriteRecipes','']);
+    domUpdates.displayCards(user.recipesToCook, cardArea, ['recipesToCook', 'favoriteRecipes', '']);
   }
   displayRecipeFavoriteOrCooklistLabels(user.recipesToCook);
 }
 
 function returnHome() {
-    domUpdates.displayCards(cookbook.recipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
-    displayRecipeFavoriteOrCooklistLabels(cookbook.recipes);
+  domUpdates.displayCards(cookbook.recipes, cardArea, ['', 'favoriteRecipes', 'recipesToCook']);
+  displayRecipeFavoriteOrCooklistLabels(cookbook.recipes);
 }
 
 function toggleHamburgerMenuDropdown() {
@@ -113,8 +112,13 @@ function searchRecipes() {
 }
 
 function viewSearchedRecipes() {
-  let filteredRecipes = cookbook.findRecipesByTagNameOrIngredient(searchInput.value.toLowerCase());
-  domUpdates.displayCards(filteredRecipes, cardArea, ['','favoriteRecipes', 'recipesToCook']);
+  let filteredRecipes;
+  if (domUpdates.interactWithClassList('contains', 'favoriteRecipes', event, cardArea)) {
+    filteredRecipes = user.findFavorites(searchInput.value);
+  } else {
+    filteredRecipes = cookbook.findRecipesByTagNameOrIngredient(searchInput.value.toLowerCase());
+  }
+  domUpdates.displayCards(filteredRecipes, cardArea, ['', 'favoriteRecipes', 'recipesToCook']);
   displayRecipeFavoriteOrCooklistLabels(filteredRecipes);
 }
 
@@ -127,7 +131,7 @@ function handleCardAreaButtons(event) {
     viewRecipeDetails(event);
   } else if (domUpdates.interactWithClassList('contains', 'cook-recipe-button', event)) {
     removeIngredientsUsedToCookRecipe(event);
-  } else if (domUpdates.interactWithClassList('contains', 'add-indredients-to-pantry', event)) {
+  } else if (domUpdates.interactWithClassList('contains', 'add-ingredients-to-pantry', event)) {
     addMissingIngredientsNeededForRecipe(event);
   }
 }
@@ -146,8 +150,8 @@ function addCardToFavoritesOrCookList(event, listCategory, activeClassName, idNa
 }
 
 function refreshCurrentCardFilterWithUpdatedList(listCategory) {
-  if(domUpdates.interactWithClassList('contains', `${listCategory}`, event, cardArea)){
-    domUpdates.displayCards(user[listCategory], cardArea, [`${listCategory}`,'','']);
+  if (domUpdates.interactWithClassList('contains', `${listCategory}`, event, cardArea)) {
+    domUpdates.displayCards(user[listCategory], cardArea, [`${listCategory}`, '', '']);
     displayRecipeFavoriteOrCooklistLabels(user[listCategory]);
   }
 }
@@ -181,9 +185,13 @@ function compilePantryData(recipe) {
     missingIngredients = listMissingIngredients(recipe);
     costOfRemainingIngredients = pantry.calculateMissingCost(recipe);
     domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+    domUpdates.interactWithClassList("add", "add-active", event, recipeID);
+    //cookbutton disables
   } else {
     costOfRemainingIngredients = pantry.calculateMissingCost(recipe)
     domUpdates.displayCostMessage(recipe.id, missingIngredients, costOfRemainingIngredients);
+    //addingrdient disables
+    //cook enabled
   }
 }
 
@@ -213,7 +221,7 @@ function removeIngredientsUsedToCookRecipe(event) {
   let removedIngredients = pantry.removeIngredientsFromPantry(cookedRecipe)
   removedIngredients.forEach((ingredient) => {
     let postOption = createPostOption(ingredient, 'amountToRemove');
-     return updatePantryDataWithNewIngredientQuantities(postOption, cookedRecipe);
+    return updatePantryDataWithNewIngredientQuantities(postOption, cookedRecipe);
   })
 };
 
@@ -233,16 +241,16 @@ function createPostOption(ingredient, modifyingProperty) {
 
 function updatePantryDataWithNewIngredientQuantities(postOption, recipe) {
   return fetch("http://localhost:3001/api/v1/users", postOption)
-   .then((response) => response.json())
-   .then((message) => {
-     console.log(message);
-     Promise.all([getUserData(), getRecipeData(), getIngredientData()])
-   .then((data) => {
-     let updatedUserData = data[0];
-     user.pantry = updatedUserData.find(entry => entry.id === user.id).pantry
-     pantry.contents = user.pantry
-     compilePantryData(recipe);
-       })
-     })
-   .catch((error) => console.log(error));
+    .then((response) => response.json())
+    .then((message) => {
+      console.log(message);
+      Promise.all([getUserData(), getRecipeData(), getIngredientData()])
+        .then((data) => {
+          let updatedUserData = data[0];
+          user.pantry = updatedUserData.find(entry => entry.id === user.id).pantry
+          pantry.contents = user.pantry
+          compilePantryData(recipe);
+        })
+    })
+    .catch((error) => console.log(error));
 }

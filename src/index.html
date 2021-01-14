@@ -1,40 +1,45 @@
 <!DOCTYPE html>
 <html lang='en'>
-  <head>
-    <meta charset='UTF-8'>
-    <title>Whats Cookin</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Raleway&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
-    <header class='main-header'>
-      <div class="hamburger hidden">
-        <div class="hamburger-content hidden">
-          <span class="dropdown-item home-mobile">Home</span>
-          <span class="dropdown-item view-favorites-mobile">Favorites</span>
-          <span class="dropdown-item view-to-cook-list-mobile">Recipes</span>
-        </div>
+
+<head>
+  <meta charset='UTF-8'>
+  <title>Whats Cookin</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Raleway&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <header class='main-header'>
+    <div class="hamburger hidden">
+      <div class="hamburger-content hidden">
+        <span class="dropdown-item home-mobile">Home</span>
+        <span class="dropdown-item view-favorites-mobile">Favorites</span>
+        <span class="dropdown-item view-to-cook-list-mobile">Recipes</span>
       </div>
-      <h1>What's Cookin'</h1>
-      <label for='home-button' class='hidden'>Homepage button</label>
-      <button id='home-button' aria-label='Return Home' class='home navButton'>Home</button>
-      <label for='view-favorites-button' class='hidden'>View Favorites</label>
-      <button id='view-favorites-button' aria-label='View Favorites' class="view-favorites navButton">My Favorites</button>
-      <button id='view-to-cook-list-button' aria-label='Search For Recipe' class="view-to-cook-list navButton">My Recipes</button>
-      <form class='search-bar'>
-        <label for='search-button' class='hidden'>Click here to search here</label>
-        <button id='search-button' aria-label='Search For Recipe' class='search-button' type='button'>
-        </button>
-        <label for='search-input'>Search For Recipes...
+    </div>
+    <h1>What's Cookin'</h1>
+    <label for='home-button' class='hidden'>Homepage button</label>
+    <button id='home-button' aria-label='Return Home' class='home navButton'>Home</button>
+    <label for='view-favorites-button' class='hidden'>View Favorites</label>
+    <button id='view-favorites-button' aria-label='View Favorites' class="view-favorites navButton">My
+      Favorites</button>
+    <button id='view-to-cook-list-button' aria-label='Search For Recipe' class="view-to-cook-list navButton">My
+      Recipes</button>
+    <form class='search-bar'>
+      <label for='search-button' class='hidden'>Click here to search here</label>
+      <button id='search-button' aria-label='Search For Recipe' class='search-button' type='button'>
+      </button>
+      <label for='search-input'>Search For Recipes...
         <input id='search-input' class='search-input' type='text' placeholder='by tag, ingredient, or name' value=''>
-        </label>
-      </form>
-    </header>
-    <main>
-      <p class='user-info'></p>
-      <section class='all-cards'>
-      </section>
-    </main>
-  </body>
+      </label>
+    </form>
+  </header>
+  <main>
+    <p class='user-info'></p>
+    <section class='all-cards'>
+    </section>
+  </main>
+</body>
+
 </html>
