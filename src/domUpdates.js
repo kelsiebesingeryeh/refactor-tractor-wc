@@ -40,7 +40,7 @@ let domUpdates = {
         </div>
         <label for='add-ingredients-to-pantry' class='hidden'>Click to add missing ingredients to your pantry
         </label>
-        <button aria-label='Add Ingredients To Pantry' id='${id}' class='add-indredients-to-pantry disabled' disabled>Add Ingredients</button>
+        <button aria-label='Add Ingredients To Pantry' id='${id}' class='add-ingredients-to-pantry disabled' disabled>Add Ingredients</button>
         <label for='cook-recipe' class='hidden'>Click to cook this recipe, and remove ingredients from your pantry
         </label>
         <button aria-label='Cook This Recipe' id='${id}' class='cook-recipe-button'>Cook Recipe</button>`;
@@ -54,7 +54,7 @@ let domUpdates = {
         </div>
         <label for='add-ingredients-to-pantry' class='hidden'>Click to add missing ingredients to your pantry
         </label>
-        <button aria-label='Add Ingredients To Pantry' id='${id}' class='add-indredients-to-pantry'>Add Ingredients</button>
+        <button aria-label='Add Ingredients To Pantry' id='${id}' class='add-ingredients-to-pantry'>Add Ingredients</button>
         <label for='cook-recipe' class='hidden'>Click to cook this recipe, and remove ingredients from your pantry
         </label>
         <button aria-label='Cook This Recipe' id='${id}' class='cook-recipe-button disabled' disabled>Cook Recipe</button>`;
