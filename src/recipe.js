@@ -5,7 +5,10 @@ class Recipe {
     this.ingredients = recipe.ingredients.map(recipeIngredient => {
       let ingredientInfo = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id);
       recipeIngredient.missing = 0;
-      return {...recipeIngredient,...ingredientInfo};
+      return {
+        ...recipeIngredient,
+        ...ingredientInfo
+      };
     });
     this.instructions = recipe.instructions;
     this.tags = recipe.tags;

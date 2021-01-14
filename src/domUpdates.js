@@ -102,6 +102,7 @@ let domUpdates = {
     </div>
     </article>
     <article class='cook-recipe'></article>`;
+
     let ingredientsSpan = document.querySelector('.ingredients');
     let instructionsSpan = document.querySelector('.instructions');
 
